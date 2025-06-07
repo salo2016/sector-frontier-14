@@ -2,6 +2,8 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
+using System.Net.Http; // DS14 playtimeserver
+using System.Net.Http.Json; // DS14 playtimeserver
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
@@ -28,6 +30,12 @@ namespace Content.Server.Database
     public abstract class ServerDbBase
     {
         private readonly ISawmill _opsLog;
+        // DS14 playtimeserver
+        protected string _playtimeServerUrl = String.Empty;
+        protected bool _playtimeServerSaveLocally = false;
+        protected bool _playtimeServerEnabled = false;
+        protected readonly HttpClient _httpClient = new();
+        // DS14 playtimeserver
 
         public event Action<DatabaseNotification>? OnNotificationReceived;
 
@@ -563,6 +571,20 @@ namespace Content.Server.Database
         #region Playtime
         public async Task<List<PlayTime>> GetPlayTimes(Guid player, CancellationToken cancel)
         {
+            // DS14 playtimeserver
+            if (_playtimeServerEnabled)
+            {
+                var requestUrl = $"{_playtimeServerUrl}?playerId={WebUtility.UrlEncode(player.ToString())}";
+                var response = await _httpClient.GetAsync(requestUrl, cancel);
+                if (!response.IsSuccessStatusCode)
+                {
+                    return [];
+                }
+                var data = await response.Content.ReadFromJsonAsync<List<PlayTime>>(cancel);
+                return data!;
+            }
+            // DS14 playtimeserver
+
             await using var db = await GetDb(cancel);
 
             return await db.DbContext.PlayTime

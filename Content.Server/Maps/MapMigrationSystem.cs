@@ -22,7 +22,7 @@ public sealed class MapMigrationSystem : EntitySystem
 #endif // Frontier
     [Dependency] private readonly IResourceManager _resMan = default!;
 
-    private static readonly string[] MigrationFiles = { "/migration.yml", "/nf_migration.yml" }; // Frontier: use array of migration files
+    private static readonly string[] MigrationFiles = { "/migration.yml", "/nf_migration.yml", "/lua_migration.yml" }; // Frontier: use array of migration files // Lua
 
     public override void Initialize()
     {

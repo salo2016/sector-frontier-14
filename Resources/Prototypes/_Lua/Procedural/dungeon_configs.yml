@@ -1,0 +1,25 @@
+- type: dungeonConfig
+  id: GateMineshaft
+  data:
+    colors:
+      Decals: "#FFFFFF"
+    entities:
+      Walls: WallRock
+      CornerWalls: WallRock
+      Cabling: Catwalk
+    spawnGroups:
+      CornerClutter: NFMineshaftClutter
+      Entrance: NFBaseWoodWall
+      EntranceFlank: NFBaseWoodWall
+      Junction: NFBaseWoodSupport
+      WallMounts: NFNanoTrasenFacilityWallmounts
+      Window: NFBaseWoodWall
+    tiles:
+      FallbackTile: FloorCaveDrought
+    whitelists:
+      Rooms:
+        tags:
+        - NFMineshaft
+  layers:
+  - !type:PrototypeDunGen
+    proto: NFPlanetBase

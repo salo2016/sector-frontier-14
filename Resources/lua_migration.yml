@@ -14,3 +14,20 @@ WeaponTargetingPad: ComputerGunneryConsole
 # 2025-06-02 Lua migrate ArmoryLathe
 ArmoryLatheEvent: ArmoryLathe
 MedipenTechfabEvent: MedipenTechfab
+
+# 2025-06-05 Lua new migrations
+ClothingUniformJumpskirtVictorianBlack: null
+ClothingUniformJumpskirtVictorianrRed: null
+GoldenRose: null
+PistolDominator: null
+RandomAnimalSpawner: null
+SpawnVehicleAntagVehicle: null
+VendingMachineBoozeFree: null
+VendingMachineChefvendFree: null
+VendingMachineChemicalsFree: null
+VendingMachineDinnerwareFree: null
+VendingMachineEngiDrobeFree: null
+VendingMachineEngivendFree: null
+VendingMachineMedicalFree: null
+VendingMachineSyndieDrobeFree: null
+VendingMachineYouToolFree: null

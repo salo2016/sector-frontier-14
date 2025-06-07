@@ -82,9 +82,9 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         if (!_cfgManager.GetCVar(CCVars.GatewayGeneratorEnabled))
             return;
 
-        generator.NextUnlock = TimeSpan.FromMinutes(5);
+        generator.NextUnlock = TimeSpan.FromSeconds(5);
 
-        for (var i = 0; i < 3; i++)
+        for (var i = 0; i < 1; i++)
         {
             GenerateDestination(uid, generator);
         }
@@ -109,14 +109,16 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
         var restricted = new RestrictedRangeComponent
         {
+            Range = 200f,
             Origin = origin
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Continental"), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Grasslands"), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
+        const int TileRadius = 15;
         for (var x = -2; x <= 2; x++)
         {
             for (var y = -2; y <= 2; y++)
@@ -165,10 +167,10 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 
         if (TryComp(ent.Comp.Generator, out GatewayGeneratorComponent? generatorComp))
         {
-            generatorComp.NextUnlock = _timing.CurTime + generatorComp.UnlockCooldown;
+            //generatorComp.NextUnlock = _timing.CurTime + generatorComp.UnlockCooldown; // Lua
             _gateway.UpdateAllGateways();
             // Generate another destination to keep them going.
-            GenerateDestination(ent.Comp.Generator);
+            //GenerateDestination(ent.Comp.Generator); // Lua
         }
 
         if (!TryComp(args.MapUid, out MapGridComponent? grid))
@@ -185,7 +187,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var dungeonRotation = _dungeon.GetDungeonRotation(seed);
         var dungeonPosition = (origin + dungeonRotation.RotateVec(new Vector2i(0, dungeonDistance))).Floored();
 
-        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("Experiment"), "Experiment", args.MapUid, grid, dungeonPosition, seed); // Frontier: add "Experiment" arg
+        _dungeon.GenerateDungeon(_protoManager.Index<DungeonConfigPrototype>("GateMineshaft"), "GateMineshaft", args.MapUid, grid, dungeonPosition, seed); // Lua NFMineshaft
 
         // TODO: Dungeon mobs + loot.
 

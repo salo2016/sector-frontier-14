@@ -6,3 +6,38 @@ Entries:
   id: 1
   time: '2025-06-04T19:50:23.0000000+00:00'
   url: https://github.com/HacksLua/sector-frontier-14/pull/4
+- author: HacksLua
+  changes:
+    - type: Add
+      message: Добавлены дополнительные миграции со старой версии фронтира
+    - type: Remove
+      message: Убраны суффиксы в меню строительства
+    - type: Tweak
+      message: Увеличено время хранения еды до двух часов
+    - type: Fix
+      message: Исправлена работа портала на ДШФБ
+    - type: Fix
+      message: Исправлено питание на Anura
+    - type: Fix
+      message: Исправлена поломка ховербайка на льду
+    - type: Fix
+      message: Исправлена стойка на Mole
+    - type: Fix
+      message: Исправлен ихор
+  id: 2
+  time: '2025-06-06T12:16:56.0000000+00:00'
+  url: https://github.com/HacksLua/sector-frontier-14/pull/9
+- author: HacksLua
+  changes:
+    - type: Add
+      message: Добавлена синхронизация времени ролей между серверами
+  id: 3
+  time: '2025-06-06T12:16:21.0000000+00:00'
+  url: https://github.com/HacksLua/sector-frontier-14/pull/6
+- author: HacksLua
+  changes:
+    - type: Fix
+      message: Автовыплаты теперь не зависят от грида
+  id: 4
+  time: '2025-06-06T12:16:43.0000000+00:00'
+  url: https://github.com/HacksLua/sector-frontier-14/pull/8

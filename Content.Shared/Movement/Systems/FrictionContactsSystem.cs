@@ -1,4 +1,5 @@
 using Content.Shared.Movement.Components;
+using Content.Shared._Goobstation.Vehicles;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -67,6 +68,9 @@ public sealed class FrictionContactsSystem : EntitySystem
 
     private void ApplyFrictionChange(EntityUid uid)
     {
+        if (HasComp<VehicleComponent>(uid))
+            return; // Lua
+
         if (!EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physicsComponent))
             return;
 

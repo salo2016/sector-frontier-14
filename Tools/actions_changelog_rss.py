@@ -176,7 +176,7 @@ def generate_description_for_entries(entries: List[Any]) -> str:
     keyfn = lambda x: x["author"]
     sorted_author = sorted(entries, key=keyfn)
     for author, group in itertools.groupby(sorted_author, keyfn):
-        desc.write(f"<h3>{html.escape(author)} updated:</h3>\n")
+        desc.write(f"<h3>{html.escape(author)} обновил:</h3>\n")
         desc.write("<ul>\n")
         for entry in sorted(group, key=lambda x: x["time"]):
             for change in entry["changes"]:

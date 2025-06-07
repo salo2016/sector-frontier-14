@@ -53,14 +53,11 @@
       food:
         maxVol: 36
         reagents:
-        - data: null
-          ReagentId: Egg
+        - ReagentId: Egg
           Quantity: 12
-        - data: null
-          ReagentId: Ichor
+        - ReagentId: Ichor
           Quantity: 12
-        - data: null
-          ReagentId: Vitamin
+        - ReagentId: Vitamin
           Quantity: 12
   - type: StaticPrice
     price: 20000

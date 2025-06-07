@@ -1,0 +1,71 @@
+- type: biomeMarkerLayer
+  id: Slimes
+  prototype: SpawnMobSlimeGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFCarps
+  prototype: SpawnMobCarpGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFXenos
+  prototype: SpawnMobXenoGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFFlesh
+  prototype: SpawnMobFleshGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFArgocytes
+  prototype: SpawnMobArgocyteGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFPunks
+  prototype: SpawnMobPunksGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFDinosaurs
+  prototype: SpawnMobDinosaursGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFMercenaries
+  prototype: SpawnMobMercenariesGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFSyndicate
+  prototype: SpawnMobSyndicateGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFExplorers
+  prototype: SpawnMobExplorersGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFSilicons
+  prototype: SpawnMobSiliconsGate
+  minGroupSize: 1
+  maxGroupSize: 1
+
+- type: biomeMarkerLayer
+  id: NFCultists
+  prototype: SpawnMobCultistsGate
+  minGroupSize: 1
+  maxGroupSize: 1

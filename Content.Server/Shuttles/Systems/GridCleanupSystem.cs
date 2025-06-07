@@ -2,6 +2,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Content.Server.Salvage.Expeditions;
+using Content.Server.Gateway.Components;
+using Content.Shared.Tiles;
 
 namespace Content.Server.Shuttles.Systems;
 
@@ -69,6 +71,9 @@ public sealed class GridCleanupSystem : EntitySystem
         var gridUid = ent.Owner;
         var grid = ent.Comp;
 
+        if (HasComp<GatewayGeneratorDestinationComponent>(gridUid))
+            return;
+
         // Skip if already scheduled for deletion
         if (_pendingCleanup.ContainsKey(gridUid))
             return;
@@ -125,6 +130,13 @@ public sealed class GridCleanupSystem : EntitySystem
 
         foreach (var (gridUid, targetTime) in _pendingCleanup)
         {
+
+            if (HasComp<GatewayGeneratorDestinationComponent>(gridUid))
+            {
+                toRemove.Add(gridUid);
+                continue;
+            }
+
             // Skip if the time hasn't elapsed yet
             if (currentTime < targetTime)
                 continue;

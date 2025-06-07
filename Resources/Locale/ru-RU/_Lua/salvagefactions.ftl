@@ -1,0 +1,1 @@
+salvage-faction-slimes = Слаймы

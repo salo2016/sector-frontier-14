@@ -1,0 +1,22 @@
+- type: salvageFaction
+  id: Slimes
+  desc: salvage-faction-slimes
+  entries:
+    - proto: MobAdultSlimesBlueSpace
+      cost: 3
+    - proto: MobAdultSlimesGreenSpace
+      cost: 3
+      prob: 0.3
+    - proto: MobAdultSlimesYellowSpace
+      cost: 6
+      prob: 0.4
+    - proto: MobAdultSlimesGalacticSpace
+      cost: 3
+      prob: 0.05
+    - proto: ReagentSlimeSpawnerSpace
+      cost: 3
+      prob: 0.05
+  configs:
+    DefenseStructure: SlimeStructure
+    Megafauna: MobSlimesRainbowSpace
+    Difficulties: NFModerate

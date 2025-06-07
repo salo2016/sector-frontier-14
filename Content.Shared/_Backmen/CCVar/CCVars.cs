@@ -5,7 +5,7 @@ namespace Content.Shared.Backmen.CCVar;
 
 // ReSharper disable once InconsistentNaming
 [CVarDefs]
-public sealed class CCVars
+public sealed partial class CCVars
 {
     public static readonly CVarDef<bool>
         GameDiseaseEnabled = CVarDef.Create("game.disease", false, CVar.SERVERONLY);

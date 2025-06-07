@@ -18,7 +18,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: TimedDespawn
-    lifetime: 1800
+    lifetime: 7200
 
 # For produce that can be immediately eaten
 
@@ -36,7 +36,7 @@
   - type: Extractable
     grindableSolutionName: food
   - type: TimedDespawn
-    lifetime: 1800
+    lifetime: 7200
 
 # Subclasses
 

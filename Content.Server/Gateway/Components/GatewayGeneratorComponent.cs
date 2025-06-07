@@ -1,4 +1,4 @@
-﻿using Content.Shared.Parallax.Biomes.Markers;
+using Content.Shared.Parallax.Biomes.Markers;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -44,8 +44,18 @@ public sealed partial class GatewayGeneratorComponent : Component
     [DataField]
     public List<ProtoId<BiomeMarkerLayerPrototype>> MobLayers = new()
     {
-        "Carps",
-        "Xenos",
+        "NFCarps",
+        "NFXenos",
+        "NFFlesh",
+        "NFArgocytes",
+        "NFPunks",
+        "NFDinosaurs",
+        "NFMercenaries",
+        "NFSyndicate",
+        "NFExplorers",
+        "NFSilicons",
+        "NFCultists",
+        "Slimes",
     };
 
     [DataField]
@@ -58,11 +68,14 @@ public sealed partial class GatewayGeneratorComponent : Component
     {
         "OreIron",
         "OreQuartz",
+        "OreCoal",
+        "OreSalt",
         "OreGold",
         "OreSilver",
         "OrePlasma",
         "OreUranium",
-        "OreBananium",
+        "OreDiamond",
+        //"OreBananium",
         "OreArtifactFragment",
     };
 }

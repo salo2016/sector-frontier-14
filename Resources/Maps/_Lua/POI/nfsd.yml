@@ -14854,14 +14854,6 @@ entities:
     - type: Gateway
       enabled: True
     - type: GatewayGenerator
-      mobLayers:
-      - Carps
-      - Xenos
-      - Syndicate
-      - Cultists
-      - Necromorfs
-      - Spider
-      generated: []
 - proto: GeneratorBasic15kW
   entities:
   - uid: 1934
