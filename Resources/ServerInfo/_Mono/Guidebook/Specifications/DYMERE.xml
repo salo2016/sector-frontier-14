@@ -11,9 +11,20 @@ An [color=MediumVioletRed]energy[/color]-based capital-class turret capable of s
 
 - Firerate: [color=crimson] 45 RPM [/color]/[color=deepskyblue] 0.75 RPS [/color]
 - Sell Value: [color=greenyellow][bold]60000 Spesos[/bold][/color]
+<<<<<<< HEAD
 - Muzzle Velocity: [color=orange]95 m/s[/color]
 - Capacitor Storage: [color=orange]40000 J[/color]
 - Capacitor Recharge: [color=turquoise]67 J/s[/color]
 - Capacitor Fire Cost: [color=turquoise]2400 J[/color]
+=======
+- Muzzle Velocity: [color=orange]150 m/s[/color]
+- Range: [color=orange]1320m[/color]
+- Power Usage (Passive): [color=turquoise]25000u/s[/color]
+- Capacitor Storage: [color=orange]40800u[/color]
+- Capacitor Recharge: [color=turquoise]81600u/s[/color]
+- Capacitor Fire Cost: [color=turquoise]2400u[/color]
+- Capacitor Recharge Pause: [color=orange]60s[/color]
+- Firing Mode: [color=gold]Automatic[/color]
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
 
 </Document>

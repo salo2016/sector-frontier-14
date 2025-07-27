@@ -21,10 +21,20 @@ A basic combat-rated [color=GreenYellow]missile[/color] pod turret.
 
 ## Missile Specifications
 
+<<<<<<< HEAD
 - Acceleration: [color=mediumspringgreen][bold]20 m/s[/bold][/color]
 - Detection Range: [color=orangered][bold]800m[/bold][/color]
 - Scanning Arc: [color=teal]65 degrees[/color]
 - Launch Speed: [color=darkorange]60 m/s[/color]
 - Max Speed: [color=darkorange]140 m/s[/color]
+=======
+- Acceleration: [color=mediumspringgreen][bold]100 m/s²[/bold][/color]
+- Tracking Range: [color=orangered][bold]450m[/bold][/color]
+- Scanning Arc: [color=teal]70 degrees[/color]
+- Launch Speed: [color=darkorange]90 m/s[/color]
+- Max Speed: [color=darkorange]210 m/s[/color]
+- Range: [color=orange]1260m[/color]
+- Tracking Delay: [color=orange] 0.7 seconds [/color]
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
 
 </Document>

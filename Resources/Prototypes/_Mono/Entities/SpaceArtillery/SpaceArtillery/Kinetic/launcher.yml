@@ -26,7 +26,7 @@
     - Toggle
   - type: Gun
     fireRate: 12
-    projectileSpeed: 180
+    projectileSpeed: 90
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/slammer.ogg
     soundEmpty:
@@ -78,7 +78,7 @@
     range: 500
   - type: Gun
     fireRate: 1.5
-    projectileSpeed: 322
+    projectileSpeed: 161
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/mortar.ogg
     soundEmpty:
@@ -126,7 +126,7 @@
     range: 500
   - type: Gun
     fireRate: 2.5
-    projectileSpeed: 240
+    projectileSpeed: 120
     burstCooldown: 0.5
     burstFireRate: 10
     shotsPerBurst: 2
@@ -238,7 +238,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    projectileSpeed: 315
+    projectileSpeed: 155
     fireRate: 0.2
     burstCooldown: 10
     burstFireRate: 2
@@ -303,7 +303,11 @@
         layer:
         - MachineLayer
   - type: Gun
+<<<<<<< HEAD
     projectileSpeed: 250 #450
+=======
+    projectileSpeed: 225
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
     fireRate: 0.2
     burstCooldown: 10
     burstFireRate: 2
@@ -357,7 +361,11 @@
     range: 500
   - type: Gun
     fireRate: 0.05
+<<<<<<< HEAD
     projectileSpeed: 200 #900
+=======
+    projectileSpeed: 400
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/leviathan_fire.ogg
     soundEmpty:
@@ -444,8 +452,13 @@
         layer:
         - MachineLayer
   - type: Gun
+<<<<<<< HEAD
     projectileSpeed: 200 #315 - Lua
     fireRate: 0.075
+=======
+    projectileSpeed: 155
+    fireRate: 0.1
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/cannon.ogg
     soundEmpty:
@@ -505,7 +518,11 @@
         layer:
         - MachineLayer
   - type: Gun
+<<<<<<< HEAD
     projectileSpeed: 180 #315 - Lua
+=======
+    projectileSpeed: 155
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
     fireRate: 0.2
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/cannon.ogg

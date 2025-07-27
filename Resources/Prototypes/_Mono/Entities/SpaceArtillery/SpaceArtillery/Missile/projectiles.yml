@@ -25,7 +25,11 @@
     requireNoGrid: true
     shape: triangle
   - type: TimedDespawn
+<<<<<<< HEAD
     lifetime: 6
+=======
+    lifetime: 7
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
   - type: PointLight
     radius: 3.5
     color: orange
@@ -40,6 +44,7 @@
   - type: MiningGatheringSoft
   - type: MiningGatheringHard
   - type: TargetSeeking
+<<<<<<< HEAD
     acceleration: 150
     detectionRange: 200
     scanArc: 40
@@ -55,6 +60,14 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+=======
+    acceleration: 75
+    detectionRange: 300
+    scanArc: 70
+    launchSpeed: 150
+    maxSpeed: 180
+    trackDelay: 0.3
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
 
 # ASM-302
 
@@ -83,7 +96,11 @@
     requireNoGrid: true
     shape: triangle
   - type: TimedDespawn
+<<<<<<< HEAD
     lifetime: 6
+=======
+    lifetime: 7
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
   - type: PointLight
     radius: 3.5
     color: orange
@@ -98,6 +115,7 @@
   - type: MiningGatheringSoft
   - type: MiningGatheringHard
   - type: TargetSeeking
+<<<<<<< HEAD
     acceleration: 200
     detectionRange: 300
     scanArc: 40
@@ -113,6 +131,14 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+=======
+    acceleration: 100
+    detectionRange: 450
+    scanArc: 70
+    launchSpeed: 90
+    maxSpeed: 210
+    trackDelay: 0.7
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
 
 # ASM-501
 
@@ -141,7 +167,7 @@
     requireNoGrid: true
     shape: triangle
   - type: TimedDespawn
-    lifetime: 10
+    lifetime: 20
   - type: PointLight
     radius: 5
     color: orange
@@ -156,6 +182,7 @@
   - type: MiningGatheringSoft
   - type: MiningGatheringHard
   - type: TargetSeeking
+<<<<<<< HEAD
     acceleration: 50
     detectionRange: 500
     scanArc: 50
@@ -171,6 +198,14 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+=======
+    acceleration: 25
+    detectionRange: 300
+    scanArc: 50
+    launchSpeed: 25
+    maxSpeed: 30
+    trackDelay: 4
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
 
 # TOVEK
 
@@ -199,7 +234,7 @@
     requireNoGrid: true
     shape: triangle
   - type: TimedDespawn
-    lifetime: 4.2
+    lifetime: 8.2
   - type: PointLight
     radius: 3.5
     color: orange
@@ -219,6 +254,7 @@
   - type: MiningGatheringSoft
   - type: MiningGatheringHard
   - type: TargetSeeking
+<<<<<<< HEAD
     acceleration: 80
     detectionRange: 300
     scanArc: 50
@@ -234,3 +270,11 @@
         behaviors:
           - !type:DoActsBehavior
             acts: [ "Destruction" ]
+=======
+    acceleration: 40
+    detectionRange: 450
+    scanArc: 80
+    launchSpeed: 50
+    maxSpeed: 125
+    trackDelay: 1.2
+>>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
