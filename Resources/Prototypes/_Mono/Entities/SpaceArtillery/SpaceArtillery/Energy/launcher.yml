@@ -87,11 +87,7 @@
     range: 500
   - type: Gun
     fireRate: 0.2
-<<<<<<< HEAD
     projectileSpeed: 120
-=======
-    projectileSpeed: 90
->>>>>>> edf106aeaf7 (Halves Shipgun Projectile Speeds (#1638))
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
     soundEmpty:
