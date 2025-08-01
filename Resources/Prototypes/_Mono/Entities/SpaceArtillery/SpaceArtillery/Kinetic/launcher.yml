@@ -303,7 +303,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    projectileSpeed: 450
+    projectileSpeed: 250 #450
     fireRate: 0.2
     burstCooldown: 10
     burstFireRate: 2
@@ -357,7 +357,7 @@
     range: 500
   - type: Gun
     fireRate: 0.05
-    projectileSpeed: 900
+    projectileSpeed: 200 #900
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/leviathan_fire.ogg
     soundEmpty:
@@ -418,7 +418,7 @@
   description: A single barrelled, heavy artillery cannon. Can be remotely activated, or linked up to a GCS.
   components:
   - type: StaticPrice
-    price: 20000
+    price: 30000 #20000
   - type: Sprite
     sprite: _Mono/Objects/ShuttleWeapons/bofors.rsi
     layers:
@@ -444,7 +444,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    projectileSpeed: 315
+    projectileSpeed: 200 #315 - Lua
     fireRate: 0.075
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/cannon.ogg
@@ -505,7 +505,7 @@
         layer:
         - MachineLayer
   - type: Gun
-    projectileSpeed: 315
+    projectileSpeed: 180 #315 - Lua
     fireRate: 0.2
     soundGunshot:
       path: /Audio/_Mono/Weapons/Guns/Gunshots/cannon.ogg

@@ -28,9 +28,10 @@
 
 - type: npcFaction
   id: LuaNordFoll
-  friendly: # Frontier
-  - NFSyndicate # Frontier
-  - Syndicate # Lua
+  parent: NanoTrasen
+  friendly:
+  - NFSyndicate
+  - Syndicate
   hostile:
   - NanoTrasen
   - SimpleHostile

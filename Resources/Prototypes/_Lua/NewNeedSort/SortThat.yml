@@ -1,0 +1,125 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: randomHumanoidSettings
+  id: EventNordFoll
+  speciesBlacklist:
+    #- Arachnid
+    #- Diona
+    #- Dwarf
+    #- Human
+    #- Moth
+    #- Reptilian
+    #- SlimePerson
+    - Vox
+    # - Demon
+    #- Shark
+    # - Tajaran
+    #- Vulpkanin
+    #- Goblin
+    #- Harpy
+    - Felinid
+    #- Kobolt
+    #- Avali #рофлсы - да.
+  randomizeName: false
+
+#Обычный Нордфолл
+
+#Снаряжение
+- type: startingGear
+  id: SyndicateNordFollResearcher
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRecruitSyndie
+    back: ClothingBackpackSyndicateFilled
+    mask: ClothingMaskGasSyndicate
+    eyes: ClothingHeadsetAltOutpostSyndicate
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsCombatFilled
+    id: SyndiPDAResearcher
+    pocket1: DoubleEmergencyTankO2N2EqualFilled
+    pocket2: PlushieCarp
+    belt: ClothingBeltMilitaryWebbing
+
+# Под
+- type: entity
+  parent: [ MedicalPodSyndie, MedicalPod ]
+  id: MedicalPodNordFollRandomReseacher
+  suffix: Под, Нордфолл Исследователь
+  components:
+  - type: StorageFill
+    contents:
+    - id: RandomHumanoidSpawnerNordfollReseacher
+      orGroup: body
+      prob: 1
+  - type: Icon
+    sprite:  _Lua/Structures/Storage/emergency_pod.rsi
+    state: icon
+  - type: Sprite
+    noRot: true
+    sprite: _Lua/Structures/Storage/emergency_pod.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: window-closed
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: antenna-unlit
+      shader: unshaded
+    - state: healthanalyzer-unlit
+      shader: unshaded
+      map: ["healthanalyzer"]
+    - state: occupied-unlit
+      shader: unshaded
+      map: ["occupied"]
+
+# В поде нордфолл рандом
+- type: entity
+  id: RandomHumanoidSpawnerNordfollReseacher
+  categories: [ HideSpawnMenu ]
+  name: Исследователь Нордфолла
+  suffix: Нордфолл, Исследователь
+  components:
+    - type: Sprite
+      layers:
+        - sprite: Clothing/OuterClothing/Hardsuits/syndicate.rsi
+          state: icon
+        - sprite: Markers/cross.rsi
+          state: blue
+    - type: RandomMetadata
+    - type: RandomHumanoidSpawner
+      settings: RandomHumanoidSpawnerNordfollReseacherPreset
+- type: randomHumanoidSettings
+  id: RandomHumanoidSpawnerNordfollReseacherPreset
+  parent: EventNordFoll
+  components:
+    - type: GhostTakeoverAvailable
+    - type: GhostRole
+      name: roles-antag-nuclear-operative-name
+      description: roles-antag-nuclear-operative-objective
+      rules: ghost-role-information-rules-default-team-antagonist
+      requirements:
+      - !type:DepartmentTimeRequirement
+        department: Antag
+        time: 36000
+      - !type:DepartmentTimeRequirement
+        department: Civilian
+        time: 40000
+      - !type:DepartmentTimeRequirement
+        department: Security
+        time: 25000
+      - !type:OverallPlaytimeRequirement
+        time: 360000
+        raffle:
+          settings: default
+    - type: RandomHumanoidAppearance
+      randomizeName: true
+    - type: NpcFactionMember
+      factions:
+      - LuaNordFoll
+    - type: Loadout
+      prototypes: [ SyndicateNordFollResearcher ]
+    - type: AutoImplant
+      implants:
+      - DeathAcidifierImplant
