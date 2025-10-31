@@ -20,7 +20,7 @@ public sealed partial class ShuttleConsoleSystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
-    private const float ShuttleFTLRange = 200f;
+    public const float ShuttleFTLRange = 1500f;
     private const float ShuttleFTLMassThreshold = 50f;
 
     private bool IsGcAbleGrid(EntityUid gridUid) // Lua start создание проблемы и её героическое решение
@@ -153,11 +153,11 @@ public sealed partial class ShuttleConsoleSystem
         if (shuttleComp.Enabled == false)
             return;
 
-        // Check shuttle can even FTL
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {
-            // TODO: Session popup
-            return;
+            PlayDenySound(ent);
+            if (!string.IsNullOrEmpty(reason)) _popupSystem.PopupEntity(reason!, ent.Owner, PopupType.Medium);
+            UpdateConsoles(shuttleUid.Value); return;
         }
 
         // Check shuttle can FTL to this target.

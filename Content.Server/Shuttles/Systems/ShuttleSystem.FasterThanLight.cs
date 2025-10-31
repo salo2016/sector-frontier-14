@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server._NF.Shuttles.Components; // Frontier: FTL knockdown immunity
 using Content.Server._Lua.NoShuttleFTL;
 using Content.Server.Emp; // Lua
+using Content.Server._Lua.Starmap.Components; // Lua Warp transit marker
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Server.Station.Events;
@@ -354,7 +355,7 @@ public sealed partial class ShuttleSystem
             TimeSpan.FromSeconds(hyperspace.StartupTime));
         hyperspace.PriorityTag = priorityTag;
 
-        if (TryGetFTLDrive(shuttleUid, out _, out var driveComp)) // Lua start 
+        if (TryGetFTLDrive(shuttleUid, out _, out var driveComp)) // Lua start
         {
             hyperspace.SkipHyperspace = driveComp.SkipHyperspace;
             hyperspace.SkipHyperspaceEmpRange = driveComp.SkipHyperspaceEmpRange;
@@ -649,7 +650,6 @@ public sealed partial class ShuttleSystem
         {
             dest.Enabled = true;
         }
-
         comp.State = FTLState.Cooldown;
         comp.StateTime = StartEndTime.FromCurTime(_gameTiming, FTLCooldown);
         _console.RefreshShuttleConsoles(uid);

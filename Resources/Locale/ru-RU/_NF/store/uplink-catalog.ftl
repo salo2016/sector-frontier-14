@@ -76,6 +76,9 @@ uplink-security-holo-name = Голографический барьер
 uplink-security-holo-desc = Портативный голопроектор на батарейках, создающий временные барьеры для ограничения движения.
 uplink-security-jetpack-name = Джетпак
 uplink-security-jetpack-desc = Заправленный реактивный ранец для выхода в открытый космос. Поставляется в модном зелёном цвете.
+
+uplink-security-sector-banner-name = Секторный баннер ДСБФ
+uplink-security-sector-banner-desc = Позволяет захватить звезду. Установите баннер на гриде маяка в системе звезды.
 uplink-security-magboots-name = Магнитные сапоги ДСБФ
 uplink-security-magboots-desc = Лёгкие магнитные ботинки, разработанные, чтобы удержать владельца на твёрдой поверхности в условиях низкой и нулевой гравитации. Также отлично подходят для танцев на потолке.
 uplink-security-techfab-name = Техфаб ДСБФ
@@ -230,3 +233,6 @@ uplink-security-magazinepistol-rubber-name = Коробка магазинов �
 uplink-security-magazinepistol-rubber-desc = Коробка, содержащая 4 полных магазина .35 (Резина)
 uplink-security-30riflemagazine-name = Коробка магазинов калибрка .30
 uplink-security-30riflemagazine-desc = Коробка содержащая 4 магазина .30 калибра.
+
+uplink-security-coordinates-disk-frontier-name = Диск координат Фронтира
+uplink-security-coordinates-disk-frontier-desc = Защищённый диск с навигационными координатами сектора Фронтир.

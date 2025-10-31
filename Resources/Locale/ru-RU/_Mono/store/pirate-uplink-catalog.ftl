@@ -101,6 +101,9 @@ uplink-pirate-radio-jammer-desc = При активации это устрой�
 uplink-pirate-voicemask-name = Голосовая маска
 uplink-pirate-voicemask-desc = Противогаз, позволяющий подстроить свой голос под кого угодно.
 
+uplink-pirate-sector-banner-name = Секторный баннер Пиратов
+uplink-pirate-sector-banner-desc = Позволяет захватить звезду. Установите баннер на гриде маяка в системе звезды.
+
 uplink-pirate-cash2500-name = Кредиты (2,500)
 uplink-pirate-cash2500-desc = Йарр! Молодец, пират.
 
@@ -215,3 +218,6 @@ uplink-pirate-webvest-desc = Веб-жилет, провезенный конт�
 
 uplink-pirate-syndie-mask-name = Противогаз Синдиката
 uplink-pirate-syndie-mask-desc = Тактическая маска, провезенная в сектор, которую можно подключить к системе подачи воздуха.
+
+uplink-pirate-coordinates-disk-pirate-name = Диск координат Пиратов
+uplink-pirate-coordinates-disk-pirate-desc = Защищённый диск с навигационными координатами сектора Пиратов.
