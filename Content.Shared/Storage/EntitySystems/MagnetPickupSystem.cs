@@ -1,15 +1,15 @@
-using Content.Shared.Storage.Components; // Frontier: Server<Shared
-using Content.Shared.Examine;
-using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
+using Content.Shared.Storage.Components;
 using Content.Shared.Item.ItemToggle; // DeltaV
 using Content.Shared.Whitelist;
-using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Item; // Frontier
 using Content.Shared.Verbs; // Frontier
+using Content.Shared.Examine; // Frontier
+using Content.Shared.Hands.Components; // Frontier
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -31,7 +31,9 @@ public sealed class MagnetPickupSystem : EntitySystem
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
     private const int MaxEntitiesToInsert = 15; // Frontier
 
+    private const float SleepRange = 32f;
     private EntityQuery<PhysicsComponent> _physicsQuery;
+    private readonly HashSet<Entity<ActorComponent>> _nearActorLookup = new();
 
     public override void Initialize()
     {
@@ -140,6 +142,9 @@ public sealed class MagnetPickupSystem : EntitySystem
             if (slotCount >= totalSlots)
                 continue;
             // End Frontier
+            _nearActorLookup.Clear();
+            _lookup.GetEntitiesInRange(xform.Coordinates, SleepRange, _nearActorLookup);
+            if (_nearActorLookup.Count == 0) continue;
 
             var parentUid = xform.ParentUid;
             var playedSound = false;

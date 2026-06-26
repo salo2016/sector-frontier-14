@@ -1,3 +1,4 @@
+#Disabled
 - type: pointOfInterest
   id: BarrierGate
   parent: BasePOI
@@ -5,8 +6,12 @@
   minimumDistance: 11000
   maximumDistance: 12000
   spawnGroup: Required
-  gridPath: /Maps/_Lua/POI/barriergate.yml
+  gridPath: /Maps/_Lua/POI/BarrierGate2.yml
   addComponents:
+  - type: RadarBlipIcon
+    icon: /Textures/_Lua/Interface/Radar/space-outpost.png
+    scale: 1.2
+    allowWhenHidden: true
   - type: SolarPoweredGrid
     trackOnInit: true
     doNotCull: true
@@ -14,7 +19,7 @@
 - type: gameMap
   id: BarrierGate
   mapName: 'Barrier Gate'
-  mapPath: /Maps/_Lua/POI/barriergate.yml
+  mapPath: /Maps/_Lua/POI/BarrierGate2.yml
   minPlayers: 0
   stations:
     BarrierGate:

@@ -1,8 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Redrover1760
-// SPDX-FileCopyrightText: 2025 RikuTheKiller
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Mono.ShipGuns;
@@ -18,6 +13,9 @@ public sealed partial class ShipGunClassComponent : Component
     /// </summary>
     [DataField("shipClass")]
     public ShipGunClass Class = ShipGunClass.Medium;
+
+    [DataField("processingPowerCost")]
+    public int? ProcessingPowerCost;
 }
 
 /// <summary>

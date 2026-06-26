@@ -5,22 +5,24 @@
 - type: vessel
   parent: BaseVessel
   id: Expedition
-  name: TY Expedition
-  price: 52556 #28100
+  name: Expedition
+  price: 65000
   category: Small
   group: Typan
   access: SyndicateAgent
+  whitelist:
+  - Luna
+  - Frontier
   class:
   - Syndicate
+  - Patrol # Lua
   engine:
-  - Singularity
+  - Plasma # Lua
   shuttlePath: /Maps/_Lua/Shuttles/Typan/expedition.yml
-  addComponents:
-    - type: IFF
-      color: "#d93204"
+
 - type: gameMap
   id: Expedition
-  mapName: 'TY Expedition'
+  mapName: 'Expedition'
   mapPath: /Maps/_Lua/Shuttles/Typan/expedition.yml
   minPlayers: 0
   stations:
@@ -28,7 +30,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'TY Expedition {1}'
+          mapNameTemplate: 'Expedition {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

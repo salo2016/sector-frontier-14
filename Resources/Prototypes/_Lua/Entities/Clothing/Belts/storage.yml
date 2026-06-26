@@ -1,0 +1,199 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: entity
+  parent: [ClothingBeltStorageBase, BaseC1SyndicateContraband]
+  id: ClothingBeltPlantOutpostTypan
+  name: пояс ботаника синдиката
+  description: Пояс, используемый для хранения основных принадлежностей для гидропоники. На удивление, не чёрный.
+  components:
+  - type: Storage
+    whitelist:
+      tags:
+        # - PlantAnalyzer
+        - PlantSampleTaker
+        - BotanyShovel
+        - BotanyHoe
+        - BotanyHatchet
+        - PlantSampleTaker
+        - PlantBGone
+        - Bottle
+        - Syringe
+        - CigPack
+      components:
+        - Seed
+        - Smokable
+        - HandLabeler
+  - type: Sprite
+    sprite: _Lua/Clothing/Belt/plantbelt.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Belt/plantbelt.rsi
+
+- type: entity
+  parent: ClothingBeltStorageBase
+  id: ClothingBeltAssaultOutpostTypan
+  name: тактический пояс
+  description: Удобный пояс, часто используемый синдикатом на засекреченных территориях.
+  components:
+  - type: Sprite
+    sprite: Clothing/Belt/assault.rsi
+  - type: Clothing
+    sprite: Clothing/Belt/assault.rsi
+  - type: ItemMapper
+    mapLayers:
+      flashbang:
+        whitelist:
+          components:
+          - FlashOnTrigger
+      stunbaton:
+        whitelist:
+          components:
+          - Stunbaton
+      tear_gas_grenade:
+        whitelist:
+          components:
+          - SmokeOnTrigger
+    sprite: Clothing/Belt/belt_overlay.rsi
+  - type: Storage
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - SmokeOnTrigger
+        - Flash
+        - Handcuff
+        - BallisticAmmoProvider
+        - Ammo
+  - type: Appearance
+
+- type: entity
+  parent: [ClothingBeltSecurity, BaseC1SyndicateContraband]
+  id: ClothingBeltOutpostTypanSecurityWebbing
+  name: РПС синдиката
+  description: Ременно-плечевая система тактических ремней, которую носят представители военных структур синдиката.
+  components:
+  - type: Clothing
+    sprite: _Lua/Clothing/Belt/webbing.rsi
+  - type: Sprite
+    sprite: _Lua/Clothing/Belt/webbing.rsi
+
+- type: entity
+  parent: ClothingBeltSecurity
+  id: ClothingBeltStormCreedWebbing
+  name: РПС Кодекса
+  description: Ременно-плечевая система тактических ремней, которую носят жители Бури.
+  components:
+  - type: Clothing
+    sprite: _Lua/Clothing/Belt/stormcreedwebbing.rsi
+  - type: Sprite
+    sprite: _Lua/Clothing/Belt/stormcreedwebbing.rsi
+
+- type: entity
+  name: сумка для растений синдиката
+  id: OutpostTypanPlantBag
+  parent: BaseStorageItem
+  description: Сумка для ботаников, чтобы легко переносить свои огромные урожаи.
+  components:
+  - type: Item
+    storedRotation: -90
+  - type: Sprite
+    sprite: _Lua/Clothing/Back/plant_bag.rsi
+    state: icon
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - belt
+  - type: Dumpable
+  - type: Storage
+    grid:
+    - 0,0,7,4
+    maxItemSize: Small
+    quickInsert: true
+    areaInsert: true
+    whitelist:
+      components:
+        - Produce
+        - Seed
+
+- type: entity
+  id: ClothingBeltPlantManagerFilled
+  parent: ClothingBeltChiefEngineer
+  suffix: Filled
+  components:
+  - type: Storage
+    grid:
+    - 0,0,9,1
+  - type: StorageFill
+    contents:
+      - id: PowerDrill
+      - id: JawsOfLife
+      - id: WelderExperimental
+      - id: Multitool
+      - id: HolofanProjector
+      - id: GasAnalyzer
+      - id: trayScanner
+      - id: RCDRecharging
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingBlueShieldFilled
+  parent: ClothingBeltMilitaryWebbingMed
+  name: РПС офицера "Синий Щит"
+  description: РПС, которую носят офицеры "Синий Щит"
+  suffix: Заполненный
+  components:
+  - type: StorageFill
+    contents:
+      - id: ADTCombatHypo
+      - id: ChemistryBottleEpinephrine
+      - id: ChemistryBottleEphedrine
+      - id: ChemistryBottleOmnizine
+        amount: 2
+      - id: ADTObjectsSpecificBicaridineChemistryBottle
+      - id: ADTObjectsSpecificDexalinPlusChemistryBottle
+      - id: ADTObjectsSpecificDermalineChemistryBottle
+  - type: Sprite
+    sprite: _Lua/Clothing/Belt/webbing_blueshield.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Belt/webbing_blueshield.rsi
+
+- type: entity
+  parent: [ BaseC2ContrabandUnredeemable, ClothingBeltSecurityWebbing ]
+  id: ClothingBeltWebbingMedicNFSD
+  name: medical NFSD webbing
+  description: Webbing for medical security workers' needs.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Belt/web_er_nfsd.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Belt/web_er_nfsd.rsi
+
+- type: entity
+  parent: [ BaseC2ContrabandUnredeemable, ClothingBeltSecurityWebbing ]
+  id: ClothingBeltMedicNFSD
+  name: medical NFSD belt
+  description: Medical belt for NFSD workers.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Belt/belt_er_nfsd.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Belt/belt_er_nfsd.rsi
+
+- type: entity
+  id: ClothingBeltNfsdFilledBrigmedic
+  parent: ClothingBeltMedicNFSD
+  suffix: Filled, Brigmedic
+  components:
+  - type: StorageFill
+    contents:
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 1
+      - id: Bloodpack
+        amount: 1
+      - id: Gauze
+      - id: EmergencyMedipen #You never know what people are going to latejoin into

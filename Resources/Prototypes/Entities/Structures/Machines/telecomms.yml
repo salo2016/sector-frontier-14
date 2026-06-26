@@ -92,7 +92,7 @@
     enabled: false
     castShadows: false
     radius: 1.5
-    energy: 1.6
+    energy: 3.0
     color: "#39b8ee"
   - type: LitOnPowered
   - type: GenericVisualizer
@@ -195,7 +195,7 @@
     containers:
       key_slots:
       - EncryptionKeyCommon
-      #- EncryptionKeyOutpostSyndicate # Typan
+      #- EncryptionKeyOutpostTypan # Typan
       - EncryptionKeyFreelance #Pirates
       - EncryptionKeyCargo
       - EncryptionKeyEngineering
@@ -213,7 +213,7 @@
 - type: entity
   parent: TelecomServer
   id: TelecomServerTypan
-  suffix: Нордфолл
+  suffix: Тайпан
   components:
   - type: ContainerFill
     containers:
@@ -223,7 +223,7 @@
       - EncryptionKeyTrade
       - EncryptionKeyMercenary
       - EncryptionKeyVip
-      - EncryptionKeyOutpostSyndicate
+      - EncryptionKeyOutpostTypan
 
 - type: entity
   parent: TelecomServer

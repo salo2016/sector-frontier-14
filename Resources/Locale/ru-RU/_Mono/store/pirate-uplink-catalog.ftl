@@ -119,16 +119,16 @@ uplink-pirate-energy-cutlass-name = Энергетическая абордаж�
 uplink-pirate-energy-cutlass-desc = Экзотическое энергетическое оружие.
 
 uplink-pirate-python-name = Ритланд
-uplink-pirate-python-desc = Жестко простой, эффективный и громкий револьвер. Поставляется с патронами .45 магнум.
+uplink-pirate-python-desc = Жестко простой, эффективный и громкий револьвер. Поставляется с патронами .45 Magnum.
 
 uplink-pirate-viper-name = Гадюка
-uplink-pirate-viper-desc = Небольшой, легко скрываемый, но несколько маломощный пистолет. Модернизированный с полностью автоматическим стволом. Использует пистолетные магазины (.35 auto).
+uplink-pirate-viper-desc = Небольшой, легко скрываемый, но несколько маломощный пистолет. Модернизированный с полностью автоматическим стволом. Использует пистолетные магазины (9x19mm).
 
 uplink-pirate-kanabou-name = Канабоу
 uplink-pirate-kanabou-desc = Оружие для тех, кто хочет отказаться от тонкости. Особенно подходит для Они.
 
-uplink-pirate-ak-name = Соланд-Мосс
-uplink-pirate-ak-desc = Легендарное оружие войны. Использует винтовочные патроны .30.
+uplink-pirate-ak-name = AK-74M
+uplink-pirate-ak-desc = Легендарное оружие войны. Использует винтовочные патроны 7.62x39mm.
 
 uplink-pirate-laser-gun-name = Лазерный пистолет
 uplink-pirate-laser-gun-desc = Слабое гражданское оружие, имеющее два режима стрельбы.
@@ -137,7 +137,7 @@ uplink-pirate-c20-name = Набор "C-20r"
 uplink-pirate-c20-desc = Автоматический, лёгкий пистолет-пулемёт, укомплектованный несколькими магазинами.
 
 uplink-pirate-bulldog-name = Набор "Бульдог"
-uplink-pirate-bulldog-desc = Автоматический дробовик .50 калибра, укомплектованное с несколькими барабанами.
+uplink-pirate-bulldog-desc = Автоматический дробовик 4 gauge калибра, укомплектованное с несколькими барабанами.
 
 uplink-pirate-vt7-name = VT7 HF Клинок
 uplink-pirate-vt7-desc = Высококачественное лезвие HF.
@@ -146,10 +146,10 @@ uplink-pirate-anaconda-name = Анаконда
 uplink-pirate-anaconda-desc = Гордость инженеров Cybersun. Портативное, компактное, самоперезаряжающееся баллистическое огнестрельное оружие.
 
 uplink-pirate-wspr-name = WSPR
-uplink-pirate-wspr-desc = Создано против Энни от ДСБФ. Использует те же .30 дозвуковые боеприпасы.
+uplink-pirate-wspr-desc = Создано против Энни от СРБС. Использует те же 7.62x39mm дозвуковые боеприпасы.
 
 uplink-pirate-burner-name = Тяжелая винтовка Burner
-uplink-pirate-burner-desc = Разрушительная винтовка калибра .50. Поддерживает боеприпасы HE. Ужасно разрушительна.
+uplink-pirate-burner-desc = Разрушительная винтовка калибра 12.7x99mm. Поддерживает боеприпасы HE. Ужасно разрушительна.
 
 uplink-pirate-energy-sword-name = Энергетический меч
 uplink-pirate-energy-sword-desc = Очень громкий и опасный меч с лучом чистой, концентрированной плазмы. Разрезает небронированные обьекты как масло.
@@ -160,61 +160,61 @@ uplink-pirate-GrapeShot-name = Сундук с Картечью
 
 uplink-pirate-glassshots-name = Сундук с Стеклянной картечью
 
-uplink-pirate-speed-loader-magnum-name = Спидлоадер (.45 магнум)
-uplink-pirate-speed-loader-magnum-desc = Спидлоадер для револьвера с 6 патронами .45 Магнум.
+uplink-pirate-speed-loader-magnum-name = Спидлоадер (.45 Magnum)
+uplink-pirate-speed-loader-magnum-desc = Спидлоадер для револьвера с 6 патронами .45 Magnum.
 
-uplink-pirate-box-magazine-pistol-name = Коробка магазинов для пистолета .35
-uplink-pirate-box-magazine-pistol-desc = Коробка, заполненная четырьмя магазинами для пистолета 35-го калибра.
+uplink-pirate-box-magazine-pistol-name = Коробка магазинов для пистолета 9x19mm
+uplink-pirate-box-magazine-pistol-desc = Коробка, заполненная четырьмя магазинами для пистолета 9x19mm.
 
-uplink-pirate-box-magazine-light-rifle-name = Коробка магазинов для винтовки .30
-uplink-pirate-box-magazine-light-rifle-desc = Коробка, заполненная четырьмя магазинами для винтовки .30 калибра.
+uplink-pirate-box-magazine-light-rifle-name = Коробка магазинов для винтовки 7.62x39mm
+uplink-pirate-box-magazine-light-rifle-desc = Коробка, заполненная четырьмя магазинами для винтовки 7.62x39mm калибра.
 
-uplink-pirate-magazine-box-magnum-name = коробка с боеприпасами (.45 магнум)
-uplink-pirate-magazine-box-magnum-desc = Коробка с 12 патронами магнум калибра .45.
+uplink-pirate-magazine-box-magnum-name = коробка с боеприпасами (.45 Magnum)
+uplink-pirate-magazine-box-magnum-desc = Коробка c патронами калибра .45 Magnum.
 
 uplink-pirate-light-rifle-magazine-box-big-name = коробка с винтовочными боеприпасами (.20)
 uplink-pirate-light-rifle-magazine-box-big-desc = Коробка с 200 винтовочными патронами калибра .20.
 
 uplink-pirate-shell-box-lethal-name = Коробка с патронами (летальными)
-uplink-pirate-shell-box-lethal-desc = Коробка с 16 патронами калибра .50.
+uplink-pirate-shell-box-lethal-desc = Коробка с 16 патронами калибра 4 gauge.
 
-uplink-pirate-smg-ammo-box-name = Коробка с боеприпасами (.35)
-uplink-pirate-smg-ammo-box-desc = Коробка, содержащая 60 патронов .35 для пистолета. Может использоваться для снаряжения магазинов пистолета-пулемета.
+uplink-pirate-smg-ammo-box-name = Коробка с боеприпасами (9x19mm)
+uplink-pirate-smg-ammo-box-desc = Коробка, содержащая 60 патронов 9x19mm для пистолета. Может использоваться для снаряжения магазинов пистолета-пулемета.
 
-uplink-pirate-bulldog-ammo-name = .50 барабан
+uplink-pirate-bulldog-ammo-name = 4 gauge барабан
 uplink-pirate-bulldog-ammo-desc = Барабан для дробовика Бульдог. Может использоваться для ручной зарядки других ружей.
 
-uplink-pirate-bulldog-slug-ammo-name = .50 барабан пуль
+uplink-pirate-bulldog-slug-ammo-name = 4 gauge барабан пуль
 uplink-pirate-bulldog-slug-ammo-desc = Барабан для дробовика Бульдог. Может использоваться для ручной зарядки других ружей. Использует цельные снаряды (Пули).
 
-uplink-pirate-smg-magazine-name = .35 магазин для пистолета-пулемета
-uplink-pirate-smg-magazine-desc = Магазин на 30 патронов .35. Совместим с C-20r, Drozd и многими другими.
+uplink-pirate-smg-magazine-name = 9x19mm магазин для пистолета-пулемета
+uplink-pirate-smg-magazine-desc = Магазин на 30 патронов 9x19mm. Совместим с C-20r, Drozd и многими другими.
 
-uplink-subsonic-mag-name = .30 дозвуковой винтовочный магазин
+uplink-subsonic-mag-name = 7.62x39mm дозвуковой винтовочный магазин
 uplink-subsonic-mag-desc = Поддерживает WSPR и Энни.
 
-uplink-subsonic-box-name = .30 дозвуковая винтовка коробка
+uplink-subsonic-box-name = 7.62x39mm дозвуковая винтовка коробка
 uplink-subsonic-box-desc = Коробка с боеприпасами для WSPR и Энни.
 
-uplink-pirate-box-highcal-name = коробка для боеприпасов .50
+uplink-pirate-box-highcal-name = коробка для боеприпасов 12.7x99mm
 uplink-pirate-box-highcal-desc = Коробка универсальных боеприпасов для тяжелой винтовки Burner.
 
-uplink-pirate-box-highcal-he-name = Коробка для боеприпасов HE .50
+uplink-pirate-box-highcal-he-name = Коробка для боеприпасов 12.7x99mm Explosive
 uplink-pirate-box-highcal-he-desc = Коробка с разрывными боеприпасами для тяжелой винтовки Burner.
 
 # equipment
 
 uplink-pirate-combat-hardsuit-name = Боевой скафандр
-uplink-pirate-combat-hardsuit-desc = Определенно не просто украденный костюм SCAF. На случай, если вы потеряли свой.
+uplink-pirate-combat-hardsuit-desc = 40/40/60//60/60//40/40 Определенно не просто украденный костюм SCAF. На случай, если вы потеряли свой.
 
 uplink-pirate-viper-group-standard-hardsuit-name = Скафандр JACKAL группы Viper
-uplink-pirate-viper-group-standard-hardsuit-desc = скафандр, украшенный фирменными знаками группы Viper. Броня отличается исключительной маневренностью для своей защиты и имеет встроенную систему ночного видения.
+uplink-pirate-viper-group-standard-hardsuit-desc = 40/40/40//60/60//60/60 скафандр, украшенный фирменными знаками группы Viper. Броня отличается исключительной маневренностью для своей защиты и имеет встроенную систему ночного видения.
 
 uplink-pirate-viper-group-medic-hardsuit-name = Скафандр IMP группы Viper
-uplink-pirate-viper-group-medic-hardsuit-desc = Скафандр, украшенный фирменными знаками группы Viper. Броня имеет различные усиленные пластины в жизненно важных областях и медицинский HUD, дополненный системами термических импульсов.
+uplink-pirate-viper-group-medic-hardsuit-desc = 60/60/60//40/40//40/40 Скафандр, украшенный фирменными знаками группы Viper. Броня имеет различные усиленные пластины в жизненно важных областях и медицинский HUD, дополненный системами термических импульсов.
 
 uplink-pirate-webvest-name = Тактический жилет
-uplink-pirate-webvest-desc = Веб-жилет, провезенный контрабандой в сектор, который не был потрёпан при перевозке, как те, что используются авантюристами. Отличная устойчивость к пулям, плохая устойчивость к ожогам.
+uplink-pirate-webvest-desc = Веб-жилет, провезенный контрабандой в сектор, который не был потрёпан при перевозке, как те, что используются Гражданскими. Отличная устойчивость к пулям, плохая устойчивость к ожогам.
 
 uplink-pirate-syndie-mask-name = Противогаз Синдиката
 uplink-pirate-syndie-mask-desc = Тактическая маска, провезенная в сектор, которую можно подключить к системе подачи воздуха.

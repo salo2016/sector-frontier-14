@@ -1,0 +1,65 @@
+- type: entity
+  parent: [ClothingBackpackERTSecurity, BaseC3SyndicateContrabandPremium]
+  id: ClothingmodsuitBloodRedHardsuit
+  name: Blood-red Modsuit
+  description: A hardsuit adorned with signature markings of the syndicate. The armor is remarkably nimble for the protection it offers.
+  components:
+    - type: Storage
+      grid:
+       - 0,0,9,5
+    - type: Sprite
+      sprite: _Lua/Clothing/Back/Backpacks/nukeops.rsi
+    - type: Clothing
+      sprite: _Lua/Clothing/Back/Backpacks/nukeops.rsi
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+        toggleable-clothing: !type:ContainerSlot
+    - type: ToggleableClothing
+      clothingPrototype: ClothingOuterHardsuitBloodRedHardsuit
+      requiredSlot: back
+      slot: outerClothing
+
+- type: entity
+  parent: [ClothingBackpackERTSecurity, BaseC3SyndicateContrabandPremium]
+  id: ClothingmodsuitBloodRedHardsuitElite
+  name: Blood-red Modsuit elite
+  description: A hardsuit adorned with signature markings of the syndicate. The armor is remarkably nimble for the protection it offers.
+  components:
+    - type: Storage
+      grid:
+       - 0,0,9,5
+    - type: Sprite
+      sprite: _Lua/Clothing/Back/Backpacks/pmc.rsi
+    - type: Clothing
+      sprite: _Lua/Clothing/Back/Backpacks/pmc.rsi
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+        toggleable-clothing: !type:ContainerSlot
+    - type: ToggleableClothing
+      clothingPrototype: ClothingOuterHardsuitBloodRedHardsuitelite
+      requiredSlot: back
+      slot: outerClothing
+
+- type: entity
+  parent: ClothingBackpackERTSecurity
+  id: ClothingModsuitChiefEngineer
+  name: chief engineer MODsuit
+  description: An advanced backpack with small bluespace storage for hardsuit. Was designed specifically for Frontier enviroment.
+  components:
+    - type: Storage
+      grid:
+       - 0,0,8,5
+    - type: Sprite
+      sprite: _Lua/Clothing/Back/Backpacks/modsuitenginering.rsi
+    - type: Clothing
+      sprite: _Lua/Clothing/Back/Backpacks/modsuitenginering.rsi
+    - type: ContainerContainer
+      containers:
+        storagebase: !type:Container
+        toggleable-clothing: !type:ContainerSlot
+    - type: ToggleableClothing
+      clothingPrototype: ClothingOuterHardsuitChiefEngineerMOD
+      requiredSlot: back
+      slot: outerClothing

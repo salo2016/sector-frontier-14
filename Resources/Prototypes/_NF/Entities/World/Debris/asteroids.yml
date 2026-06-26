@@ -23,7 +23,13 @@
             orGroup: rock
             prob: 0.0002
     - type: IFF
+      flags: HideLabel
       color: "#d67e27"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidGas
@@ -76,7 +82,13 @@
             orGroup: rock
             prob: 0.0002
     - type: IFF
+      flags: HideLabel
       color: "#d6fffc"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidIceGas
@@ -106,6 +118,7 @@
           orGroup: deposit
         - id: GasDepositWaterVaporLarge
           orGroup: deposit
+
 # endregion Snow Table
 
 # region Andesite Table
@@ -131,7 +144,13 @@
             orGroup: rock
             prob: 0.0003
     - type: IFF
+      flags: HideLabel
       color: "#95c280"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidAndesiteGas
@@ -151,6 +170,9 @@
           orGroup: deposit
         - id: GasDepositAmmonia
           orGroup: deposit
+        - id: GasDepositHelium
+          orGroup: deposit
+
 # endregion Andesite Table
 
 # region Basalt Table
@@ -176,7 +198,13 @@
             orGroup: rock
             prob: 0.0002
     - type: IFF
+      flags: HideLabel
       color: "#b5b5b5"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidBasaltGas
@@ -195,6 +223,8 @@
         - id: GasDepositMuddlePlasmaVerySmall
           orGroup: deposit
         - id: GasDepositMuddleEvenVerySmall
+          orGroup: deposit
+        - id: GasDepositHelium
           orGroup: deposit
 # endregion Basalt Table
 
@@ -221,7 +251,13 @@
             orGroup: rock
             prob: 0.0002
     - type: IFF
+      flags: HideLabel
       color: "#cad17b"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidSandGas
@@ -240,6 +276,8 @@
         - id: GasDepositAmmonia
           orGroup: deposit
         - id: GasDepositNitrogenLarge
+          orGroup: deposit
+        - id: GasDepositHeliumLarge
           orGroup: deposit
 # endregion Sand Table
 
@@ -266,7 +304,13 @@
             orGroup: rock
             prob: 0.0002
     - type: IFF
+      flags: HideLabel
       color: "#8178cc"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidChromiteGas
@@ -313,7 +357,13 @@
             orGroup: rock
             prob: 0.0002
     - type: IFF
+      flags: HideLabel
       color: "#BF8C5C"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 
 - type: entity
   id: NFBaseAsteroidRockGas
@@ -334,6 +384,8 @@
         - id: GasDepositCarbonDioxideSmall
           orGroup: deposit
         - id: GasDepositAirSmall
+          orGroup: deposit
+        - id: GasDepositHelium
           orGroup: deposit
 # endregion AsteroidRock Table
 
@@ -356,7 +408,13 @@
             orGroup: rock
             prob: 0.05
     - type: IFF
+      flags: HideLabel
       color: "#fcdec7"
+    - type: RadarBlipIcon
+      icon: /Textures/_Lua/Interface/Radar/asteroid.png
+      scale: 1.2
+      maxDistance: 600
+      allowWhenHidden: true
 # endregion Scrap Table
 
 # region Asteroid Sizes

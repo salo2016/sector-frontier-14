@@ -3,6 +3,9 @@
 # See AGPLv3.txt for details.
 
 - type: Tag
+  id: Webbing
+
+- type: Tag
   id: PurspaceManupulator
 
 - type: Tag
@@ -19,6 +22,9 @@
 
 - type: Tag
   id: MedipenLathe
+
+- type: Tag
+  id: BlueprintAncientCircuitImprinter
 
 - type: Tag
   id: Shrimp
@@ -139,3 +145,27 @@
 
 - type: Tag
   id: CapacitorStockPart
+
+# Tags used by finance consoles to mark map-placed entities and for whitelists.
+# NFFinanceLoansConsole: public/command loan overview consoles
+# NFFinanceDepositConsole: personal deposit terminal (requires ID)
+# NFFinanceRatingConsole: credit rating lookup console
+# NFFinanceIssuanceConsole: privileged loan issuance console
+
+- type: Tag
+  id: NFFinanceLoansConsole
+
+- type: Tag
+  id: NFFinanceDepositConsole
+
+- type: Tag
+  id: NFFinanceRatingConsole
+
+- type: Tag
+  id: NFFinanceIssuanceConsole
+
+- type: Tag
+  id: DontReopenRole
+
+- type: Tag
+  id: WaterRegenerator

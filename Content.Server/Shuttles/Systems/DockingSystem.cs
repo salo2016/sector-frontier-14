@@ -1,7 +1,10 @@
+using System.Numerics; // Lua
 using Content.Server.Doors.Systems;
 using Content.Server.NPC.Pathfinding;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
+using Content.Server._Lua.Shuttles.Systems;
+using Content.Shared._Lua.Shuttles.Components;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
 using Content.Shared.Popups;
@@ -28,6 +31,9 @@ namespace Content.Server.Shuttles.Systems
         [Dependency] private readonly SharedJointSystem _jointSystem = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!; // Lua
+        [Dependency] private readonly MagneticLatchSystem _magLatch = default!; // Lua
+        [Dependency] private readonly ShuttleTabletSystem _tablet = default!; // Lua
 
         private const string DockingJoint = "docking";
 
@@ -92,7 +98,7 @@ namespace Content.Server.Shuttles.Systems
         private void OnShutdown(EntityUid uid, DockingComponent component, ComponentShutdown args)
         {
             if (component.DockedWith == null ||
-                EntityManager.GetComponent<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized)
+                Comp<MetaDataComponent>(uid).EntityLifeStage > EntityLifeStage.MapInitialized)
             {
                 return;
             }
@@ -135,8 +141,8 @@ namespace Content.Server.Shuttles.Systems
             dockA.DockJointId = null;
 
             // If these grids are ever null then need to look at fixing ordering for unanchored events elsewhere.
-            var gridAUid = EntityManager.GetComponent<TransformComponent>(dockAUid).GridUid;
-            var gridBUid = EntityManager.GetComponent<TransformComponent>(dockBUid.Value).GridUid;
+            var gridAUid = Comp<TransformComponent>(dockAUid).GridUid;
+            var gridBUid = Comp<TransformComponent>(dockBUid.Value).GridUid;
 
             var msg = new UndockEvent
             {
@@ -157,7 +163,7 @@ namespace Content.Server.Shuttles.Systems
             var component = entity.Comp;
 
             // Use startup so transform already initialized
-            if (!EntityManager.GetComponent<TransformComponent>(uid).Anchored)
+            if (!Comp<TransformComponent>(uid).Anchored)
                 return;
 
             // This little gem is for docking deserialization
@@ -167,7 +173,7 @@ namespace Content.Server.Shuttles.Systems
                 if (MetaData(component.DockedWith.Value).EntityLifeStage < EntityLifeStage.Initialized)
                     return;
 
-                var otherDock = EntityManager.GetComponent<DockingComponent>(component.DockedWith.Value);
+                var otherDock = Comp<DockingComponent>(component.DockedWith.Value);
                 DebugTools.Assert(otherDock.DockedWith != null);
 
                 Dock((uid, component), (component.DockedWith.Value, otherDock));
@@ -218,8 +224,8 @@ namespace Content.Server.Shuttles.Systems
             // https://gamedev.stackexchange.com/questions/98772/b2distancejoint-with-frequency-equal-to-0-vs-b2weldjoint
 
             // We could also potentially use a prismatic joint? Depending if we want clamps that can extend or whatever
-            var dockAXform = EntityManager.GetComponent<TransformComponent>(dockAUid);
-            var dockBXform = EntityManager.GetComponent<TransformComponent>(dockBUid);
+            var dockAXform = Comp<TransformComponent>(dockAUid);
+            var dockBXform = Comp<TransformComponent>(dockBUid);
 
             DebugTools.Assert(dockAXform.GridUid != null);
             DebugTools.Assert(dockBXform.GridUid != null);
@@ -233,8 +239,8 @@ namespace Content.Server.Shuttles.Systems
                 SharedJointSystem.LinearStiffness(
                     2f,
                     0.7f,
-                    EntityManager.GetComponent<PhysicsComponent>(gridA).Mass,
-                    EntityManager.GetComponent<PhysicsComponent>(gridB).Mass,
+                    Comp<PhysicsComponent>(gridA).Mass,
+                    Comp<PhysicsComponent>(gridB).Mass,
                     out var stiffness,
                     out var damping);
 
@@ -253,16 +259,15 @@ namespace Content.Server.Shuttles.Systems
                     joint = _jointSystem.GetOrCreateWeldJoint(gridA, gridB, DockingJoint + dockAUid);
                 }
 
-                var gridAXform = EntityManager.GetComponent<TransformComponent>(gridA);
-                var gridBXform = EntityManager.GetComponent<TransformComponent>(gridB);
+                var gridAXform = Comp<TransformComponent>(gridA);
+                var gridBXform = Comp<TransformComponent>(gridB);
 
-                var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.ToWorldVec() / 2f;
-                var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.ToWorldVec() / 2f;
-
+                var anchorA = dockAXform.LocalPosition + dockAXform.LocalRotation.RotateVec(new Vector2(0f, -0.5f)); // Lua
+                var anchorB = dockBXform.LocalPosition + dockBXform.LocalRotation.RotateVec(new Vector2(0f, -0.5f)); // Lua
                 joint.LocalAnchorA = anchorA;
                 joint.LocalAnchorB = anchorB;
                 joint.ReferenceAngle = (float)(_transform.GetWorldRotation(gridBXform) - _transform.GetWorldRotation(gridAXform));
-                joint.CollideConnected = true;
+                joint.CollideConnected = false; // Lua
                 joint.Stiffness = stiffness;
                 joint.Damping = damping;
 
@@ -275,6 +280,16 @@ namespace Content.Server.Shuttles.Systems
 
             dockA.Comp.DockedWith = dockBUid;
             dockB.Comp.DockedWith = dockAUid;
+
+            if (_physicsQuery.TryGetComponent(gridA, out var physA) && _physicsQuery.TryGetComponent(gridB, out var physB))
+            {
+                var linear = (physA.LinearVelocity + physB.LinearVelocity) / 2f; // Lua
+                var angular = 0f; // Lua
+                _physics.SetLinearVelocity(gridA, linear, body: physA); // Lua
+                _physics.SetLinearVelocity(gridB, linear, body: physB); // Lua
+                _physics.SetAngularVelocity(gridA, angular, body: physA); // Lua
+                _physics.SetAngularVelocity(gridB, angular, body: physB); // Lua
+            }
 
             if (TryComp(dockAUid, out DoorComponent? doorA))
             {
@@ -418,6 +433,12 @@ namespace Content.Server.Shuttles.Systems
 
             var dock = (dockEnt.Value, dockComp);
 
+            if (TryComp(dockEnt.Value, out MagneticLatchComponent? latch) && latch.JointId != null)
+            {
+                _magLatch.ShutdownLatch(dockEnt.Value);
+                return;
+            }
+
             if (!CanUndock(dock))
             {
                 _popup.PopupCursor(Loc.GetString("shuttle-console-undock-fail"));
@@ -437,7 +458,7 @@ namespace Content.Server.Shuttles.Systems
                 return;
             }
 
-            var shuttleUid = Transform(console.Value).GridUid;
+            var shuttleUid = _tablet.GetTabletGrid(uid) ?? Transform(console.Value).GridUid; // Lua
 
             if (!CanShuttleDock(shuttleUid))
             {
@@ -449,6 +470,12 @@ namespace Content.Server.Shuttles.Systems
                 !TryGetEntity(args.TargetDockEntity, out var targetDock) ||
                 !TryComp(ourDock, out DockingComponent? ourDockComp) ||
                 !TryComp(targetDock, out DockingComponent? targetDockComp))
+            {
+                _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
+                return;
+            }
+
+            if (HasComp<MagneticGrabberComponent>(ourDock.Value) || HasComp<MagneticGrabberComponent>(targetDock.Value))
             {
                 _popup.PopupCursor(Loc.GetString("shuttle-console-dock-fail"));
                 return;
@@ -533,6 +560,13 @@ namespace Content.Server.Shuttles.Systems
                 if (!TryGetEntity(dockEntity, out var dockEnt) ||
                     !TryComp(dockEnt, out DockingComponent? dockComp))
                 {
+                    continue;
+                }
+
+                if (TryComp(dockEnt.Value, out MagneticLatchComponent? latch2) && latch2.JointId != null)
+                {
+                    _magLatch.ShutdownLatch(dockEnt.Value);
+                    undockedAny = true;
                     continue;
                 }
 

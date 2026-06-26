@@ -1,0 +1,141 @@
+# Damage-per-second = 150 for rifles; 150-25 = 125 for caustic ammo; max COO = 5
+# Main damage type - Piercing for standart; main damage/special damage = 70/30 for special
+# LeptonComm status clear
+# Standart
+- type: entity
+  id: Bullet762x39mmFMJ
+  name: bullet (7.62x39mm FMJ)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 26.5 #Lua +1.5
+
+# Mechanical
+- type: entity
+  id: Bullet762x39mmPractice
+  name: bullet (7.62x39mm practice)
+  parent: BaseBulletPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1 #Lua -1
+
+- type: entity
+  id: Bullet762x39mmRubber
+  name: bullet (7.62x39mm rubber)
+  parent: BaseBulletRubber
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+  - type: StaminaDamageOnCollide #Lua add
+    damage: 15
+
+- type: entity
+  id: Bullet762x39mmHP
+  parent: BaseBullet
+  name: bullet (7.62x39mm hollow-point)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 9
+        Piercing: 21
+
+# Physical
+- type: entity
+  id: Bullet762x39mmIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (7.62x39mm incendiary)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 21
+        Heat: 9
+
+- type: entity
+  id: Bullet762x39mmUranium
+  parent: BaseBulletUranium
+  name: bullet (7.62x39mm uranium)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 21
+        Piercing: 9
+
+# Special
+- type: entity
+  id: Bullet762x39mmEMP
+  name: bullet (7.62x39mm EMP)
+  parent: BaseBulletEmp
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 21
+        Shock: 9
+
+- type: entity
+  id: Bullet762x39mmCaustic
+  name: bullet (7.62x39mm caustic)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 17.5
+        Caustic: 7.5
+
+# Out of balance
+- type: entity
+  id: Bullet762x39mmSubsonic
+  name: bullet (7.62x39mm subsonic)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 27 #Lua +4
+
+- type: entity
+  id: Bullet762x39mmRIP
+  parent: BaseBullet
+  name: bullet (7.62x39mm RIP)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Slash: 10 #Lua +2
+        Piercing: 12 #Lua -30
+        Blunt: 10 #Lua add
+
+#armor-piercing:
+
+- type: entity
+  id: Bullet762x39mmPlasteelAP
+  parent: BaseBullet
+  name: bullet (7.62x39mm AP)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 26 #Lua +1
+        Structural: 150 #Lua add
+    ignoreResistances: true #Lua add

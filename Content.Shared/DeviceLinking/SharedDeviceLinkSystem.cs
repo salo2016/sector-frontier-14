@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.DeviceLinking.Events;
@@ -142,6 +145,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         }
     }
 
+    public ProtoId<SourcePortPrototype>[] GetSourcePortIds(Entity<DeviceLinkSourceComponent> source)
+    {
+        return source.Comp.Ports.ToArray();
+    }
+
     /// <summary>
     /// Retrieves the available ports from a source
     /// </summary>
@@ -158,6 +166,11 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
         }
 
         return sourcePorts;
+    }
+
+    public ProtoId<SinkPortPrototype>[] GetSinkPortIds(Entity<DeviceLinkSinkComponent> source)
+    {
+        return source.Comp.Ports.ToArray();
     }
 
     /// <summary>
@@ -552,5 +565,48 @@ public abstract class SharedDeviceLinkSystem : EntitySystem
     {
         sink.InvokeCounterTick = _gameTiming.CurTick;
         sink.InvokeCounter = value;
+    }
+
+    public void PruneStaleDeviceLinkSourcesForMap(EntityUid mapUid, Func<EntityUid, EntityUid, bool> isEntityOnMap)
+    {
+        var sinkQuery = GetEntityQuery<DeviceLinkSinkComponent>();
+        var query = AllEntityQuery<DeviceLinkSourceComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var source, out var xform))
+        {
+            if (xform.MapUid != mapUid && !isEntityOnMap(uid, mapUid))
+                continue;
+
+            var changed = false;
+            var badSinks = new List<EntityUid>();
+            foreach (var sinkUid in source.LinkedPorts.Keys)
+            {
+                if (!sinkUid.IsValid() || !sinkQuery.HasComponent(sinkUid) || !Exists(sinkUid) || !isEntityOnMap(sinkUid, mapUid))
+                    badSinks.Add(sinkUid);
+            }
+
+            foreach (var sinkUid in badSinks)
+            {
+                if (sinkQuery.TryGetComponent(sinkUid, out var sinkComp))
+                    sinkComp.LinkedSources.Remove(uid);
+                source.LinkedPorts.Remove(sinkUid);
+                foreach (var outputList in source.Outputs.Values)
+                    outputList.Remove(sinkUid);
+                changed = true;
+            }
+
+            foreach (var set in source.Outputs.Values)
+            {
+                foreach (var sinkUid in set.ToArray())
+                {
+                    if (sinkUid.IsValid() && sinkQuery.HasComponent(sinkUid) && Exists(sinkUid) && isEntityOnMap(sinkUid, mapUid))
+                        continue;
+                    if (set.Remove(sinkUid))
+                        changed = true;
+                }
+            }
+
+            if (changed)
+                Dirty(uid, source);
+        }
     }
 }

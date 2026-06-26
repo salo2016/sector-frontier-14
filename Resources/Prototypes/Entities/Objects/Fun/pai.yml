@@ -93,9 +93,15 @@
       components:
         - SecretStash
         - WrappedParcel
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSilicon
+  - type: Tag
+    tags:
+    - SiliconEmotes
 
 - type: entity
-  parent: [ PersonalAI, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband
+  parent: [PersonalAI, BaseC1SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   id: SyndicatePersonalAI
   name: syndicate personal ai device
   description: Your Syndicate pal who's fun to be with!
@@ -127,6 +133,11 @@
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }
           On: { state: syndicate-pai-on-overlay }
+  - type: StaticPrice
+    price: 500
+  - type: Vocal
+    sounds:
+      Unsexed: UnisexSiliconSyndicate
 
 - type: entity
   parent: PersonalAI
@@ -143,7 +154,8 @@
       map: ["screen"]
   - type: Appearance
   - type: StaticPrice
-    price: 5000
+    price: 10000 #Lua 5000<10000
+  - type: NFTreasure # Frontier
 
 - type: entity
   parent: PersonalAI

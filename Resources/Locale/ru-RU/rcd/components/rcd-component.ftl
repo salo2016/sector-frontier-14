@@ -11,6 +11,9 @@ rcd-component-change-build-mode = РСУ переключён в режим ст
 # Ammo count
 rcd-component-no-ammo-message = В РСУ закончились заряды!
 rcd-component-insufficient-ammo-message = В РСУ не хватает зарядов!
+
+planetary-rcd-only-stargate = Планетарный РСУ работает только в мирах звёздных врат!
+
 # Deconstruction
 rcd-component-tile-indestructible-message = Эта клетка не может быть демонтирова!
 rcd-component-deconstruct-target-not-on-whitelist-message = Вы не можете демонтировать это!
@@ -32,9 +35,19 @@ rcd-component-windows-and-grilles = Окна и решётки
 rcd-component-airlocks = Шлюзы
 rcd-component-electrical = Электроприборы
 rcd-component-lighting = Освещение
+rcd-component-floor-corners-plating = Угловые полы
+rcd-component-floor-corners-lattice = преоброзование решёток в угловые решётки
 
 ### Prototype names (note: constructable items will be puralized)
 
 rcd-component-deconstruct = демонтаж
 rcd-component-floor-steel = стальной пол
 rcd-component-plating = корпусное покрытие
+rcd-component-PlatingCornerNE = угловое корпусное покрытие Северо Восток
+rcd-component-PlatingCornerNW = угловое корпусное покрытие Северо Запад
+rcd-component-PlatingCornerSW = угловое корпусное покрытие Юго Запад
+rcd-component-PlatingCornerSE = угловое корпусное покрытие Юго Восток
+rcd-component-LatticeCornerNE = угловое решётчетое покрытие Северо Восток
+rcd-component-LatticeCornerNW = угловое решётчетое покрытие Северо Запад
+rcd-component-LatticeCornerSW = угловое решётчетое покрытие Юго Запад
+rcd-component-LatticeCornerSE = угловое решётчетое покрытие Юго Восток

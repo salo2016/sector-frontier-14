@@ -28,7 +28,7 @@
     - ComputerMassMediaCircuitboard
     - AutolatheMachineCircuitboard
     - ProtolatheMachineCircuitboard
-    - SalvageMagnetMachineCircuitboard
+    #- SalvageMagnetMachineCircuitboard # Lua, lol...
     rareChance: 0.05
 
 - type: entity
@@ -52,15 +52,15 @@
     - SignalTimerElectronics
     - APECircuitboard
     - SMESMachineCircuitboard
+    - ThrusterMachineCircuitboard
     - SubstationMachineCircuitboard
     - TelecomServerCircuitboard
-    chance: 0.999
+    - StargateAddressDisk
+    chance: 0.8
     rarePrototypes:
     - ShuttleConsoleCircuitboard
     - AutolatheMachineCircuitboard
     - OreProcessorMachineCircuitboard
     - CircuitImprinterMachineCircuitboard
-    - ThrusterMachineCircuitboard
     - CoordinatesDiskFrontier
-    - MachineWarpDriveFlatpack
-    rareChance: 0.001
+    rareChance: 0.2

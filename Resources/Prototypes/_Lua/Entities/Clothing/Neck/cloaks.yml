@@ -1,0 +1,96 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCapShoulder
+  name: captain shoulder cloak
+  description: Extremely expensive mantle, that is made of thick light durathread cloth and golden threads.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Cloaks/capcloakformal.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Cloaks/capcloakformal.rsi
+
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakHoSShoulder
+  name: head of security formal shoulder cloak
+  description: Can't hide bloodstains of your prisoners, but can definetly hide all your war crimes.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Cloaks/hoscloakformal.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Cloaks/hoscloakformal.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakCentralCommandShoulder
+  name: CC shoulder cloak
+  description: Just looking at it you might think about how you would need to sell the whole station, if it will get dirty.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Cloaks/centcomcloakformal.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Cloaks/centcomcloakformal.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakFormalCE
+  name: chief engineer's formal cloak
+  description: Bob-the-Builder.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Cloaks/ce.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Cloaks/ce.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakFormalSeniorEngineer
+  name: senior engineer's formal cloak
+  description: To create a singularity, you need to connect these two things... Not like this!!!
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Cloaks/le.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Cloaks/le.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakYesod
+  name: woolen black cape
+  categories: [ HideSpawnMenu ]
+  description: A good cape that is made of wool. Clearly contains gold.
+  components:
+    - type: Sprite
+      sprite: _Lua/Clothing/Neck/Cloaks/yesod.rsi
+    - type: Clothing
+      sprite: _Lua/Clothing/Neck/Cloaks/yesod.rsi
+    - type: Tag
+      tags:
+      - ClothMade
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakBlueshield
+  name: blueshield cloak
+  description: Protect the king!
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Cloaks/blueshield.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Cloaks/blueshield.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckCloakNfsdShoulder
+  name: warrant officer's shoulder cape
+  description: A formal cloack for Frontier's Security Department officers. It's made of mother-of-pearl velvet.
+  components:
+    - type: Sprite
+      sprite: _Lua/Clothing/Neck/Cloaks/nfsd_formal.rsi
+    - type: Clothing
+      sprite: _Lua/Clothing/Neck/Cloaks/nfsd_formal.rsi

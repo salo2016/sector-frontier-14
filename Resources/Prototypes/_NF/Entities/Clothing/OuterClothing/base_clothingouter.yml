@@ -2,10 +2,13 @@
   abstract: true
   parent: ClothingOuterHardsuitBase
   id: ClothingOuterHardsuitBaseNF
+  components:
+  - type: Item
+    size: Huge
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterHardsuitBaseNF, BaseC2ContrabandUnredeemable]
+  parent: ClothingOuterHardsuitBaseNF # Lua-changes: deleted BaseC2ContrabandUnredeemable
   id: ClothingOuterHardsuitBaseNFNfsd
   components:
   - type: PressureProtection

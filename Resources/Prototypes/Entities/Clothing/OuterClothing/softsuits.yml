@@ -13,6 +13,7 @@
     tags:
     - SuitEVA
     - MonkeyWearable
+    - CorgiWearable
     - WhitelistChameleon
   - type: StaticPrice # Frontier
     price: 30 # Frontier
@@ -20,7 +21,7 @@
 
 #Syndicate EVA
 - type: entity
-  parent: [ClothingOuterEVASuitBase, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: added BaseC3SyndicateContraband, ContrabandClothing as parent
+  parent: [ClothingOuterEVASuitBase, BaseC1SyndicateContraband, ContrabandClothing] # Frontier: added BaseC3SyndicateContraband, ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   id: ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
@@ -34,6 +35,8 @@
     - SuitEVA
     - MonkeyWearable
     - WhitelistChameleon
+  - type: StaticPrice
+    price: 1000 # Helmet is 500
 
 #Emergency EVA
 - type: entity
@@ -61,7 +64,12 @@
       toggleable-clothing: !type:ContainerSlot {}
       storagebase: !type:Container # Frontier
         ents: [] # Frontier
-      beakerSlot: !type:ContainerSlot # _Lua imperial hardsuit injection
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - ScurretWearable
+    - MonkeyWearable
+    - WhitelistChameleon
 
 #Prisoner EVA
 - type: entity
@@ -104,31 +112,34 @@
   description: A void suit made for paramedics.
   components:
   - type: Sprite
-    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/paramed.rsi #Lua
     layers:
     - state: icon
   - type: Appearance
   - type: Clothing
-    sprite: Clothing/OuterClothing/Hardsuits/paramed.rsi
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/paramed.rsi #Lua
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
-    walkModifier: 0.9
-    sprintModifier: 0.95 #Lua
+    walkModifier: 1 #Lua 0.9<1
+    sprintModifier: 1 #Lua 0.95<1
   - type: HeldSpeedModifier
   - type: TemperatureProtection
     heatingCoefficient: 0.1
     coolingCoefficient: 0.1
   - type: Armor
     modifiers:
-      coefficients:
+      coefficients: # Damage values from Spatio hardsuit 30/30/20//30/30//20/20//30/0
         Blunt: 0.7
         Slash: 0.7
-        Piercing: 0.9
-        Heat: 0.5
+        Piercing: 0.8 #Lua 0.9<0.8
+        Heat: 0.7 #Lua 0.5<0.7
         Radiation: 0.7
-        Caustic: 0.5
+        Shock: 0.8 #Lua
+        Caustic: 0.8 #Lua 0.5<0.8
+  - type: StaminaResistance #Lua
+    damageCoefficient: 0.7
   - type: GroupExamine
   - type: StealTarget
     stealGroup: ClothingOuterHardsuitVoidParamed
@@ -163,4 +174,7 @@
       toggleable-clothing: !type:ContainerSlot {}
       storagebase: !type:Container # Frontier
         ents: [] # Frontier
-      beakerSlot: !type:ContainerSlot # _Lua imperial hardsuit injection
+  - type: Tag
+    tags:
+    - CorgiWearable
+    - WhitelistChameleon

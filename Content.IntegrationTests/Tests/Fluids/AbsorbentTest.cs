@@ -5,6 +5,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
+using Robust.UnitTesting.Pool;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -110,7 +111,7 @@ public sealed class AbsorbentTest
                 solutionContainerSystem.AddSolution(refillableSoln.Value, new Solution(NonEvaporablePrototypeId, testCase.InitialRefillableSolution.VolumeOfNonEvaporable));
 
             // Act
-            absorbentSystem.Mop(user, refillable, absorbent, component);
+            absorbentSystem.Mop((absorbent, component), user, refillable);
 
             // Assert
             var absorbentComposition = absorbentSolution.GetReagentPrototypes(prototypeManager).ToDictionary(r => r.Key.ID, r => r.Value);
@@ -167,7 +168,7 @@ public sealed class AbsorbentTest
                 solutionContainerSystem.AddSolution(refillableSoln.Value, new Solution(NonEvaporablePrototypeId, testCase.InitialRefillableSolution.VolumeOfNonEvaporable));
 
             // Act
-            absorbentSystem.Mop(user, refillable, absorbent, component);
+            absorbentSystem.Mop((absorbent, component), user, refillable);
 
             // Assert
             var absorbentComposition = absorbentSolution.GetReagentPrototypes(prototypeManager).ToDictionary(r => r.Key.ID, r => r.Value);

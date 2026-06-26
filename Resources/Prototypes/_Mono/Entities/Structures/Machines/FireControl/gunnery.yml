@@ -1,16 +1,3 @@
-# SPDX-FileCopyrightText: 2025 Ark
-# SPDX-FileCopyrightText: 2025 Ghagliiarghii
-# SPDX-FileCopyrightText: 2025 Ilya246
-# SPDX-FileCopyrightText: 2025 LaCumbiaDelCoronavirus
-# SPDX-FileCopyrightText: 2025 LukeZurg22
-# SPDX-FileCopyrightText: 2025 Redrover1760
-# SPDX-FileCopyrightText: 2025 RikuTheKiller
-# SPDX-FileCopyrightText: 2025 ark1368
-# SPDX-FileCopyrightText: 2025 sleepyyapril
-# SPDX-FileCopyrightText: 2025 starch
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
 # Monolith : Gunnery Server
 - type: entity
   id: GunneryServerBase
@@ -110,7 +97,7 @@
 
 - type: entity
   id: GunneryServerHigh
-  parent: GunneryServerBase
+  parent: [BaseStructureDisableToolUse, GunneryServerBase]
   name: high-power gunnery control server
   suffix: 60
   components:
@@ -130,17 +117,19 @@
     idleLoad: 20
     batteryRechargeRate: 1200
     batteryRechargeEfficiency: 0.95
+  - type: Anchorable
+    flags: Anchorable
 
 - type: entity
   id: GunneryServerUltra
-  parent: [GunneryServerBase] # removed BaseStructureDisableToolUse
+  parent: [BaseStructureDisableToolUse, GunneryServerBase]
   name: ultra-high-power gunnery control server
-  suffix: 90
+  suffix: 96
   components:
   - type: Machine
     board: MachineGCSUltraCircuitboard
   - type: FireControlServer
-    processingPower: 90
+    processingPower: 96
   - type: PassiveThermalSignature
     signature: 4000000 # ~4km
   - type: ThermalSignature
@@ -153,8 +142,8 @@
     idleLoad: 50
     batteryRechargeRate: 2400
     batteryRechargeEfficiency: 0.95
-#  - type: Anchorable # Sorry Tunguska, but I am NOT risking this being used for a missile bus. - "what could go wrong" says redrover
-#    flags: Anchorable
+  - type: Anchorable
+    flags: Anchorable
 
 - type: entity
   id: GunneryServerOmega

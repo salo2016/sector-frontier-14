@@ -1,0 +1,141 @@
+- type: entity
+  id: BaseCartridge68x52mmCaseless
+  name: cartridge (6.8x52mm STANAG Caseless)
+  description: A new intermediate caseless round developed in recent TSF standardization programs, using experience from old corporate war caseless ammunition to enhance the performance of rifles across the sectors.
+  parent: BaseCartridge
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+      - Cartridge
+      - Cartridge68x52mmCaseless
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+  - type: Sprite
+    noRot: false
+    sprite: _Mono/Objects/Weapons/Guns/Ammunition/Casings/caseless_ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 1
+
+# Standart
+- type: entity
+  id: Cartridge68x52mmCaseless
+  name: cartridge (6.8x52mm STANAG Caseless)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaseless
+
+- type: entity
+  id: Cartridge68x52mmCaselessRubber
+  name: cartridge (6.8x52mm STANAG Caseless rubber)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessRubber
+
+- type: entity
+  id: Cartridge68x52mmCaselessPractice
+  name: cartridge (6.8x52mm STANAG Caseless practice)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessPractice
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#dbdbdb"
+
+# Mechanical
+- type: entity
+  id: Cartridge68x52mmCaselessHP
+  name: cartridge (6.8x52mm STANAG HP)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessHP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#991d39"
+
+# Physical
+- type: entity
+  id: Cartridge68x52mmCaselessIncendiary
+  name: cartridge (6.8x52mm STANAG Incendiary)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#f44336"
+
+- type: entity
+  id: Cartridge68x52mmCaselessUranium
+  name: cartridge (6.8x52mm STANAG Uranium)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessUranium
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#6b9747"
+
+# Special
+- type: entity
+  id: Cartridge68x52mmCaselessEMP
+  name: cartridge (6.8x52mm STANAG EMP)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessEMP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#044492"
+
+- type: entity
+  id: Cartridge68x52mmCaselessCaustic
+  name: cartridge (6.8x52mm STANAG Caustic)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge68x52mmCaseless
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet68x52mmCaselessCaustic
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#8b9229"

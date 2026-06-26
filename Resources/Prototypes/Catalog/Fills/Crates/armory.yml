@@ -2,13 +2,13 @@
   id: CrateArmorySMG
   parent: [ CrateWeaponSecure, BaseC2ContrabandUnredeemable ] # Frontier: BaseSecurityContraband<BaseC2ContrabandUnredeemable
   name: SMG crate
-  description: Contains two high-powered, semiautomatic rifles with four mags. Requires Armory access to open.
+  description: Contains two SMGs with four mags. Requires Armory access to open.
   components:
   - type: StorageFill
     contents:
       - id: NFWeaponSubMachineGunWt550 # Frontier: WeaponSubMachineGunWt550<NFWeaponSubMachineGunWt550
         amount: 2
-      - id: NFMagazineSubMachineGunTopMounted35 # Frontier: MagazinePistolSubMachineGunTopMounted<NFMagazineSubMachineGunTopMounted35
+      - id: Magazine9x19mmSubMachineGunTopMountedFMJ #Lua 35 -> 9x19
         amount: 4
 
 - type: entity
@@ -21,7 +21,7 @@
     contents:
       - id: NFWeaponShotgunEnforcer # Frontier: WeaponShotgunEnforcer<NFWeaponShotgunEnforcer
         amount: 2
-      - id: NFAmmunitionBoxShellShotgunBuckshot # Frontier: BoxLethalshot<NFAmmunitionBoxShellShotgunBuckshot
+      - id: AmmoBox23x75mmBuckshot # Lua 20 gauge
         amount: 4
 
 - type: entity
@@ -67,7 +67,7 @@
     contents:
     - id: NFWeaponPistolMk58 # Frontier: WeaponPistolMk58<NFWeaponPistolMk58
       amount: 2
-    - id: NFMagazinePistol35 # Frontier: MagazinePistol<NFMagazinePistol35
+    - id: Magazine9x19mmPistolFMJ # Lua 35 -> 9x19
       amount: 4
 
 - type: entity
@@ -84,7 +84,20 @@
       amount: 2
     - id: NFWeaponShotgunEnforcerLessLethal # Frontier: WeaponEnforcerRubber<NFWeaponShotgunEnforcerLessLethal
       amount: 2
-    - id: NFAmmunitionBoxShellShotgunBeanbag # Frontier: BoxBeanbag<NFAmmunitionBoxShellShotgunBeanbag
+    - id: AmmoBox23x75mmBeanbag # Lua 20 gauge
       amount: 2
     - id: RiotShield
       amount: 2
+
+- type: entity
+  id: CrateArmoryRifle
+  parent: [ CrateWeaponSecure, BaseC2ContrabandUnredeemable ] # Frontier: BaseSecurityContraband<BaseC2ContrabandUnredeemable
+  name: SMG crate #Lua rifle<SMG
+  description: Contains two high-powered SMGs with four mags. Requires Armory access to open. #Lua rifles<SMGs
+  components:
+  - type: StorageFill
+    contents:
+    - id: NFWeaponSubMachineGunDrozd #Lua NFWeaponRifleAssaultLecter<NFWeaponSubMachineGunDrozd
+      amount: 1 #Lua 2<1
+    - id: Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+      amount: 4

@@ -414,15 +414,12 @@
   - type: RandomSpawner
     prototypes:
     - CutterMachine
-    - SalvageTechfabNF
-    - ServiceTechFab
-    - EngineeringTechFab
     - Autolathe
     - Protolathe
     - CircuitImprinter
     - ExosuitFabricator
     - Biogenerator
-    - AmmoTechFab
+#    - AmmoTechFab # comment from _Lua
     - MedicalTechFab
     - UniformPrinter
     - MachineFlatpacker
@@ -720,10 +717,7 @@
     - SurveillanceCameraWirelessRouterCircuitboard
     - SurveillanceWirelessCameraMonitorCircuitboard
     # Boards
-    - SalvageTechFabCircuitboardNF
-    - ServiceTechFabCircuitboard
-    - EngineeringTechFabCircuitboard
-    - AmmoTechFabCircuitboard
+#    - AmmoTechFabCircuitboard # comment from _Lua
     - MedicalTechFabCircuitboard
     - OreProcessorIndustrialMachineCircuitboard
     - DawInstrumentMachineCircuitboard
@@ -1057,10 +1051,10 @@
     - MercenaryTechFabFlatpack
     chance: 0.95
     offset: 0.0
-    rarePrototypes:
-    - AmmoTechFabFlatpack
+#    rarePrototypes: # comment from _Lua
+#    - AmmoTechFabFlatpack
 #    - VendingMachineSyndieContrabandFlatpack # A bit less Syndicate loot
-    rareChance: 0.05
+#    rareChance: 0.05
 
 - type: entity
   name: random restock box

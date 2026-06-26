@@ -3,9 +3,30 @@
   parent: [Clothing, RecyclableItemClothSmall] # Frontier: added RecyclableItemClothSmall
   id: ClothingShoesBase
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/generic_small_pickup.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/shoes_drop.ogg
+      params:
+        volume: -5
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/boots_drop.ogg
+      params:
+        volume: -5
   - type: Clothing
     slots:
     - FEET
+    equipSound:
+      collection: GenericEquip
+      params:
+        volume: -5
+  # Goobstation edit end
   - type: Sprite
     state: icon
   - type: Item
@@ -46,6 +67,8 @@
   parent: [ClothingShoesBase, ClothingSlotBase]
   id: ClothingShoesMilitaryBase
   components:
+  - type: ClothingSlowOnDamageModifier #Lua
+    modifier: 0.5
   - type: Matchbox
   - type: ItemSlots
     slots:
@@ -54,6 +77,7 @@
         whitelist:
           tags:
           - Knife
+          - Holdout #Lua
 
 - type: entity
   abstract: true

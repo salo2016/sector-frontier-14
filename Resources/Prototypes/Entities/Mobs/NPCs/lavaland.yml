@@ -49,7 +49,7 @@
       amount: 1
   - type: MovementSpeedModifier
     baseWalkSpeed: 5
-    baseSprintSpeed: 7
+    baseRunningSpeed: 7
   - type: ProjectileBatteryAmmoProvider
     proto: NFWatcherBolt # Frontier: use NF variant
     fireCost: 50
@@ -73,8 +73,7 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/lizard_happy.ogg
-  - type: TimedDespawn
-    lifetime: 2400
+
 
 - type: entity
   id: MobWatcherLavaland
@@ -89,8 +88,8 @@
       shader: unshaded
       color: red
   - type: PointLight
-    radius: 1.5
-    energy: 0.5
+    radius: 1
+    energy: 3
     color: red
 
 - type: entity
@@ -107,8 +106,8 @@
       shader: unshaded
       color: deepskyblue
   - type: PointLight
-    radius: 1.5
-    energy: 1
+    radius: 1
+    energy: 3
     color: deepskyblue
 
 - type: entity
@@ -125,8 +124,8 @@
       shader: unshaded
       color: orangered
   - type: PointLight
-    radius: 1.5
-    energy: 1
+    radius: 1
+    energy: 3
     color: orangered
   - type: ProjectileBatteryAmmoProvider
     proto: NFWatcherBoltMagmawing # Frontier: use NF variant
@@ -147,7 +146,7 @@
       state: unshaded
       shader: unshaded
   - type: PointLight
-    radius: 1.5
-    energy: 1
+    radius: 1
+    energy: 3
   - type: RgbLightController
     layers: [ 1 ]

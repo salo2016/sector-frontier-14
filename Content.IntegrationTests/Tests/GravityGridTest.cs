@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Robust.UnitTesting.Pool;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -67,7 +68,7 @@ namespace Content.IntegrationTests.Tests
                 powerComponent.NeedsPower = false;
             });
 
-            await server.WaitRunTicks(5);
+            await server.WaitRunTicks(20);
 
             await server.WaitAssertion(() =>
             {
@@ -77,8 +78,8 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() =>
                 {
                     Assert.That(generatorComponent.GravityActive, Is.True);
-                    Assert.That(!entityMan.GetComponent<GravityComponent>(grid1).EnabledVV);
-                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2).EnabledVV);
+                    Assert.That(!entityMan.GetComponent<GravityComponent>(grid1).Enabled);
+                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2).Enabled);
                 });
 
                 // Re-enable needs power so it turns off again.
@@ -86,7 +87,7 @@ namespace Content.IntegrationTests.Tests
                 powerComponent.NeedsPower = true;
             });
 
-            await server.WaitRunTicks(5);
+            await server.WaitRunTicks(20);
 
             await server.WaitAssertion(() =>
             {
@@ -95,7 +96,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.Multiple(() =>
                 {
                     Assert.That(generatorComponent.GravityActive, Is.False);
-                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2).EnabledVV, Is.False);
+                    Assert.That(entityMan.GetComponent<GravityComponent>(grid2).Enabled, Is.False);
                 });
             });
 

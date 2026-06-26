@@ -1,8 +1,8 @@
 uplink-security-eg4-name = EG-4 Энергетический Револьвер
 uplink-security-eg4-desc = Самозаряжающееся энергетическое оружие, способное стрелять как и нелетальными, так и смертельными болтами. Как мини-энергетическая пушка.
 
-uplink-security-annie-name = Энни
-uplink-security-annie-desc = Дозвуковое оружие калибра .30, созданное для выполнения невыполнимых задач.
+uplink-security-annie-name = TCA M27 Annie (7.62x39mm)
+uplink-security-annie-desc = Дозвуковое оружие калибра 7.62x39mm, созданное для выполнения невыполнимых задач.
 
 uplink-security-portable-recharger-name = Переносной зарядник
 uplink-security-portable-recharger-desc = Экспериментальное портативное зарядное устройство, оснащенное встроенным микрореактором.
@@ -25,20 +25,23 @@ uplink-security-ashstorm-desc = TSF-EM72 Ashstorm — это ручной пул
 uplink-security-cash2500-name = 2,500 Кредитов
 uplink-security-cash2500-desc = Наличные деньги в твердой валюте.
 
-uplink-security-8x65mm-magazine-name = STANAG магазин (8x65мм SKR)
-uplink-security-8x65mm-magazine-desc = Магазин для винтовки MR-8C BR. Используются патроны 8x65мм SKR.
+uplink-security-8x65mm-magazine-name = STANAG магазин (8x65mm SKR)
+uplink-security-8x65mm-magazine-desc = Магазин для винтовки VFD MR-8C DMR и пулемёта VFD MR-8B LWMMG. Используются патроны 8x65mm SKR.
 
-uplink-security-8x55mm-boxmag-name = Магазин "SAW" (8x55мм SKR)
-uplink-security-8x55mm-boxmag-desc = Магазин для пулемёта MR-8B LWMMG. Используются патроны 8x55мм SKR.
+uplink-security-8x65mm-box-name = Коробка патрон (8x65mm SKR)
+uplink-security-8x65mm-box-desc = Коробка патрон для магазинов, использующих патроны 8x65mm.
 
-uplink-security-8x55mm-box-name = Коробка патрон (8x55мм SKR)
-uplink-security-8x55mm-box-desc = Коробка патрон для пулемёта MR-8B LWMMG. Содержит 300 патрон.
+uplink-security-mr8c-name = VFD MR-8C DMR
+uplink-security-mr8c-desc = Полуавтоматическая винтовка, стреляющая патронами 8x65mm, специально созданная для использования MARSOC. Ты счастливчик, сотрудник.
 
-uplink-security-8x65mm-box-name = Коробка патрон (8x65мм SKR)
-uplink-security-8x65mm-box-desc = Коробка патрон для магазинов, использующих патроны 8x65мм. Содержит 120 патрон.
+uplink-security-mr8b-name = VFD MR-8B LWMMG (7.62x51mm)
+uplink-security-mr8b-desc = Вариант LWMMG серии MR-8. Калибр 7.62x51mm, подходит как для коробчатых, так и для обычных магазинов. На боковой стороне имеется надпись «ТОЛЬКО ДЛЯ ВОЕННОГО ИСПОЛЬЗОВАНИЯ».
 
-uplink-security-mr8c-name = MR-8C BR
-uplink-security-mr8c-desc = Полуавтоматическая винтовка, стреляющая патронами 8x65 мм, специально созданная для использования MARSOC. Ты счастливчик, сотрудник.
+uplink-security-762x51-boxmag-name = ammunition box (7.62x51mm FMJ)
+uplink-security-762x51-boxmag-desc = Коробка патрон с патронами калибра 7.62x51mm, можно использовать как ленту для VFD MR-8B LWMMG (7.62x51mm)
 
-uplink-security-mr8b-name = MR-8B LWMMG
-uplink-security-mr8b-desc = Дорогой (относительно) легкий пулемёт, ответвление МР-8С. Совместим с магазинами и коробками 8x55 мм.
+uplink-security-vector45acp-name = Набор "LWC Vector SBR (.45 ACP)"
+uplink-security-vector45acp-desc = Отличный полностью автоматический пистолет-пулемет, военной модификаций SBR. Использует патроны калибра .45 ACP. Набор содержит в себе 3 дополнительных магазина и 1 коробку патронов.
+
+uplink-submachinegun-mag-45ACP-name = SMG magazine (.45 ACP FMJ)
+uplink-submachinegun-mag-45ACP-desc = магазин для ПП калибра .45 ACP

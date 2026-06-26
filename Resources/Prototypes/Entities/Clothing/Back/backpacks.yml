@@ -14,7 +14,31 @@
     quickEquip: false
     slots:
     - back
+  # Goobstation edit start
+    equipSound:
+      path: /Audio/_Goobstation/Items/handling/backpack_equip.ogg
+      params:
+        volume: -9
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/backpack_pickup.ogg
+      params:
+        volume: -9
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/backpack_drop.ogg
+      params:
+        volume: -11
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/backpack_drop.ogg
+      params:
+        volume: -11
+  # Goobstation edit end
   - type: Storage
+    blacklist: #Lua
+      tags:
+      - Webbing
     grid:
     - 0,0,6,3
     maxItemSize: Huge
@@ -32,6 +56,10 @@
   - type: ExplosionResistance
     damageCoefficient: 0.9
   - type: AllowsSleepInside # Frontier
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - Backpack
 
 - type: entity
   parent: NFClothingBackpack # Frontier: ClothingBackpack<NFClothingBackpack
@@ -268,10 +296,13 @@
     - type: Storage
       grid:
       - 0,0,7,6
+    - type: Tag
+      tags:
+      - ClothMade
 
 #Syndicate
 - type: entity
-  parent: [NFClothingBackpack, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, ClothingBackpack<NFClothingBackpack
+  parent: [NFClothingBackpack, BaseC1SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, ClothingBackpack<NFClothingBackpack # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   id: ClothingBackpackSyndicate
   name: syndicate backpack
   description:
@@ -284,6 +315,8 @@
     grid:
     - 0,0,7,3
     - 8,1,8,3
+  - type: StaticPrice
+    price: 1000
 
 #Special
 - type: entity
@@ -321,7 +354,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,7,7 # Frontier: Was 0,0,19,9
+    - 0,0,11,4 # Frontier: Was 0,0,19,9 #Lua 0,0,7,7<0,0,11,4
 
 - type: entity
   parent: NFClothingBackpack # Frontier: ClothingBackpack<NFClothingBackpackClown

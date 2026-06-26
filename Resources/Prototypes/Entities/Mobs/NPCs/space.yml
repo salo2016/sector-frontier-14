@@ -34,7 +34,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+      200: Dead #Lua 80<200
   - type: Stamina
     critThreshold: 150
   - type: MovementAlwaysTouching
@@ -67,8 +67,6 @@
   - type: GhostTakeoverAvailable
   - type: Speech
     speechVerb: LargeMob
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   name: space bear
@@ -101,7 +99,7 @@
       amount: 3
     - id: MaterialHideBear
       amount: 1
-      prob: 0.3
+      prob: 0.1 #Lua 0.3<0.1
   - type: ReplacementAccent
     accent: genericAggressive
   - type: Vocal
@@ -149,7 +147,7 @@
         Slash: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.5
+    baseRunningSpeed: 4.5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -173,6 +171,10 @@
     spawned:
     - id: FoodMeat
       amount: 1
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      200: Dead #Lua 60<200
 
 - type: entity
   id: MobKangarooSpaceSalvage
@@ -201,7 +203,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Dead
+      150: Dead #Lua 45<150
   - type: Stamina
     critThreshold: 150
   - type: DamageStateVisuals
@@ -217,7 +219,7 @@
       amount: 2
     - id: EggSpider
       amount: 1
-      prob: 0.5
+      prob: 0.1 #Lua 0.5<0.1
   - type: Bloodstream
     bloodMaxVolume: 250
     bloodReagent: Cryoxadone
@@ -304,7 +306,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        100: Dead
+        200: Dead #Lua 45<200
     - type: Stamina
       critThreshold: 150
     - type: DamageStateVisuals
@@ -364,7 +366,7 @@
       interactFailureString: petting-failure-generic
     - type: PointLight
       radius: 1.1
-      energy: 1.5
+      energy: 2.7
       color: "#4faffb"
     - type: Stealth
       enabledOnDeath: false
@@ -451,7 +453,7 @@
         recursive: false
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseRunningSpeed : 3
   - type: DamageStateVisuals
     states:
       Alive:
@@ -570,7 +572,7 @@
         Base: spacedead
   - type: MovementSpeedModifier
     baseWalkSpeed : 5 #he go fast, also they cant slip so its probably fine.
-    baseSprintSpeed : 7
+    baseRunningSpeed : 7
 #  - type: ActiveJetpack # I think this will need a custom component to not make tests angry.
   - type: MovementAlwaysTouching
 

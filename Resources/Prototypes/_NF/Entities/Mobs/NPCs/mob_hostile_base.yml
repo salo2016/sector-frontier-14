@@ -107,7 +107,6 @@
     - type: CanMoveInAir
     - type: Tag
     - type: Access
-    - type: Timer
     - type: TimedSpawner
     - type: Jittering
 
@@ -168,8 +167,6 @@
     removeComponentsOnRevival:
     - type: Strippable
     - type: UserInterface
-    - type: TimedDespawn
-      lifetime: 2400
 #endregion
 
 #region Despawn timers
@@ -260,8 +257,8 @@
   abstract: true
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4.2 # ~10% slowdown
-    baseSprintSpeed : 4.2 # ~10% slowdown
+    baseWalkSpeed : 4.7 # ~10% slowdown #Lua 4.2<4.7
+    baseRunningSpeed : 4.7 # ~10% slowdown #Lua 4.2<4.7
 
 - type: entity
   id: MobMovementSpeedModifierEVAMelee
@@ -269,7 +266,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.8 # ~15% slowdown
-    baseSprintSpeed : 3.8 # ~15% slowdown
+    baseRunningSpeed : 3.8 # ~15% slowdown
 
 - type: entity
   id: MobMovementSpeedModifierRanged
@@ -277,7 +274,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
-    baseSprintSpeed : 3.5
+    baseRunningSpeed : 3.5
 
 - type: entity
   id: MobMovementSpeedModifierEVARanged
@@ -285,7 +282,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 3 # ~15% slowdown
-    baseSprintSpeed : 3 # ~15% slowdown
+    baseRunningSpeed : 3 # ~15% slowdown
 
 - type: entity
   id: MobMovementSpeedModifierSpecial
@@ -293,7 +290,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
-    baseSprintSpeed : 5
+    baseRunningSpeed : 5
 
 - type: entity
   id: MobMovementSpeedModifierBoss
@@ -301,7 +298,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 4.5
-    baseSprintSpeed : 4.5
+    baseRunningSpeed : 4.5
 #endregion
 
 #region Stamina
@@ -350,8 +347,6 @@
     - DoorBumpOpener
     - CannotSuicide
   - type: FTLKnockdownImmune
-  - type: TimedDespawn
-    lifetime: 2400
 #endregion
 
 #region Inventories
@@ -403,7 +398,7 @@
       NavInteract: !type:Bool
         true
       NavPry: !type:Bool
-        true
+        false #Lua true<false
       NavSmash: !type:Bool # They use this option too much for my liking, but I'll keep it here as an option
         true
 
@@ -469,11 +464,11 @@
     factions:
     - SimpleHostile
   - type: Carriable # Carrying system from nyanotrasen.
-  - type: Advertise
-    pack: syndicatehumanoidchatter
-    minimumWait: 120
-    maximumWait: 240
-    nextAdvertisementTime: 0
+  - type: Vocalizer
+    minVocalizeInterval: 120
+    maxVocalizeInterval: 240
+  - type: DatasetVocalizer
+    dataset: syndicatehumanoidchatter
   - type: FTLKnockdownImmune
   - type: Respirator
     updateInterval: 99999 # Shouldn't run often, if ever.
@@ -484,8 +479,7 @@
       types: {}
   - type: TTS
     enabled: false
-  - type: TimedDespawn
-    lifetime: 2400
+  - type: DisableSuitSensors # Lua
 
 # NonHuman NPC base, no equipment, immune to vacuum/low pressure
 - type: entity
@@ -560,8 +554,7 @@
   - type: FTLKnockdownImmune
   - type: TTS
     enabled: false
-  - type: TimedDespawn
-    lifetime: 2400
+  - type: DisableSuitSensors # Lua
 
 # A simpler base for extending existing mobs (e.g. carp, kangaroos, snakes, xenos)
 - type: entity
@@ -605,8 +598,6 @@
   - type: FTLKnockdownImmune
   - type: TTS
     enabled: false
-  - type: TimedDespawn
-    lifetime: 2400
 #endregion
 
 #region Roadkill

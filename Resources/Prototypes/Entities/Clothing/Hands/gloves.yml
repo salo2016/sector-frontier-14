@@ -100,9 +100,9 @@
   description: Regal blue gloves, with a nice gold trim. Swanky.
   components:
   - type: Sprite
-    sprite: Clothing/Hands/Gloves/captain.rsi
+    sprite: _ADT/Clothing/Hands/Gloves/captain.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Hands/Gloves/captain.rsi
+    sprite: _ADT/Clothing/Hands/Gloves/captain.rsi # Lua
   - type: Insulated
   - type: Fiber
     fiberMaterial: fibers-durathread
@@ -158,6 +158,8 @@
   - type: Fiber
     fiberMaterial: fibers-nitrile
   - type: FingerprintMask
+  - type: DiseaseProtection #Backmen & Ataraxia anti viral
+    protection: 0.2
 
 - type: entity
   parent: ClothingHandsButcherable
@@ -209,7 +211,7 @@
   - type: FingerprintMask
 
 - type: entity
-  parent: [ClothingHandsBase, BaseToggleClothing, BaseC3Contraband, ContrabandClothing] # Frontier: BaseMajorContraband<BaseC3Contraband, added ContrabandClothing as parent
+  parent: [ClothingHandsBase, BaseToggleClothing, BaseC3SpiderClanContraband] # Frontier: BaseMajorContraband<BaseC3Contraband, added ContrabandClothing as parent # Lua-changes: BaseC3Contraband > BaseC3SpiderClanContraband, deleted ContrabandClothing
   id: ClothingHandsGlovesSpaceNinja
   name: space ninja gloves
   description: These black nano-enhanced gloves insulate from electricity and provide fire resistance.
@@ -420,7 +422,7 @@
       enum.MeleeSpeechUiKey.Key:
         type: MeleeSpeechBoundUserInterface
   - type: StaticPrice
-    price: 0
+    price: 2500
   - type: Tag
     tags:
     - Kangaroo
@@ -558,6 +560,8 @@
     tags:
     - WhitelistChameleon
     - Kangaroo
+  - type: StaticPrice
+    price: 2000
 
 - type: entity
   name: stun knuckle dusters

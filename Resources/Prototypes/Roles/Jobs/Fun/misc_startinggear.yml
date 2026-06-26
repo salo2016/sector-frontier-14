@@ -87,7 +87,7 @@
     back:
     - BoxSurvivalSecurity
     - Flash
-    - NFMagazinePistol35 # Frontier: MagazinePistol<NFMagazinePistol35
+    - Magazine9x19mmPistolFMJ # Lua 35 -> 9x19
 
 - type: startingGear
   id: BoxingKangarooGear
@@ -101,6 +101,18 @@
     ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: PunPunIDCard
+
+- type: startingGear
+  id: MobPollyGear
+  equipment:
+    ears: ClothingHeadsetEngineering
+
+# Emotional Support Scurret
+
+- type: startingGear
+  id: EmotionalSupportScurretGear
+  equipment:
+    id: ScurretPDA
 
 # DeathMatch Gear
 
@@ -118,7 +130,7 @@
 - type: startingGear
   id: MobAghostGear
   equipment:
-    back: ClothingBackpackSatchelHolding
+    back: ClothingBackpackSatchelAdmin
     id: AdminPDA
   storage:
     back:

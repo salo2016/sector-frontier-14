@@ -81,6 +81,8 @@
       weight: 0.0003
     - id: NFCobblebrickElementalSpawner
       weight: 0.006
+    - id: SalvageSpawnerMobMiningAsteroid #Lua
+      weight: 0.1
 
 - type: entity
   id: NFRockMineralHard
@@ -705,6 +707,8 @@
       weight: 0.0025
     - id: NFChromiteElementalSpawner
       weight: 0.05
+    - id: WallRockChromiteMagmite #Lua
+      weight: 0.0016
 
 - type: entity
   id: NFChromiteMineralSoft

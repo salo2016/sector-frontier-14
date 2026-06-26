@@ -1,24 +1,8 @@
-# SPDX-FileCopyrightText: 2025 Avalon
-# SPDX-FileCopyrightText: 2025 Blu
-# SPDX-FileCopyrightText: 2025 BlueHNT
-# SPDX-FileCopyrightText: 2025 Disguised Bear
-# SPDX-FileCopyrightText: 2025 Ilya246
-# SPDX-FileCopyrightText: 2025 Onezero0
-# SPDX-FileCopyrightText: 2025 Redrover1760
-# SPDX-FileCopyrightText: 2025 RikuTheKiller
-# SPDX-FileCopyrightText: 2025 core-mene
-# SPDX-FileCopyrightText: 2025 kyres1
-# SPDX-FileCopyrightText: 2025 starch
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
-
 # MARAUDER
-
 - type: entity
   id: WeaponTurretType35
   name: Type-35 MARAUDER-type plasma cannon
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
   description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
   components:
   - type: StaticPrice
@@ -80,12 +64,291 @@
   - type: ShipGunClass
     shipClass: Medium
 
+# Ускоритель плазмы 
+
+- type: entity
+  id: WeaponTurretplasmaaccelerator
+  name: Type-1008 Plasma Accelerator
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
+  description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
+  components:
+  - type: StaticPrice
+    price: 2000
+  - type: Sprite
+    sprite: _Mono/Objects/ShuttleWeapons/scythe.rsi
+    layers:
+    - state: space_artillery
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Battery
+    maxCharge: 40000
+    startingCharge: 40000
+  - type: ExaminableBattery
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: Gun
+    projectileSpeed: 200
+    burstCooldown: 5
+    burstFireRate: 1
+    shotsPerBurst: 3
+    selectedMode: Burst
+    availableModes: Burst
+    shootThermalSignature: 4000000 # ~2.8km with continuous fire
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 350
+  - type: SpaceArtillery
+    powerChargeRate: 350
+    powerUsePassive: 500
+    powerUseActive: 0
+  - type: FireControlRotate
+  - type: Actions
+  - type: ProjectileBatteryAmmoProvider
+    proto: ShipDymereProjectile
+    fireCost: 2400
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 12500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: RadarBlip
+    radarColor: "#C92BCC"
+    scale: 2
+  - type: ShipGunType
+    shipType: Energy
+  - type: ShipGunClass
+    shipClass: Medium
+
+
+# Ускоритель плазмы Капитальный
+
+- type: entity
+  id: WeaponTurretplasmaacceleratorHuge
+  name: Type-1984 Plasma Accelerator
+  parent: BallisticArtilleryUnanchorable
+  suffix: TSF ONLY, ADS ONLY
+  description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
+  components:
+  - type: StaticPrice
+    price: 50000
+  - type: Sprite
+    sprite: _Mono/Objects/ShuttleWeapons/harbringer.rsi
+    layers:
+    - state: space_artillery
+    scale: 1, 1
+  - type: Appearance
+  - type: AmmoCounter
+  - type: FireControlRotate
+  - type: Battery
+    maxCharge: 40800
+    startingCharge: 40800
+  - type: ExaminableBattery
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.75,-0.75,0.75,0.75"
+        density: 1500
+  - type: Gun
+    projectileSpeed: 150
+    fireRate: 0.25
+    shootThermalSignature: 12000000 # ~6km after firing
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: BatterySelfRecharger
+    autoRechargePause: true
+    autoRechargePauseTime: 60
+    autoRecharge: true
+    autoRechargeRate: 81600
+  - type: SpaceArtillery
+    powerChargeRate: 81600
+    powerUsePassive: 25000
+    powerUseActive: 0
+  - type: Actions
+  - type: ProjectileBatteryAmmoProvider
+    proto: ShipDymereProjectile
+    fireCost: 2400
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 25000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: RadarBlip
+    radarColor: "#C92BCC"
+    scale: 3
+  - type: ShipGunType
+    shipType: Energy
+  - type: ShipGunClass
+    shipClass: Superheavy
+    processingPowerCost: 16
+
+# Type 2048 scattershot canon
+
+- type: entity
+  id: WeaponTurretType2048
+  name: Type-2048 scattershot canon
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
+  description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
+  components:
+  - type: StaticPrice
+    price: 2000
+  - type: Sprite
+    sprite: _Mono/Objects/ShuttleWeapons/cerberus.rsi
+    layers:
+    - state: space_artillery
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Battery
+    maxCharge: 40000
+    startingCharge: 40000
+  - type: ExaminableBattery
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: Gun
+    fireRate: 0.38
+    projectileSpeed: 90
+    shootThermalSignature: 4000000 # ~2.8km with continuous fire
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 350
+  - type: SpaceArtillery
+    powerChargeRate: 350
+    powerUsePassive: 500
+    powerUseActive: 0
+  - type: FireControlRotate
+  - type: Actions
+  - type: ProjectileBatteryAmmoProvider
+    proto: CerberusSpread
+    fireCost: 500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 12500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: RadarBlip
+    radarColor: "#C92BCC"
+    scale: 2
+  - type: ShipGunType
+    shipType: Energy
+  - type: ShipGunClass
+    shipClass: Medium
+
+  # Scylla
+
+- type: entity
+  id: WeaponTurretScylla
+  name: PASM "Scylla" Plasma accelerator system of magnet
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
+  description: Launches magnetically contained balls of plasma at targets. Can be remotely activated, or linked up to a GCS.
+  components:
+  - type: StaticPrice
+    price: 2000
+  - type: Sprite
+    sprite: _Mono/Objects/ShuttleWeapons/scylla.rsi
+    layers:
+    - state: space_artillery
+  - type: Appearance
+  - type: AmmoCounter
+  - type: Battery
+    maxCharge: 40000
+    startingCharge: 40000
+  - type: ExaminableBattery
+  - type: WirelessNetworkConnection
+    range: 500
+  - type: Gun
+    fireRate: 50
+    projectileSpeed: 120
+    shootThermalSignature: 4000000 # ~2.8km with continuous fire
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 350
+  - type: SpaceArtillery
+    powerChargeRate: 350
+    powerUsePassive: 500
+    powerUseActive: 0
+  - type: FireControlRotate
+  - type: Actions
+  - type: ProjectileBatteryAmmoProvider
+    proto: ShipAutopulserPlasmaProjectile
+    fireCost: 500
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15000
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 12500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+  - type: RadarBlip
+    radarColor: "#C92BCC"
+    scale: 2
+  - type: ShipGunType
+    shipType: Energy
+  - type: ShipGunClass
+    shipClass: Medium
+    
 # Type 54 autopulser
 
 - type: entity
   id: WeaponTurretType54
   name: Type-54C plasma autopulser
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
   suffix: TSF ONLY, ADS ONLY
   description: A rapidly firing energy weapon, dealing a large amount of damage to its targets. Takes a long time to recharge.
   components:
@@ -226,13 +489,14 @@
     shipType: Energy
   - type: ShipGunClass
     shipClass: Medium
+    processingPowerCost: 45
 
  # M25
 
 - type: entity
   id: WeaponTurretM25
   name: M25 mining pulser
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
   description: Uses mechanisms to launch... something. Destroys rock easily.
   components:
   - type: StaticPrice
@@ -299,7 +563,7 @@
 - type: entity
   id: WeaponTurretM220
   name: M220 RUBICON EMP launcher
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
   description: Launches EMP projectiles at ships, disabling systems with powerful electromagnetic pulses. Ideal for non-lethal engagements and can be remotely activated or linked to a GCS.
   components:
   - type: StaticPrice
@@ -426,6 +690,7 @@
     shipType: Energy
   - type: ShipGunClass
     shipClass: Superheavy
+    processingPowerCost: 45
 
 # Laser Hitscan
 
@@ -434,7 +699,7 @@
 - type: entity
   id: WeaponLaserTurretL1Phalanx
   name: L-1 Phalanx
-  parent: BallisticArtillery
+  parent: BallisticArtilleryUnanchorable #Lua BallisticArtillery<BallisticArtilleryUnanchorable
   description: A light laser emplactment designed by the Pantheon Collective, used to shred threats of all types
   components:
   - type: StaticPrice
@@ -515,6 +780,7 @@
       path: /Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg
   - type: ShipGunClass
     shipClass: Heavy
+    processingPowerCost: 42
   - type: HitscanBatteryAmmoProvider
     proto: ApolloLaser
     fireCost: 500

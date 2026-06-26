@@ -165,18 +165,21 @@
 - type: Tag
   id: DemagImmune
 
+- type: Tag
+  id: NFHotdog
+
 # region Blueprints
+
+# Used for blueprints that are "too advanced" to be used with an autolathe.
+# Requires a techfab or protolathe.
+- type: Tag
+  id: NFBlueprintAdvanced
+
 - type: Tag
   id: NFBlueprintMedicalTechfab
 
 - type: Tag
   id: NFBlueprintSalvageTechfab
-
-- type: Tag
-  id: NFBlueprintServiceTechfab
-
-- type: Tag
-  id: NFBlueprintEngineeringTechfab
 
 - type: Tag
   id: NFBlueprintProtolathe
@@ -232,13 +235,13 @@
   id: NFMagazineRifle20 # OG WizDen: MagazineRifle
 
 - type: Tag
-  id: NFMagazineClipRifle20
+  id: NFMagazineClipRifle556x45 #Lua 20 -> 556x45
 
 - type: Tag
-  id: NFMagazineBoxRifle20 # OG WizDen: MagazineLightRifleBox
+  id: NFMagazineBoxRifle556x45 #Lua 20 -> 556x45
 
 - type: Tag
-  id: NFMagazineDrumRifle20
+  id: NFMagazineDrumRifle556x45 #Lua 20 -> 556x45
 
 #region .25 rifle
 - type: Tag

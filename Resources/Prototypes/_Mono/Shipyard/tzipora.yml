@@ -7,26 +7,29 @@
 - type: vessel
   id: Tzipora
   parent: BaseVessel
-  name: SKR Tzipora
+  name: Tzipora
   description: A advanced medical ship, outfitted with cryo, chem, and surgical capabilities.
   limit: 2
-  price: 81100
+  price: 70000
   category: Large
   group: Medical
   shuttlePath: /Maps/_Mono/Shuttles/tzipora.yml
   guidebookPage: null
+  whitelist:
+  - Luna
+  - Frontier
   class:
   - Civilian
   - Medical
+  - Paramedical # Lua
   - Chemistry
+  - Cryogenic # Lua
   engine:
   - AME
-  addComponents:
-    - type: IFF
-      color: "#ffffff"
+
 - type: gameMap
   id: Tzipora
-  mapName: 'SKR Tzipora'
+  mapName: 'Tzipora'
   mapPath: /Maps/_Mono/Shuttles/tzipora.yml
   minPlayers: 0
   stations:
@@ -34,7 +37,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'Tzipora MED{1}'
+          mapNameTemplate: 'Tzipora {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

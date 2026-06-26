@@ -96,12 +96,34 @@
         acts: [ "Destruction" ]
   - type: DnaSubstanceTrace
 
+# Lua start
+- type: entity
+  parent: BaseChemistryEmptyBottle
+  abstract: true
+  id: BaseChemistryEmptyBottleNoShard
+  components:
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+          params:
+            volume: -4
+      - !type:SpillBehavior { }
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+# Lua end
+
 - type: entity
   parent: BaseChemistryEmptyBottle
   id: ChemistryEmptyBottle01
 
 - type: entity
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryEmptyBottleNoShard # Lua: BaseChemistryEmptyBottle < BaseChemistryEmptyBottleNoShard
   id: ChemistryEmptyBottle02
   components:
   - type: Sprite
@@ -114,7 +136,7 @@
     fillBaseName: bottle-2-
 
 - type: entity
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryEmptyBottleNoShard # Lua: BaseChemistryEmptyBottle < BaseChemistryEmptyBottleNoShard
   id: ChemistryEmptyBottle03
   components:
   - type: Sprite
@@ -127,7 +149,7 @@
     fillBaseName: bottle-3-
 
 - type: entity
-  parent: BaseChemistryEmptyBottle
+  parent: BaseChemistryEmptyBottleNoShard # Lua: BaseChemistryEmptyBottle < BaseChemistryEmptyBottleNoShard
   id: ChemistryEmptyBottle04
   components:
   - type: Sprite
@@ -226,7 +248,7 @@
 - type: entity
   id: ChemistryBottleNocturine
   suffix: nocturine
-  parent: BaseChemistryBottleFilled
+  parent: [BaseChemistryBottleFilled, BaseC3SyndicateContrabandNoValue] # Lua-changes: added BaseC3SyndicateContrabandNoValue
   components:
   - type: Label
     currentLabel: reagent-name-nocturine
@@ -316,7 +338,7 @@
 - type: entity
   id: ChemistryBottleLead
   suffix: lead
-  parent: BaseChemistryBottleFilled
+  parent: [BaseChemistryBottleFilled, BaseC3ContrabandNoValue] # Lua-changes: added BaseC3ContrabandNoValue
   components:
   - type: Label
     currentLabel: reagent-name-lead

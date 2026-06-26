@@ -9,7 +9,19 @@
   stations:
     Frontier:
       stationProto: StandardFrontierStation
+      # Lua add start
+      gridComponents:
+      - type: VesselMusic
+        ambientMusicPrototype: ColossusCentralMusic
+      - type: VesselInfo
+        description: "Хотя бы здесь вы можете почувствовать себя в безопасности."
+      # Lua add end
       components:
+        - type: FrontierParking # Lua
+        - type: RadarBlipIcon
+          icon: /Textures/_Lua/Interface/Radar/space-station.png
+          scale: 1.2
+          allowWhenHidden: true
         - type: StationNameSetup
           mapNameTemplate: 'Станция Фронтир'
 #          nameGenerator:
@@ -22,10 +34,11 @@
           lobbySortOrder: 1
         - type: StationJobs
           availableJobs:
+            Vip: [ -1, -1 ]
             Contractor: [ -1, -1 ]
             Pilot: [ -1, -1 ]
-            MedicalDoctor: [ 1, 1 ] #Lua 3<1
-            Chemist: [ 1, 1 ]
+#            MedicalDoctor: [ 1, 1 ] #comment (28-29) from _Lua
+#            Chemist: [ 1, 1 ]
             Borg: [ -1, -1 ]
             StationRepresentative: [ 1, 1 ]
             StationTrafficController: [ 1, 1 ]
@@ -33,6 +46,7 @@
             Valet: [ 1, 1 ]
             NFJanitor: [ 1, 1 ]
             MailCarrier: [ 1, 1 ]
+            FrontierEngineer: [ 1, 1 ]
           tags:
           - HeadOfPersonnel
           - HeadOfSecurity

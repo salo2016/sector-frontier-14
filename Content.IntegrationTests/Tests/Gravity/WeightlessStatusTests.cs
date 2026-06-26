@@ -2,6 +2,7 @@ using Content.Server.Gravity;
 using Content.Shared.Alert;
 using Content.Shared.Gravity;
 using Robust.Shared.GameObjects;
+using Robust.UnitTesting.Pool;
 
 namespace Content.IntegrationTests.Tests.Gravity
 {
@@ -19,6 +20,7 @@ namespace Content.IntegrationTests.Tests.Gravity
   - type: Alerts
   - type: Physics
     bodyType: Dynamic
+  - type: GravityAffected
 
 - type: entity
   name: WeightlessGravityGeneratorDummy

@@ -9,7 +9,8 @@
     impactEffect: BulletImpactEffectOrangeDisabler
     damage:
       types:
-        Heat: 16 #Lua 8<16
+        Shock: 17.5
+        Caustic: 7.5
 
 # Assault Rifles / Carbines
 - type: entity
@@ -63,7 +64,7 @@
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
-        Heat: 0
+        Shock: 0
     soundHit:
       collection: WeakHit
     forceSound: true
@@ -78,7 +79,7 @@
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
-        Heat: 2
+        Shock: 2
     soundHit:
       collection: WeakHit
     forceSound: true
@@ -95,7 +96,7 @@
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
-        Heat: 1
+        Shock: 1
     soundHit:
       collection: WeakHit
     forceSound: true
@@ -113,7 +114,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 10
+        Blunt: 15 #Lua 10<15
         Structural: 30
   - type: Ammo
     muzzleFlash: HitscanEffect
@@ -124,7 +125,6 @@
     color: white
     energy: 0.5
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
 
 - type: entity
   id: NFBulletKineticMediumPower
@@ -136,7 +136,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 13
+        Blunt: 20 #Lua 13<20
         Structural: 30
 
 - type: entity
@@ -159,4 +159,3 @@
         Structural: 30
   - type: PointLight
     color: "#ffffff"
-  - type: MiningGatheringHard

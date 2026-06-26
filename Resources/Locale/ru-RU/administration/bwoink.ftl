@@ -6,7 +6,7 @@ bwoink-system-messages-being-relayed-to-discord =
 bwoink-system-introductory-message =
     Пожалуйста, подробно опишите проблему, с которой вы столкнулись. Предположите, что игровой администратор, который будет решать проблему, не обладает информацией из первых рук о произошедшем.
     Пожалуйста, не просите о проведении особых событий или наказании других игроков.
-    Любые баги и другие связанные вопросы следует сообщать через Issue https://github.com/HacksLua/sector-frontier-14.
+    Любые баги и другие связанные вопросы следует сообщать через Issue https://github.com/Lua-Frontier/sector-frontier-14.
     Злоупотребление этой системой сообщений может привести к дисциплинарным мерам.
 bwoink-system-typing-indicator =
     { $players } { $count ->
@@ -18,6 +18,7 @@ admin-ahelp-admin-only-tooltip =
     If checked, then the message won't be visible for the player,
     but will be visible for other admins and still will be Discord relayed.
 admin-bwoink-play-sound = Звук?
+admin-bwoink-ahelp-sound = Звук ахелпов
 bwoink-title-none-selected = Ничего не выбрано
 bwoink-system-rate-limited = Система: вы отправляете сообщения слишком быстро.
 bwoink-system-player-disconnecting = отключился.

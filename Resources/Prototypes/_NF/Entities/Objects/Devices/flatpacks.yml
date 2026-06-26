@@ -37,17 +37,6 @@
 
 - type: entity
   parent: BaseNFFlatpack
-  id: EngineeringTechFabFlatpack
-  name: engineering techfab flatpack
-  description: A flatpack used for constructing an engineering techfab.
-  components:
-  - type: Flatpack
-    entity: EngineeringTechFab
-  - type: StaticPrice
-    price: 250
-
-- type: entity
-  parent: BaseNFFlatpack
   id: GasThermoMachineFreezerFlatpack
   name: freezer flatpack
   description: A flatpack used for constructing a freezer.
@@ -305,7 +294,7 @@
   - type: Flatpack
     entity: MachineMaterialSilo
   - type: StaticPrice
-    price: 250
+    price: 150
 
 #region Service
 - type: entity
@@ -328,17 +317,6 @@
   - type: Sprite
     layers:
     - state: service_lathe
-
-- type: entity
-  parent: UniformPrinterFlatpack
-  id: ServiceTechFabFlatpack
-  name: service techfab flatpack
-  description: A flatpack used for constructing a service techfab.
-  components:
-  - type: Flatpack
-    entity: ServiceTechFab
-  - type: StaticPrice
-    price: 250
 
 - type: entity
   parent: UniformPrinterFlatpack
@@ -549,6 +527,18 @@
 
 - type: entity
   parent: BaseNFFlatpack
+  id: CivilianOreProcessorFlatpack
+  name: civilian ore processor flatpack
+  description: A flatpack used for constructing a civilian ore processor.
+  components:
+  - type: Flatpack
+    entity: OreProcessorCivilian
+  - type: Sprite
+    layers:
+    - state: supply_lathe
+
+- type: entity
+  parent: BaseNFFlatpack
   id: ShuttleGunKineticFlatpack
   name: PTK-1500e "Matter Dematerializer" flatpack
   description: A flatpack used for constructing a PTK-1500e "Matter Dematerializer".
@@ -560,15 +550,6 @@
   - type: Sprite
     layers:
     - state: supply_gun
-
-- type: entity
-  parent: OreProcessorFlatpack
-  id: SalvageTechfabNFFlatpack
-  name: salvage techfab flatpack
-  description: A flatpack used for constructing a salvage techfab.
-  components:
-  - type: Flatpack
-    entity: SalvageTechfabNF
 
 - type: entity
   parent: OreProcessorFlatpack
@@ -587,6 +568,15 @@
   components:
   - type: Flatpack
     entity: ScrapProcessor
+
+- type: entity
+  parent: OreProcessorFlatpack
+  id: CrateStorageRackFlatpack
+  name: crate storage rack flatpack
+  description: A storage rack prefab.
+  components:
+  - type: Flatpack
+    entity: CrateStorageRack
 
 #region Mercenary
 - type: entity
@@ -621,6 +611,20 @@
   components:
   - type: Flatpack
     entity: ComputerResearchAndDevelopment
+  - type: StaticPrice
+    price: 250
+  - type: Sprite
+    layers:
+    - state: science_console
+
+- type: entity
+  parent: BaseNFFlatpack
+  id: ComputerResearchAndDevelopmentSyndicateFlatpack
+  name: syndicate research and development computer flatpack
+  description: A flatpack used for constructing a syndicate research and development computer.
+  components:
+  - type: Flatpack
+    entity: ComputerResearchAndDevelopmentSyndicate
   - type: StaticPrice
     price: 250
   - type: Sprite
@@ -686,6 +690,20 @@
   components:
   - type: Flatpack
     entity: ResearchAndDevelopmentServer
+  - type: StaticPrice
+    price: 250
+  - type: Sprite
+    layers:
+    - state: science_server
+
+- type: entity
+  parent: BaseNFFlatpack
+  id: ResearchAndDevelopmentServerSyndicateFlatpack
+  name: syndicate research and development server flatpack
+  description: A flatpack used for constructing a syndicate research and development server.
+  components:
+  - type: Flatpack
+    entity: ResearchAndDevelopmentServerSyndicate
   - type: StaticPrice
     price: 250
   - type: Sprite
@@ -939,7 +957,7 @@
     price: 750
 
 - type: entity
-  parent: HoverbikeFlatpack
+  parent: [HoverbikeFlatpack, BaseC1SyndicateContraband] # Lua-changes: added BaseC1SyndicateContraband
   id: HoverbikeSyndicateFlatpack
   name: syndicate hoverbike flatpack
   description: A flatpack used for constructing a hoverbike. Keys already slotted in the ignition.
@@ -1029,7 +1047,7 @@
     price: 2500
 
 - type: entity
-  parent: VendingMachineBoozeFlatpack
+  parent: [VendingMachineBoozeFlatpack, BaseC1Contraband] # Lua-changes: added BaseC1Contraband
   id: VendingMachineClothingPunkFlatpack
   name: threadschoom vendomat flatpack
   description: A flatpack used for constructing a threadschoom vendomat.

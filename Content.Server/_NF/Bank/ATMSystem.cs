@@ -3,6 +3,7 @@
  * Copyright (c) 2024 New Frontiers Contributors
  * See AGPLv3.txt for details.
  */
+using Content.Shared._NF.Bank;
 using Content.Server.Administration.Logs;
 using Content.Server.Hands.Systems;
 using Content.Server.Popups;
@@ -35,11 +36,13 @@ public sealed partial class BankSystem
 
     private void InitializeATM()
     {
+        /* Lua start
         SubscribeLocalEvent<BankATMComponent, BankWithdrawMessage>(OnWithdraw);
         SubscribeLocalEvent<BankATMComponent, BankDepositMessage>(OnDeposit);
         SubscribeLocalEvent<BankATMComponent, BoundUIOpenedEvent>(OnATMUIOpen);
         SubscribeLocalEvent<BankATMComponent, EntInsertedIntoContainerMessage>(OnCashSlotChanged);
         SubscribeLocalEvent<BankATMComponent, EntRemovedFromContainerMessage>(OnCashSlotChanged);
+           Lua end */
     }
 
     private void OnWithdraw(EntityUid uid, BankATMComponent component, BankWithdrawMessage args)

@@ -7,22 +7,13 @@ appraisal-program-name = ОцениВСЁ Плюс
 appraisal-label-name = Предмет
 appraisal-label-price = Оценочная стоимость
 
-# Ledger cartridge
-ledger-program-name = SpesoFlow Lite
-ledger-header = Sector Ledger
-ledger-total-income = Общий доход
-ledger-no-income = Нет
-ledger-total-expenses = Общий убыток
-ledger-no-expenses = Нет
-ledger-balance = Баланс:
-ledger-no-balance = N/A
 
 ledger-tab-Frontier = Аванпост Фронтир
-ledger-tab-Nfsd = ДСБФ
+ledger-tab-Nfsd = СРБС
 ledger-tab-Medical = Медицинская диспетчерская
 # Fallback, if this displays, something's wrong.
 ledger-tab-Unknown = Неизвестно
-ledger-tab-Typan = Нордфолл
+ledger-tab-Typan = Тайпан
 ledger-tab-CentComm = Центральное Командование
 
 ledger-entry-type-TickingIncome = Субсидии
@@ -61,7 +52,3 @@ yupi-ui-balance = Баланс:
 yupi-ui-target-code = Код получателя:
 yupi-ui-amount = Сумма:
 yupi-ui-send = Отправить
-yupi-ui-repay = Погасить кредит
-yupi-repay-success = Погашено { $amount } кредитов по займу.
-yupi-ui-outstanding = Остаток по кредиту:
-yupi-repay-nothing = Нет задолженности для погашения.

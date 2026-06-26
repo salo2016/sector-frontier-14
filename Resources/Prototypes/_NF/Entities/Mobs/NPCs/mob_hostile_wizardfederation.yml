@@ -35,11 +35,11 @@
     speedModifierThresholds:
       60: 0.7
       80: 0.5
-  - type: Advertise
-    pack: wizardhumanoidchatter
-    minimumWait: 30
-    maximumWait: 120
-    nextAdvertisementTime: 10
+  - type: Vocalizer
+    minVocalizeInterval: 30
+    maxVocalizeInterval: 120
+  - type: DatasetVocalizer
+    dataset: wizardhumanoidchatter
   - type: AutoWakeUp
 
 # Humans
@@ -268,4 +268,4 @@
     muzzleFlash: null
   - type: MovementSpeedModifier
     baseWalkSpeed : 4.5
-    baseSprintSpeed : 4.5
+    baseRunningSpeed : 4.5

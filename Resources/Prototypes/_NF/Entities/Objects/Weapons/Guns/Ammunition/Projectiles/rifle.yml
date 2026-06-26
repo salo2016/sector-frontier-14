@@ -116,7 +116,8 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 14
+        Piercing: 15 #Lua 14<15
+        Slash: 9 #Lua 
 
 - type: entity
   id: NFBulletRifle25Overpressure
@@ -258,8 +259,9 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 35
-        Structural: 200
+        Piercing: 75
+        Blunt: 15
+        Structural: 150
     penetrationThreshold: 360
     penetrationDamageTypeRequirement:
     - Structural
@@ -273,6 +275,6 @@
   - type: Projectile
     damage:
       types:
-        Blunt: 10
+        Blunt: 5
   - type: StaminaDamageOnCollide
-    damage: 70
+    damage: 75

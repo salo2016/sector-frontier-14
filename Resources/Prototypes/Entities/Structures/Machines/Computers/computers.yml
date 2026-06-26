@@ -111,7 +111,7 @@
           type: WiresBoundUserInterface
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#43ccb5"
 
 - type: entity
@@ -122,6 +122,8 @@
   abstract: true
   components:
   - type: ShuttleConsole
+  - type: ShipNpcTarget # Mono
+    needPower: true
   - type: ShuttleConsoleLock
     locked: false
   - type: DetectionRangeMultiplier
@@ -154,7 +156,7 @@
     radius: 256
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#43ccb5"
   - type: ItemSlots
     slots:
@@ -247,7 +249,7 @@
     radius: 1536
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#c94242"
   - type: Computer
     board: SyndicateShuttleConsoleCircuitboard
@@ -278,7 +280,7 @@
     maxRange: 256
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#43ccb5"
   - type: Computer
     board: CargoShuttleConsoleCircuitboard
@@ -326,7 +328,7 @@
   - type: IFFConsole
     allowedFlags:
       - Hide
-      - HideLabel
+      - HideLabelShuttle # Lua decrypt mod
   - type: ActivatableUI
     key: enum.IFFConsoleUiKey.Key
   - type: UserInterface
@@ -358,7 +360,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#c9c042"
   - type: Computer
     board: PowerComputerCircuitboard
@@ -400,7 +402,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: Computer
     board: MedicalRecordsComputerCircuitboard
@@ -434,7 +436,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
@@ -451,6 +453,24 @@
   description: This can be used to check station records.
   components:
   - type: GeneralStationRecordConsole
+    captainIdSlot:
+      name: ship-crew-console-captain-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: true
+      whitelist:
+        components:
+        - IdCard
+    targetIdSlot:
+      name: ship-crew-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: true
+      whitelist:
+        components:
+        - IdCard
   - type: UserInterface
     interfaces:
         enum.GeneralStationRecordConsoleKey.Key:
@@ -458,10 +478,18 @@
         enum.WiresUiKey.Key:
           type: WiresBoundUserInterface
   - type: ActivatableUI
+    singleUser: true
     key: enum.GeneralStationRecordConsoleKey.Key
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+        ents: []
+      GeneralStationRecordConsole-captainId: !type:ContainerSlot
+      GeneralStationRecordConsole-targetId: !type:ContainerSlot
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
@@ -489,7 +517,7 @@
       state: generic_panel_open
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#006400"
   - type: Computer
     board: CrewMonitoringComputerCircuitboard
@@ -527,6 +555,7 @@
     - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
       state: generic_panel_open
   - type: ResearchClient
+    allowedFactions: [Nanotrasen] # Lua: one family<multi-family research clients
   - type: ResearchConsole
   - type: ActiveRadio
     channels:
@@ -550,8 +579,56 @@
 #    access: [["Research"]]
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Science
+
+- type: entity
+  parent: BaseComputerAiAccess
+  id: ComputerResearchAndDevelopmentSyndicate
+  name: syndicate R&D computer
+  description: A computer used to interface with syndicate R&D tools.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: ResearchClient
+    allowedFactions: [Syndicate]
+  - type: ResearchConsole
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: TechnologyDatabase
+  - type: ActivatableUI
+    key: enum.ResearchConsoleUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.ResearchConsoleUiKey.Key:
+        type: ResearchConsoleFrontierBoundUserInterface
+      enum.ResearchClientUiKey.Key:
+        type: ResearchClientBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: ApcPowerReceiver
+    powerLoad: 1000
+  - type: Computer
+    board: ResearchComputerSyndicateCircuitboard
+  - type: AccessReader
+  - type: PointLight
+    radius: 1.5
+    energy: 4.0
+    color: "#c33c3c"
   - type: GuideHelp
     guides:
     - Science
@@ -599,7 +676,7 @@
     board: AnalysisComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b53ca1"
   - type: GuideHelp
     guides:
@@ -659,7 +736,7 @@
     board: IDComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#3c5eb5"
   - type: Tag
     tags:
@@ -683,7 +760,7 @@
     board: BodyScannerComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
 
 - type: entity
@@ -710,7 +787,7 @@
     title: comms-console-announcement-title-station
     global: true #SR WILL NOT BE IGNORED
   - type: DeviceNetwork
-    deviceNetId: Wireless # Frontier
+    deviceNetId: Wireless
     transmitFrequencyId: ShuttleTimer
   - type: ActivatableUI
     key: enum.CommunicationsConsoleUiKey.Key
@@ -724,7 +801,7 @@
     board: CommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#3c5eb5"
   - type: Damageable
     damageContainer: StructuralInorganic
@@ -752,7 +829,7 @@
     access: [[ "NuclearOperative" ]]
   - type: CommunicationsConsole
     title: comms-console-announcement-title-nukie
-    color: "#ff0000"
+    color: "#8A3324"
     canShuttle: false
     global: true #announce to everyone they're about to fuck shit up
     announceSentBy: false # The title already says who they are.
@@ -761,7 +838,7 @@
     board: SyndicateCommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#f71713"
 
 - type: entity
@@ -795,7 +872,7 @@
     board: WizardCommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#F317F3"
 
 - type: entity
@@ -827,7 +904,7 @@
     board: CentcommCommsComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#00FF00"
 
 - type: entity
@@ -862,7 +939,7 @@
     board: SolarControlComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#e6e227"
   - type: GuideHelp
     guides:
@@ -902,7 +979,7 @@
     board: RadarConsoleCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#e6e227"
 
 - type: entity
@@ -943,7 +1020,7 @@
     board: CargoRequestComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
   - type: AccessReader
     #access: [["Cargo"]] # Frontier
@@ -984,7 +1061,7 @@
     account: Engineering
     announcementChannel: Engineering
     removeLimitAccess: [ "ChiefEngineer" ]
-    slipPrinter: true
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Engineering
@@ -1018,7 +1095,7 @@
     account: Medical
     announcementChannel: Medical
     removeLimitAccess: [ "ChiefMedicalOfficer" ]
-    slipPrinter: true
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Medical
@@ -1052,7 +1129,7 @@
     account: Science
     announcementChannel: Science
     removeLimitAccess: [ "ResearchDirector" ]
-    slipPrinter: true
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Science
@@ -1086,7 +1163,7 @@
     account: Security
     announcementChannel: Security
     removeLimitAccess: [ "HeadOfSecurity" ]
-    slipPrinter: true
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Security
@@ -1120,7 +1197,7 @@
     account: Service
     announcementChannel: Service
     removeLimitAccess: [ "HeadOfPersonnel" ]
-    slipPrinter: true
+    mode: SendToPrimary
   - type: ActiveRadio
     channels:
     - Service
@@ -1163,7 +1240,7 @@
     board: CargoBountyComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
   - type: AccessReader
     access: [["Quartermaster"]]
@@ -1207,7 +1284,7 @@
     board: FundingAllocationComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#3c5eb5"
 
 - type: entity
@@ -1238,7 +1315,7 @@
     board: CloningConsoleComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#1f8c28"
   - type: DeviceLinkSource
     range: 4
@@ -1296,7 +1373,7 @@
     board: SalvageJobBoardComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
 
 - type: entity
@@ -1345,7 +1422,7 @@
       board: SalvageExpeditionsComputerCircuitboard
     - type: PointLight
       radius: 1.5
-      energy: 1.6
+      energy: 4.0
       color: "#b89f25"
     - type: AccessReader
 #      access: [["Salvage"]]
@@ -1467,7 +1544,7 @@
     board: CargoSaleComputerCircuitboard
   - type: PointLight
     radius: 1.5
-    energy: 1.6
+    energy: 4.0
     color: "#b89f25"
   - type: MarketModifier # In the case someone got a computer board from QM locker, they can use it to sell on a ship if they have the grids, just to make sure its useless.
     mod: 0
@@ -1535,7 +1612,7 @@
           state: generic_panel_open
     - type: PointLight
       radius: 1.5
-      energy: 1.6
+      energy: 4.0
       color: "#43ccb5"
     - type: Computer
       board: SensorConsoleCircuitboard

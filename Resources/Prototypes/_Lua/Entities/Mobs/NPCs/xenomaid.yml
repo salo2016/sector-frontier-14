@@ -56,7 +56,7 @@
     - FootstepSound
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseRunningSpeed : 4.5
   - type: Puller
     needsHands: false
   - type: Butcherable
@@ -90,6 +90,9 @@
     damage:
       groups:
         Brute: 5
+  - type: InfectOnMelee
+    disease: XenoMaidVirus
+    infectChance: 0.05
   - type: DamageStateVisuals
     states:
       Alive:

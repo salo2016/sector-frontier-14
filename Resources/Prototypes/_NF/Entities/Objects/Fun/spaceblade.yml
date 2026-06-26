@@ -134,7 +134,7 @@
   id: SpaceBladeSec
   parent:
   - SpaceBlade
-  - BaseC2ContrabandUnredeemable
+# - BaseC2ContrabandUnredeemable # Lua-changes: commented
   components:
   - type: Sprite
     state: secblade
@@ -147,7 +147,7 @@
   id: SpaceBladeContra
   parent:
   - SpaceBlade
-  - BaseC3SyndicateContraband
+  - BaseC1SyndicateContrabandNoValue # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContrabandNoValue
   description: Let it reap.
   components:
   - type: Sprite
@@ -254,7 +254,7 @@
     state: clown
   - type: Slippery
     slipData:
-      paralyzeTime: 0.5
+      knockdownTime: 0.5
       launchForwardsMultiplier: 0.5
   - type: StepTrigger
     intersectRatio: 0.2

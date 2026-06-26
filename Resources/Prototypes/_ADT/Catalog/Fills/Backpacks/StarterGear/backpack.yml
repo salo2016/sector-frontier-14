@@ -9,8 +9,27 @@
         - id: MedkitAdvancedFilled
         - id: NFWeaponShotgunEnforcer
         - id: NFWeaponEnergyPistolPulse
-        - id: NFAmmunitionBoxShellShotgunBuckshot
-        - id: NFAmmunitionBoxShellShotgunSlug
+        - id: AmmoBox23x75mmBuckshot #Lua 4 gauge
+        - id: AmmoBox23x75mmSlug #Lua 4 gauge
+
+- type: entity
+  categories: [ HideSpawnMenu ]
+  parent: ClothingBackpackERTMedical
+  id: LuaClothingBackpackOpsFilled
+  name: Medical backpack ops
+  description: A spacious backpack with lots of pockets.
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
+        - id: CoordinatesDiskLuaTech
+        - id: MedkitCombatFilled
+        - id: MedkitCombatFilled
+        - id: CombatMedipen
+        - id: CombatMedipen
+        - id: CombatMedipen
+        - id: CombatMedipen
+        - id: NFWeaponEnergyPistolPulse
 
 - type: entity
   categories: [ HideSpawnMenu ]

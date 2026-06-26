@@ -54,6 +54,7 @@
   storage:
     back:
     - AppraisalTool
+    - Multitool
 
 - type: chameleonOutfit
   id: NFPirateCaptainChameleonOutfit

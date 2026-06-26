@@ -3,7 +3,6 @@
 // See AGPLv3.txt for details.
 
 using Content.Shared._Lua.Starmap;
-using Content.Shared._Lua.Sectors;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -11,6 +10,7 @@ using Robust.Client.UserInterface;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 using System.Numerics;
 
 namespace Content.Client._Lua.Starmap;
@@ -19,6 +19,7 @@ public sealed class StarmapControl : Control
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     public float Range = 1f;
     public float Zoom { get; private set; } = 1f;
     private List<Star> _stars = new List<Star>();
@@ -36,7 +37,12 @@ public sealed class StarmapControl : Control
     private Dictionary<MapId, string> _sectorIdByMap = new();
     private Dictionary<MapId, string> _ownerByMap = new();
     private Dictionary<MapId, string> _sectorColorOverrideHexByMap = new();
+    private readonly Dictionary<MapId, Color> _overrideColorCache = new();
+    private readonly Dictionary<MapId, Color> _sectorColorCache = new();
+    private HashSet<MapId> _capturingMaps = new();
     private StarmapConfigPrototype? _config;
+    private int _centerStarIndex = -1;
+    private bool _graphDirty;
 
     public StarmapControl()
     {
@@ -57,22 +63,126 @@ public sealed class StarmapControl : Control
     }
 
     public void SetStars(List<Star> stars)
-    { _stars = stars; }
+    {
+        _stars = stars;
+        InvalidateGraph();
+    }
 
     public void SetEdges(List<HyperlaneEdge> edges)
-    { _edges = edges; }
+    {
+        _edges = edges;
+        InvalidateGraph();
+    }
 
     public void SetVisibleSectorMaps(List<MapId> maps)
-    { _visibleSectorMaps = new HashSet<MapId>(maps ?? new List<MapId>()); }
+    {
+        _visibleSectorMaps = new HashSet<MapId>(maps ?? new List<MapId>());
+        InvalidateGraph();
+    }
 
     public void SetSectorIdByMap(Dictionary<MapId, string> map)
-    { _sectorIdByMap = map ?? new Dictionary<MapId, string>(); }
+    {
+        _sectorIdByMap = map ?? new Dictionary<MapId, string>();
+        InvalidateGraph();
+    }
 
     public void SetOwnerByMap(Dictionary<MapId, string> owners)
     { _ownerByMap = owners ?? new Dictionary<MapId, string>(); }
 
     public void SetSectorColorOverridesHex(Dictionary<MapId, string> overrides)
-    { _sectorColorOverrideHexByMap = overrides ?? new Dictionary<MapId, string>(); }
+    {
+        _sectorColorOverrideHexByMap = overrides ?? new Dictionary<MapId, string>();
+        RebuildOverrideCache();
+        RebuildSectorColorCache();
+    }
+
+    public void SetCapturingMaps(HashSet<MapId> capturing)
+    { _capturingMaps = capturing ?? new HashSet<MapId>(); }
+
+    public bool IsCapturing(MapId mapId) => _capturingMaps != null && _capturingMaps.Contains(mapId);
+
+    private void InvalidateGraph()
+    { _graphDirty = true; }
+
+    private void EnsureGraphUpToDate()
+    {
+        if (!_graphDirty) return;
+        RebuildAdjacency();
+        _graphDirty = false;
+    }
+
+    private void RebuildAdjacency()
+    {
+        _adjacentTargetMaps.Clear();
+        _centerStarIndex = -1;
+        if (_stars == null || _stars.Count == 0) return;
+        var centerIndex = 0;
+        var minDistance = float.MaxValue;
+        for (var i = 0; i < _stars.Count; i++)
+        {
+            var distance = Vector2.Distance(_stars[i].Position, Vector2.Zero);
+            if (distance < minDistance)
+            { minDistance = distance; centerIndex = i; }
+        }
+        _centerStarIndex = centerIndex;
+        if (_edges == null || _edges.Count == 0) return;
+        foreach (var e in _edges)
+        {
+            if (e.A < 0 || e.B < 0 || e.A >= _stars.Count || e.B >= _stars.Count) continue;
+            if (!IsStarVisible(_stars[e.A]) || !IsStarVisible(_stars[e.B])) continue;
+            if (e.A == _centerStarIndex) _adjacentTargetMaps.Add(_stars[e.B].Map);
+            if (e.B == _centerStarIndex) _adjacentTargetMaps.Add(_stars[e.A].Map);
+        }
+    }
+
+    private void RebuildOverrideCache()
+    {
+        _overrideColorCache.Clear();
+        if (_sectorColorOverrideHexByMap == null) return;
+        foreach (var (mapId, hex) in _sectorColorOverrideHexByMap)
+        {
+            if (string.IsNullOrWhiteSpace(hex)) continue;
+            try { _overrideColorCache[mapId] = Color.FromHex(hex); }
+            catch { }
+        }
+    }
+
+    private void RebuildSectorColorCache()
+    {
+        _sectorColorCache.Clear();
+        if (_sectorIdByMap == null) return;
+
+        Dictionary<string, Color>? dataColors = null;
+        try
+        {
+            if (_proto.TryIndex<StarmapDataPrototype>("StarmapData", out var data))
+            {
+                dataColors = new Dictionary<string, Color>();
+                foreach (var def in data.Stars)
+                {
+                    if (def.Color != null)
+                        dataColors[def.Id] = def.Color.Value;
+                }
+            }
+        }
+        catch { }
+
+        foreach (var (mapId, sid) in _sectorIdByMap)
+        {
+            if (_overrideColorCache.TryGetValue(mapId, out var over))
+            { _sectorColorCache[mapId] = over; continue; }
+            if (dataColors != null && dataColors.TryGetValue(sid, out var dataColor))
+            { _sectorColorCache[mapId] = dataColor; continue; }
+            _sectorColorCache[mapId] = Color.White;
+        }
+    }
+
+    private Color GetSectorColorCached(MapId mapId)
+    {
+        if (_overrideColorCache.TryGetValue(mapId, out var over)) return over;
+        if (_sectorColorCache.TryGetValue(mapId, out var col)) return col;
+        return Color.White;
+    }
 
     public bool TryGetOwner(MapId mapId, out string owner)
     { return _ownerByMap.TryGetValue(mapId, out owner!); }
@@ -118,6 +228,7 @@ public sealed class StarmapControl : Control
 
     protected override void Draw(DrawingHandleScreen handle)
     {
+        EnsureGraphUpToDate();
         base.Draw(handle);
         var bg = _config?.BackgroundColor ?? new Color(5, 5, 10, 255);
         handle.DrawRect(new UIBox2(Vector2.Zero, PixelSize), bg);
@@ -131,17 +242,8 @@ public sealed class StarmapControl : Control
             handle.DrawLine(new Vector2(i * xStep, 0), new Vector2(i * xStep, Size.Y), gridColor);
             handle.DrawLine(new Vector2(0, i * yStep), new Vector2(Size.X, i * yStep), gridColor);
         }
-        _adjacentTargetMaps.Clear();
         if (_stars.Count > 1 && _edges != null && _edges.Count > 0)
         {
-            var centerStarIndex = 0;
-            var minDistance = float.MaxValue;
-            for (var i = 0; i < _stars.Count; i++)
-            {
-                var distance = Vector2.Distance(_stars[i].Position, Vector2.Zero);
-                if (distance < minDistance)
-                { minDistance = distance; centerStarIndex = i; }
-            }
             var grey = new Color(112, 128, 144, 120);
             foreach (var e in _edges)
             {
@@ -150,23 +252,28 @@ public sealed class StarmapControl : Control
                 var fromPos = GetPositionOfStar(_stars[e.A].Position);
                 var toPos = GetPositionOfStar(_stars[e.B].Position);
                 handle.DrawLine(fromPos, toPos, grey);
-                if (e.A == centerStarIndex) _adjacentTargetMaps.Add(_stars[e.B].Map);
-                if (e.B == centerStarIndex) _adjacentTargetMaps.Add(_stars[e.A].Map);
             }
         }
         _hoveredStar = null;
+        var localMouse = GetMouseLocalPx();
+        var tSeconds = (float) _timing.CurTime.TotalSeconds;
         foreach (var star in _stars)
         {
             if (!IsStarVisible(star)) continue;
             var uiPosition = GetPositionOfStar(star.Position);
-            var localMouse = GetMouseLocalPx();
             var radius = 5f;
             var hovered = Vector2.Distance(localMouse, uiPosition) <= radius * 1.5f;
             var color = Color.White;
             var name = star.Name;
             var isSector = IsSectorStar(star.Map);
-            if (Vector2.Distance(Vector2.Zero, star.Position) >= Range) color = Color.Red;
-            if (Vector2.Distance(Vector2.Zero, star.Position) >= Range * 1.5)
+            var capturing = _capturingMaps != null && _capturingMaps.Contains(star.Map);
+            if (capturing)
+            {
+                var factionCol = GetSectorColorCached(star.Map);
+                color = factionCol;
+            }
+            if (!capturing && Vector2.Distance(Vector2.Zero, star.Position) >= Range) color = Color.Red;
+            if (!capturing && Vector2.Distance(Vector2.Zero, star.Position) >= Range * 1.5)
             {
                 color = Color.DarkRed;
                 name = Loc.GetString("ship-ftl-tag-oor");
@@ -174,20 +281,52 @@ public sealed class StarmapControl : Control
             if (star.Position == Vector2.Zero) color = Color.Blue;
             if (isSector)
             {
-                color = GetSectorColor(star.Map);
+                color = GetSectorColorCached(star.Map);
                 radius = GetSectorSize(star.Map);
             }
-            else if (TryGetOverrideColor(star.Map, out var overrideColor))
+            else if (_overrideColorCache.TryGetValue(star.Map, out var overrideColor))
             { color = overrideColor; }
             if (hovered) { radius = isSector ? 12f : 10f; }
             if (isSector)
             {
-                handle.DrawCircle(uiPosition, radius + 2, color with { A = 100 }, false);
+                if (capturing)
+                {
+                    var ring = Color.White with { A = 230 };
+                    handle.DrawCircle(uiPosition, radius + 2f, ring, false);
+                    var exPos = uiPosition + new Vector2(radius + 6f, -radius - 4f);
+                    handle.DrawString(_font, exPos + new Vector2(1f, 1f), "!", Color.Black);
+                    handle.DrawString(_font, exPos, "!", ring);
+                }
+                else
+                {
+                    var ring = color with { A = 255 };
+                    handle.DrawCircle(uiPosition, radius + 2f, ring, false);
+                    handle.DrawCircle(uiPosition, radius + 1f, ring, false);
+                }
                 handle.DrawCircle(uiPosition, radius, color);
-                handle.DrawCircle(uiPosition, radius - 2, Color.White with { A = 150 });
+                handle.DrawCircle(uiPosition, radius - 2, color with { A = 200 });
             }
             else
-            { handle.DrawCircle(uiPosition, radius, color); }
+            {
+                if (capturing)
+                {
+                    var ring = Color.White with { A = 230 };
+                    handle.DrawCircle(uiPosition, radius + 2f, ring, false);
+                    var exPos = uiPosition + new Vector2(radius + 6f, -radius - 4f);
+                    handle.DrawString(_font, exPos + new Vector2(1f, 1f), "!", Color.Black);
+                    handle.DrawString(_font, exPos, "!" , ring);
+                }
+                else
+                {
+                    if (_ownerByMap != null && _ownerByMap.ContainsKey(star.Map))
+                    {
+                        var ring = GetSectorColorCached(star.Map) with { A = 255 };
+                        handle.DrawCircle(uiPosition, radius + 2f, ring, false);
+                        handle.DrawCircle(uiPosition, radius + 1f, ring, false);
+                    }
+                }
+                handle.DrawCircle(uiPosition, radius, color);
+            }
             if (hovered)
             {
                 handle.DrawString(_font, uiPosition + new Vector2(10, 0), name);
@@ -199,6 +338,7 @@ public sealed class StarmapControl : Control
     private bool IsStarVisible(Star star)
     {
         var isSector = IsSectorStar(star.Map);
+        if (_capturingMaps != null && _capturingMaps.Contains(star.Map)) return true;
         if (!isSector) return true;
         if (star.Position == Vector2.Zero) return true;
         if (_visibleSectorMaps.Count == 0) return false;
@@ -308,38 +448,13 @@ public sealed class StarmapControl : Control
 
     public bool IsAdjacentToCurrent(Star star)
     {
+        EnsureGraphUpToDate();
         if (star.Position == Vector2.Zero) return false;
         return _adjacentTargetMaps.Contains(star.Map);
     }
 
     private bool IsSectorStar(MapId mapId)
     { return _sectorIdByMap.ContainsKey(mapId); }
-
-    private Color GetSectorColor(MapId mapId)
-    {
-        if (_sectorColorOverrideHexByMap.TryGetValue(mapId, out var hex))
-        { try { return Color.FromHex(hex); } catch { } }
-        if (!_sectorIdByMap.TryGetValue(mapId, out var sid)) return Color.White;
-        if (sid == "FrontierSector" || sid == "CentCom")
-        {
-            try
-            {
-                if (_config != null)
-                {
-                    foreach (var sp in _config.SpecialSectors)
-                    { if (string.Equals(sp.Id, sid, StringComparison.Ordinal) && sp.Color != null) return sp.Color.Value; }
-                }
-            }
-            catch { }
-            return Color.White;
-        }
-        try
-        {
-            if (_proto.TryIndex<SectorSystemPrototype>(sid, out var proto) && proto.StarmapColor != null) return proto.StarmapColor.Value;
-        }
-        catch { }
-        return Color.White;
-    }
 
     private float GetSectorSize(MapId mapId)
     { return _sectorIdByMap.ContainsKey(mapId) ? 7f : 7f; }

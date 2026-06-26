@@ -5,6 +5,17 @@
   description: What?
   abstract: true
   components:
+  # Goobstation edit start
+    - type: EmitSoundOnPickup
+      sound:
+        path: /Audio/_Goobstation/Items/handling/component_pickup.ogg
+    - type: EmitSoundOnDrop
+      sound:
+        path: /Audio/_Goobstation/Items/handling/component_drop.ogg
+    - type: EmitSoundOnLand
+      sound:
+        path: /Audio/_Goobstation/Items/handling/component_drop.ogg
+  # Goobstation edit end
     - type: Sprite
       sprite: _NF/Objects/Misc/stock_parts.rsi # Frontier
     - type: Item
@@ -20,10 +31,10 @@
 
 - type: entity
   id: MicroManipulatorStockPart
-  name: manipulator # Frontier: modular machine part<manipulator
+  name: basic manipulator # Frontier: modular machine part<basic manipulator
   parent: BaseStockPart
   description: A basic manipulator used in the construction of a variety of devices. # Frontier:
-  suffix: Rating 1
+  suffix: Rating 1, Single # Frontier: Single
   components:
     - type: Sprite
       state: micro_mani
@@ -32,3 +43,5 @@
       rating: 1 # Frontier
     - type: Stack
       stackType: Manipulator
+    - type: StackPrice # Frontier
+      price: 5 # Frontier

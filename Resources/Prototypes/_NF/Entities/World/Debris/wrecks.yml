@@ -3,6 +3,11 @@
   parent: NFBaseDebris
   abstract: true
   components:
+  - type: RadarBlipIcon
+    icon: /Textures/_Lua/Interface/Radar/wreck.png
+    scale: 1.2
+    maxDistance: 600
+    allowWhenHidden: true
   - type: BlobFloorPlanBuilder
     floorTileset:
       - Plating
@@ -23,6 +28,8 @@
         - id: WallReinforced
           prob: 0.2
         - id: AirlockMaint
+          prob: 0.01
+        - id: StargateAddressDisk
           prob: 0.01
         - id: Barricade
           prob: 0.01
@@ -78,13 +85,13 @@
         - id: NFSalvageTankSpawnerHighCapacity
           prob: 0.0005
         - id: RandomSurivalSpawndWrecks
-          prob: 0.0004
+          prob: 0.06
         # Medical
         - id: MedicalPodFilled # Medical bounties
           prob: 0.03
         # Mobs
         - id: NFSalvageMobSpawner
-          prob: 0.1
+          prob: 0.3 #Lua 0.1<0.3
         # Room
         - id: NFWreckRoomMarker
           prob: 0.01
@@ -97,6 +104,7 @@
         - id: GrilleBroken
           prob: 0.25
   - type: IFF
+    flags: HideLabel
     color: "#88b0d1"
 
 - type: entity
@@ -104,6 +112,11 @@
   parent: NFBaseDebris
   abstract: true
   components:
+  - type: RadarBlipIcon
+    icon: /Textures/_Lua/Interface/Radar/wreck.png
+    scale: 1.2
+    maxDistance: 600
+    allowWhenHidden: true
   - type: BlobFloorPlanBuilder
     floorTileset:
       - PlatingBrass
@@ -159,6 +172,7 @@
         - id: ClockworkGrilleBroken
           prob: 0.25
   - type: IFF
+    flags: HideLabel
     color: "#E1C16E"
 
 # region Wreck Sizes

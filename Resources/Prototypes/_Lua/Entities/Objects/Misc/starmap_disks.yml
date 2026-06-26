@@ -20,7 +20,7 @@
       - !type:DoActsBehavior { acts: [ Destruction ] }
 
 - type: entity
-  parent: CoordinatesDisk
+  parent: [CoordinatesDisk, BaseC3SyndicateContraband]
   id: CoordinatesDiskNordfall
   name: coordinates disk (Nordfall)
   components:
@@ -42,6 +42,27 @@
 
 - type: entity
   parent: CoordinatesDisk
+  id: CoordinatesDiskLuaTech
+  name: coordinates disk (LuaTech)
+  components:
+  - type: StarMapCoordinatesDisk
+    allowedSectors:
+    - LuaTech Sector
+    - Asteroid Field
+    allowedSectorIds:
+    - LuaTechSector
+    - AsteroidSectorDefault
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior { acts: [ Destruction ] }
+
+- type: entity
+  parent: [CoordinatesDisk, BaseC3PirateContraband]
   id: CoordinatesDiskPirate
   name: coordinates disk (Pirate)
   components:
@@ -91,12 +112,14 @@
     allowedSectors:
     - Frontier Sector
     - Nordfall Sector
+    - LuaTech Sector
     - Pirate Sector
     - Mercenary Sector
     - Asteroid Field
     allowedSectorIds:
     - FrontierSector
     - TypanSector
+    - LuaTechSector
     - PirateSector
     - MercenarySector
     - AsteroidSectorDefault
@@ -112,7 +135,7 @@
 
 
 - type: entity
-  parent: CoordinatesDisk
+  parent: [CoordinatesDisk, BaseC3CentCommContraband]
   id: CoordinatesDiskCentCom
   name: coordinates disk (CentCom)
   components:
@@ -132,5 +155,3 @@
         damage: 5
       behaviors:
       - !type:DoActsBehavior { acts: [ Destruction ] }
-
-

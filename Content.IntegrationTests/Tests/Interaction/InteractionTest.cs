@@ -1,21 +1,19 @@
 #nullable enable
-using System.Linq;
-using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.IntegrationTests.Pair;
-using Content.Server.Body.Systems;
 using Content.Server.Hands.Systems;
 using Content.Server.Stack;
 using Content.Server.Tools;
-using Content.Shared.Body.Part;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item.ItemToggle;
 using Content.Shared.Mind;
 using Content.Shared.Players;
 using Robust.Client.Input;
+using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -23,9 +21,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 using Robust.UnitTesting;
-using Content.Shared.Item.ItemToggle;
-using Robust.Client.State;
+using Robust.UnitTesting.Pool;
+using System.Numerics;
+using TestMapData = Content.IntegrationTests.Pair.TestMapData;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -40,10 +40,20 @@ namespace Content.IntegrationTests.Tests.Interaction;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
 {
+    /// <summary>
+    /// The prototype that will be spawned for the player entity at <see cref="PlayerCoords"/>.
+    /// This is not a full humanoid and only has one hand by default.
+    /// </summary>
     protected virtual string PlayerPrototype => "InteractionTestMob";
 
+    /// <summary>
+    /// The map path to load for the integration test.
+    /// If null an empty map with a single 1x1 plating grid will be generated.
+    /// </summary>
+    protected virtual ResPath? TestMapPath => null;
+
     protected TestPair Pair = default!;
-    protected TestMapData MapData => Pair.TestMap!;
+    protected TestMapData MapData = default!;
 
     protected RobustIntegrationTest.ServerIntegrationInstance Server => Pair.Server;
     protected RobustIntegrationTest.ClientIntegrationInstance Client => Pair.Client;
@@ -135,15 +145,19 @@ public abstract partial class InteractionTest
 - type: entity
   id: InteractionTestMob
   components:
-  - type: Body
-    prototype: Aghost
   - type: DoAfter
   - type: Hands
+    hands:
+      hand_right: # only one hand, so that they do not accidentally pick up deconstruction products
+        location: Right
+    sortedHands:
+    - hand_right
   - type: ComplexInteraction
   - type: MindContainer
   - type: Stripping
   - type: Puller
   - type: Physics
+  - type: GravityAffected
   - type: Tag
     tags:
     - CanPilot
@@ -188,7 +202,7 @@ public abstract partial class InteractionTest
         CUiSys = Client.System<SharedUserInterfaceSystem>();
 
         // Setup map.
-        await Pair.CreateTestMap();
+        MapData = await Pair.CreateTestMap();
 
         PlayerCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)), MapData.MapUid));
         TargetCoords = SEntMan.GetNetCoordinates(Transform.WithEntityId(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)), MapData.MapUid));
@@ -228,20 +242,6 @@ public abstract partial class InteractionTest
         {
             if (old != null)
                 SEntMan.DeleteEntity(old.Value);
-        });
-
-        // Ensure that the player only has one hand, so that they do not accidentally pick up deconstruction products
-        await Server.WaitPost(() =>
-        {
-            // I lost an hour of my life trying to track down how the hell interaction tests were breaking
-            // so greatz to this. Just make your own body prototype!
-            var bodySystem = SEntMan.System<BodySystem>();
-            var hands = bodySystem.GetBodyChildrenOfType(SEntMan.GetEntity(Player), BodyPartType.Hand).ToArray();
-
-            for (var i = 1; i < hands.Length; i++)
-            {
-                SEntMan.DeleteEntity(hands[i].Id);
-            }
         });
 
         // Change UI state to in-game.

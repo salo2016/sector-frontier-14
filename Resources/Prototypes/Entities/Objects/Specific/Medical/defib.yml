@@ -39,9 +39,18 @@
       price: 30
     - type: GuideHelp
       guides:
-      - Medical Doctor
+      - MedicalDoctor
+    - type: Tag
+      tags:
+      - Defibrillator
     - type: PirateBountyItem # Frontier
       id: Defibrillator # Frontier
+    # Lua start
+    - type: PhysicalComposition
+      materialComposition:
+        Steel: 100
+        RawScrap: 25
+    # Lua end
 
 - type: entity
   id: Defibrillator
@@ -96,10 +105,13 @@
     doAfterDuration: 6
   - type: DoAfter
   - type: UseDelay
+  - type: Tag
+    tags:
+     - Defibrillator
 
 - type: entity
   id: DefibrillatorSyndicate
-  parent: [ DefibrillatorCompact, BaseC3SyndicateContrabandNoValue ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue
+  parent: [DefibrillatorCompact, BaseC2SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue # LuaChanges: BaseC3SyndicateContrabandNoValue > BaseC2SyndicateContraband
   name: interdyne defibrillator
   description: Doubles as a self-defense weapon against war-crime inclined tiders.
   components:
@@ -132,3 +144,6 @@
       types:
         Blunt: 8
         Shock: 6 #12 - Lua
+  - type: Tag
+    tags:
+     - Defibrillator

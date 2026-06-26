@@ -1,0 +1,86 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: entity
+  parent:
+  - MobRogueSiliconDroneBase
+  - MobRogueSiliconProjectileBatteryAmmo
+  id: MobRogueSiliconDroneScienceLuaTech
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: base
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: decor_department
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: decor_department_accent
+      color: "#6400c8"
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: base_eyes
+      shader: unshaded
+      color: "#ffff00"
+  - type: NpcFactionMember
+    factions:
+    - LuaTech
+  - type: ProjectileBatteryAmmoProvider
+    proto: NFAnomalousParticleSigmaStrong
+    fireCost: 100
+
+- type: entity
+  parent:
+  - MobRogueSiliconDroneBase
+  - MobRogueSiliconProjectileBatteryAmmo
+  id: MobRogueSiliconDroneLethalsLuaTech
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: base
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: decor_department
+      color: "#990000"
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: decor_department_accent
+      color: "#000000"
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: base_eyes
+      shader: unshaded
+      color: "#990000"
+  - type: NpcFactionMember
+    factions:
+    - LuaTech
+
+- type: entity
+  name: drone spawner
+  id: SpawnMobRogueDronesLuaTech
+  parent: MarkerBase
+  suffix: LuaTech
+  components:
+  - type: Sprite
+    layers:
+    - state: red
+    - state: ai
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: base
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: decor_department
+      color: "#990000"
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: decor_department_accent
+      color: "#ffff00"
+    - sprite: _NF/Mobs/RogueSilicons/drones.rsi
+      state: base_eyes
+      shader: unshaded
+      color: "#990000"
+  - type: RandomSpawner
+    prototypes:
+    - MobRogueSiliconDroneLethalsLuaTech
+    - MobRogueSiliconDroneScienceLuaTech
+    chance: 1
+    offset: 0.0

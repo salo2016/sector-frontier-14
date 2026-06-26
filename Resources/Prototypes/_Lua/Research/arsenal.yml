@@ -1,16 +1,33 @@
 - type: technology
-  id: LuaAdvancedSalvage
+  id: LuaAdvancedSalvageMagmite
   name: research-technology-advanced-salvage
   entityIcon: WeaponMagmiteCrusher
   discipline: NFArsenalNfsd
+  factions:
+  - Nanotrasen
+  - Syndicate
   tier: 3
-  cost: 25000
+  cost: 20000
   recipeUnlocks:
   - WeaponMagmiteCrusher
   - WeaponMagmiteCrusherGlaive
-  - ClothingShoesBootsJetBoots
   - WeaponMagmiteAccelerator
   technologyPrerequisites:
-  - NFSalvageWeapons
+  - NFImprovedSalvageWeapons
+  position: 5.83, 9.874
+- type: technology
+  id: LuaAdvancedSalvageJetBoots
+  name: research-technology-advanced-jet-boots
+  entityIcon: ClothingShoesBootsJetBoots
+  discipline: NFArsenalNfsd
+  factions:
+  - Nanotrasen
+  - Syndicate
+  tier: 3
+  cost: 10000
+  recipeUnlocks:
+  - ClothingShoesBootsJetBoots
+  technologyPrerequisites:
   - NFMagnetsTechCombat
-  position: 4, 39
+  position: -5.355, 11.053
+...

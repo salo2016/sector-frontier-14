@@ -1,10 +1,18 @@
 #region WizDen
 - type: entity
   id: NFWeaponPistolMk58
-  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber35, NFBaseWeaponFramePistolNanotrasen ]
+  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber9x19, NFBaseWeaponFramePistolNanotrasen ] #Lua 35 -> 9x19
   name: mk58
   description: A cheap semiauto sidearm.
+  suffix: Need balance test
   components:
+  - type: Gun #Lua
+    examineCaliber: gun-examine-caliber-919 #Lua
+    minAngle: 3.1 #Lua
+    maxAngle: 15.5 #Lua
+    angleIncrease: 0.7 #Lua
+    angleDecay: 5 #Lua
+    fireRate: 4.5
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/mk58.rsi
   - type: Clothing
@@ -15,22 +23,31 @@
 
 - type: entity
   id: NFWeaponPistolN1984
-  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber45, NFBaseWeaponFramePistolNanotrasen ]
+  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber45ACP, NFBaseWeaponFramePistolNanotrasen ] #Lua 45 -> 45ACP
   name: N1984
   description: |-
     The sidearm of any self respecting officer. On the handle is a label that says 'for authorized use only.'
+  suffix: Need balance test
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/N1984.rsi
+  - type: Gun #Lua
+    examineCaliber: gun-examine-caliber-45acp #Lua
+    minAngle: 3.1 #Lua
+    maxAngle: 15.5 #Lua
+    angleIncrease: 0.7 #Lua
+    angleDecay: 5 #Lua
+    fireRate: 6
 
 - type: entity
   id: NFWeaponPistolCobra
-  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber45, NFBaseWeaponFramePistolCybersun ]
+  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber45ACP, NFBaseWeaponFramePistolCybersun ] #Lua 45 -> 45ACP
   name: cobra
   description: |-
     A rugged, robust operator handgun with inbuilt silencer. An illegal firearm often used by Syndicate agents.
+  suffix: Need balance test
   components:
   - type: Gun
     soundGunshot:
@@ -45,32 +62,21 @@
 #region DeltaV
 - type: entity
   id: NFWeaponPistolUniversal
-  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber35, NFBaseWeaponFramePistolNanotrasen ]
+  parent: [ BaseC1Contraband, NFBaseWeaponPistolChamber9x19, NFBaseWeaponFramePistolNanotrasen ] #Lua 35 -> 9x19
   name: mk32 "Universal"
   description: The Mark 32 Offensive Handgun.
+  suffix: Need balance test
   components:
   - type: Gun
+    examineCaliber: gun-examine-caliber-919 #Lua
+    minAngle: 3.1 #Lua
+    maxAngle: 15.5 #Lua
+    angleIncrease: 0.7 #Lua
+    angleDecay: 5 #Lua
+    fireRate: 9 #Lua
     soundGunshot:
       path: /Audio/_DV/Weapons/Guns/Gunshots/universal.ogg
   - type: Sprite
     sprite: _DV/Objects/Weapons/Guns/Pistols/universal.rsi
   - type: Clothing
     sprite: _DV/Objects/Weapons/Guns/Pistols/universal.rsi
-
-- type: entity
-  id: NFWeaponPistolUniversalNfsd
-  parent: [ BaseC2ExpeditionContraband, NFBaseWeaponPistolChamber35HighCapacityOverpressure, NFWeaponPistolUniversal ]
-  name: mk32-M "Universal" service pistol
-  description: |-
-    The Mark 32 Offensive Service Pistol. On the handle is a label that says 'for authorized use only.'
-  components: &universalComponents
-  - type: Gun
-    soundGunshot:
-      path: /Audio/_DV/Weapons/Guns/Gunshots/universal.ogg
-
-#region DeltaV: rubber
-- type: entity
-  id: NFWeaponPistolUniversalNfsdLessLethal
-  parent: [ NFBaseWeaponPistolChamber35HighCapacityRubber, NFWeaponPistolUniversalNfsd ]
-  suffix: Frontier, Less-lethal
-  components: *universalComponents

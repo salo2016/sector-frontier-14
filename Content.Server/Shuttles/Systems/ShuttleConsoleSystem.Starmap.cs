@@ -1,4 +1,4 @@
-// LuaWorld - This file is licensed under AGPLv3
+ // LuaWorld - This file is licensed under AGPLv3
 // Copyright (c) 2025 LuaWorld
 // See AGPLv3.txt for details.
 
@@ -89,14 +89,17 @@ public sealed partial class ShuttleConsoleSystem
             {
                 try
                 {
-                    if (_prototypes.TryIndex<StarmapConfigPrototype>("StarmapConfig", out var stCfg))
+                    var dataId = "StarmapData";
+                    try { dataId = IoCManager.Resolve<Robust.Shared.Configuration.IConfigurationManager>().GetCVar(Content.Shared.Lua.CLVar.CLVars.StarmapDataId); } catch { }
+                    if (_prototypes.TryIndex<StarmapDataPrototype>(dataId, out var stData))
                     {
-                        foreach (var sp in stCfg.SpecialSectors)
+                        foreach (var def in stData.Stars)
                         {
-                            if (string.Equals(sp.Id, "CentCom", StringComparison.Ordinal))
+                            if (string.Equals(def.StarType, "centcom", StringComparison.OrdinalIgnoreCase))
                             {
-                                var ccPos = sp.Position;
-                                stars.Add(new Star(ccPos, ccMap, "Central Command", ccPos));
+                                var ccPos = def.Position;
+                                stars.Add(new Star(ccPos, ccMap, def.Name, ccPos));
+                                Log.Debug($"[Starmap] CentCom star added: allowCentComStar={allowCentComStar} ccMap={ccMap} pos={ccPos}");
                                 break;
                             }
                         }
@@ -104,6 +107,10 @@ public sealed partial class ShuttleConsoleSystem
                 }
                 catch { }
             }
+        }
+        else
+        {
+            Log.Debug($"[Starmap] CentCom star NOT added: allowCentComStar={allowCentComStar} CentComMap={_centcomm.CentComMap}");
         }
         if (currentMap != MapId.Nullspace)
         {
@@ -119,6 +126,9 @@ public sealed partial class ShuttleConsoleSystem
         }
         var visibleSectorMaps = new List<MapId>();
         var sectorIdByMap = new Dictionary<MapId, string>();
+        if (currentMap != MapId.Nullspace && !visibleSectorMaps.Contains(currentMap))
+            visibleSectorMaps.Add(currentMap);
+        var currentPreset = _ticker.CurrentPreset?.ID;
         if (consoleUid != null)
         {
             try
@@ -138,6 +148,16 @@ public sealed partial class ShuttleConsoleSystem
                                 { mapId = _ticker.DefaultMap; }
                                 else if (_sectors.TryGetMapId(sid, out var resolved))
                                 { mapId = resolved; }
+                                else if (currentPreset == "LuaAdventure")
+                                {
+                                    string? altId = sid switch
+                                    {
+                                        "TypanSector" => "TypanSectorLua",
+                                        "PirateSector" => "PirateSectorLua",
+                                        _ => null
+                                    };
+                                    if (altId == null || !_sectors.TryGetMapId(altId, out resolved)) continue; mapId = resolved;
+                                }
                                 else
                                 { continue; }
                                 {
@@ -194,8 +214,21 @@ public sealed partial class ShuttleConsoleSystem
                 ftlTime = default;
             }
         }
-        foreach (var sid in new[] { "AsteroidSectorDefault", "MercenarySector", "PirateSector", "TypanSector" })
-        { if (_sectors.TryGetMapId(sid, out var mid) && !sectorIdByMap.ContainsKey(mid)) sectorIdByMap[mid] = sid; }
+        try
+        {
+            var sDataId = "StarmapData";
+            try { sDataId = IoCManager.Resolve<Robust.Shared.Configuration.IConfigurationManager>().GetCVar(Content.Shared.Lua.CLVar.CLVars.StarmapDataId); } catch { }
+            if (_prototypes.TryIndex<StarmapDataPrototype>(sDataId, out var sData))
+            {
+                foreach (var def in sData.Stars)
+                {
+                    if (def.StarType == "centcom" || def.StarType == "frontier") continue;
+                    if (_sectors.TryGetMapId(def.Id, out var mid) && !sectorIdByMap.ContainsKey(mid))
+                        sectorIdByMap[mid] = def.Id;
+                }
+            }
+        }
+        catch { }
         if (allowCentComStar && _centcomm.CentComMap != MapId.Nullspace)
         {
             var frontierIdx = stars.FindIndex(s => s.Map == _ticker.DefaultMap);
@@ -223,7 +256,9 @@ public sealed partial class ShuttleConsoleSystem
             { colorOverrides[kv.Key] = kv.Value; }
         }
         catch { }
-        return new StarmapConsoleBoundUserInterfaceState(stars, 100f, edges, cooldown, cooldownTotal, ftlState, ftlTime, visibleSectorMaps, sectorIdByMap, ownerByMap, colorOverrides);
+        List<MapId> capturing = new();
+        try { capturing = _ownership.GetCapturingMaps().ToList(); } catch { }
+        return new StarmapConsoleBoundUserInterfaceState(stars, 100f, edges, capturing, cooldown, cooldownTotal, ftlState, ftlTime, visibleSectorMaps, sectorIdByMap, ownerByMap, colorOverrides);
     }
 
     private void OnWarpToStarMessage(EntityUid uid, ShuttleConsoleComponent component, WarpToStarMessage args) // Lua

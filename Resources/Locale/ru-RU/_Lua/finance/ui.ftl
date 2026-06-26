@@ -30,7 +30,7 @@ finance-deposit-part-id-placeholder = Частичное снятие: ID
 finance-deposit-part-button = Снять частично
 finance-deposit-list-title = Мои вклады
 finance-refresh = Обновить
-finance-deposit-row-format = {$id} | {$principal}+{$accrued} | {$apr}% | до кап. ~{$next}s | стоп ~{$stop}s | штраф ~{$penalty}
+finance-deposit-row-format = {$id} | {$principal}+{$accrued} | {$apr}% | до кап. ~{$next} | стоп ~{$stop} | штраф ~{$penalty}
 
 # Окно кредитов/обзора вкладов
 finance-loans-window-title = Финансы
@@ -43,13 +43,12 @@ finance-loans-sort-by-name = По имени
 finance-loans-col-name = Имя
 finance-loans-col-amount = Сумма
 finance-loans-col-until-charge = До списания
-finance-col-yupi = YUPI
 finance-deposits-col-name = Имя
 finance-deposits-col-total = Вклад (осн+%)
 finance-deposits-col-nextcap = До кап.
 finance-deposits-col-stop = До стопа
 finance-deposits-col-rate = Ставка
-finance-deposits-col-yupi = YUPI
+finance-deposits-col-actions = Действия
 finance-seconds-short = {$seconds}s
 
 # Модели ставки (для таблиц)

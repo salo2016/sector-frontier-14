@@ -1,0 +1,130 @@
+# Damage-per-second = 125 for pistols; 125-25 = 100 for caustic ammo; max COO = 5
+# Main damage type - Blunt for standart; main damage/special damage = 70/30 for special
+# LeptonComm status clear
+# Standart
+- type: entity
+  id: Bullet45_ACPFMJ
+  name: bullet (.45 ACP FMJ)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 25
+
+# Mechanical
+- type: entity
+  id: Bullet45_ACPPractice
+  name: bullet (.45 ACP practice)
+  parent: BaseBulletPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1 #Lua -1
+
+- type: entity
+  id: Bullet45_ACPRubber
+  name: bullet (.45 ACP rubber)
+  parent: BaseBulletRubber
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 4
+  - type: StaminaDamageOnCollide #Lua add
+    damage: 19
+
+- type: entity
+  id: Bullet45_ACPHP
+  parent: BaseBullet
+  name: bullet (.45 hollow-point)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 17.5
+        Piercing: 7.5
+
+# Physical
+- type: entity
+  id: Bullet45_ACPIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.45 ACP incendiary)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 17.5
+        Heat: 7.5
+
+- type: entity
+  id: Bullet45_ACPUranium
+  parent: BaseBulletUranium
+  name: bullet (.45 ACP uranium)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 17.5
+        Radiation: 7.5
+
+# Special
+- type: entity
+  id: Bullet45_ACPEmp
+  name: bullet (.45 ACP emp)
+  parent: BaseBulletEmp
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 17.5
+        Shock: 7.5
+
+- type: entity
+  id: Bullet45_ACPCaustic
+  name: bullet (.45 ACP caustic)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 14
+        Caustic: 6
+
+# Out of balance
+- type: entity
+  id: Bullet45_ACPRIP
+  parent: BaseBullet
+  name: bullet (.45 RIP)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Slash: 10 #Lua +3
+        Piercing: 15 #Lua -27
+        Blunt: 10 #Lua add
+  - type: StaminaDamageOnCollide #Lua add
+    damage: 6
+
+- type: entity
+  id: Bullet45_ACPPlasteelAP
+  parent: BaseBullet
+  name: bullet (.45 AP)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 20 #Lua +8
+        Structural: 75 #Lua add
+    ignoreResistances: true #Lua add

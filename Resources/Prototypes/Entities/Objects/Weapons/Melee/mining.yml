@@ -39,6 +39,32 @@
     materialComposition:
       Steel: 100
       Wood: 100
+  # Lua start
+  - type: Repairable
+    fuelCost: 2
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: MeleeDurability
+  # Lua end
 
 - type: entity
   name: mining drill
@@ -66,6 +92,32 @@
         Brute: 3
       types:
         Structural: 15
+  # Lua start
+  - type: Repairable
+    fuelCost: 2
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: MeleeDurability
+  # Lua end
 
 - type: entity
   name: diamond tipped mining drill
@@ -88,7 +140,6 @@
         Brute: 6
       types:
         Structural: 30
-  - type: MiningGatheringHard # Frontier
 
 
 - type: entity
@@ -106,7 +157,34 @@
     color: "#ffeead"
     enabled: false
     radius: 4
+  # Lua start
+  - type: Repairable
+    fuelCost: 2
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: MeleeDurability
+  # Lua end
 
+# Very high burst damage if you land a mark, while also providing a small amount of healing.
 - type: entity
   parent: [BaseWeaponCrusher, BaseC1Contraband] # Frontier: BaseSecurityCargoContraband<BaseC1Contraband
   id: WeaponCrusher
@@ -133,11 +211,12 @@
   - type: LeechOnMarker
     leech:
       groups:
-        Brute: -10
+        Brute: -6
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
     fireRate: 1
     useKey: false
+  - type: NFOniFriendlyGun # Frontier: Oni friendly crushers
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.5
     rechargeSound:
@@ -147,25 +226,26 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
-    attackRate: 1.5
+    attackRate: 1
     wideAnimationRotation: -135
     damage:
       types:
-        Blunt: 10
-        Slash: 5
+        Blunt: 6
+        Slash: 4
     soundHit:
       collection: MetalThud
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
-        Blunt: 2.5
-        Slash: 2.5
+        Blunt: 6
+        Slash: 2
         Structural: 30
   - type: GunRequiresWield
   - type: DisarmMalus
   - type: Prying
 
+# No mark ability in exchange for wideswing, autoattack, and being one-handed
 - type: entity
   parent: [ BaseKnife, BaseWeaponCrusher, BaseC1Contraband] # Frontier: BaseSecurityCargoContraband<BaseC1Contraband
   id: WeaponCrusherDagger
@@ -194,13 +274,28 @@
     malus: 0.225
   - type: ThrowingAngle
     angle: 225
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          radius: 0.01
+          vertices:
+          - -0.4,-0.2
+          - -0.2,-0.4
+          - 0.4,0.2
+          - 0.2,0.4
+        density: 20 # derived from base_item
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
 
-# Like a crusher... but better
+# Less mark damage in exchange for more healing. Also has a better ratio of blunt to slash damage, but less structural.
 - type: entity
   parent: [ WeaponCrusher, BaseC1Contraband] # Frontier: BaseSecurityCargoContraband<BaseC1Contraband
   id: WeaponCrusherGlaive
   name: crusher glaive
-  description: An early design of the proto-kinetic accelerator, in glaive form.
+  description: An early design of the proto-kinetic accelerator, in glaive form. Provides better healing in exchange for less charged damage.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
@@ -216,11 +311,27 @@
     - suitStorage
   - type: UseDelay
     delay: 1.9
+  - type: BasicEntityAmmoProvider
+    proto: BulletChargeGlaive
+    capacity: 1
+    count: 1
   - type: LeechOnMarker
     leech:
       groups:
         Brute: -21
-  - type: MeleeWeapon
   - type: Tag
     tags:
       - Pickaxe
+  - type: MeleeWeapon
+    attackRate: 1
+    wideAnimationRotation: -135
+    damage:
+      types:
+        Blunt: 3
+        Slash: 7
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 2
+        Slash: 6
+        Structural: 20

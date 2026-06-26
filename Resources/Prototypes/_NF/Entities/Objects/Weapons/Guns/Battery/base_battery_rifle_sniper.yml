@@ -1,10 +1,21 @@
 #region frame
 - type: entity
-  id: NFBaseWeaponFrameEnergyRifleSniper
-  parent: [ NFBaseWeaponEncumbranceLauncher, BaseWeaponBattery ]
-  suffix: Frontier
   abstract: true
+  parent: [ NFBaseWeaponEncumbranceLauncher, NFBaseGunMeleeAttackHigh, BaseWeaponBattery ]
+  id: NFBaseWeaponFrameEnergyRifleSniper
+  suffix: Frontier
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: LasersPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: LasersDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: LasersDrop
+  # Goobstation edit end
   - type: Sprite
     layers:
     - state: base
@@ -19,7 +30,7 @@
     minAngle: -0 # Set to 0 because GunRequiresWield
     maxAngle: -0
   - type: Gun
-    projectileSpeed: 30
+    projectileSpeed: 45 #Lua
     minAngle: 1
     maxAngle: 5
     angleIncrease: 0.3
@@ -28,13 +39,17 @@
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
-  - type: SpeedModifiedOnWield
-    walkModifier: 0.1
-    sprintModifier: 0.1
-  - type: CursorOffsetRequiresWield
-  - type: EyeCursorOffset
-    maxOffset: 10
-    pvsIncrease: 1
+  - type: ItemToggle #Lua
+    onUse: false
+    onActivate: false
+    soundActivate:
+      path: /Audio/_Lua/Weapons/mantison.wav
+      params:
+        volume: 3
+    soundDeactivate:
+      path: /Audio/_Lua/Weapons/mantisoff.wav
+      params:
+        volume: 3
   - type: Battery # 20 shots
     maxCharge: 2400
     startingCharge: 2400

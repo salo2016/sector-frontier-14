@@ -1,22 +1,24 @@
 - type: vessel
   id: Hydra
   parent: BaseVesselAntag
-  name: TY Hydra
+  name: Hydra
   description: A syndicate missile corvette meant for stealthy hit and runs and harassment.
   limit: 3
-  price: 121135
+  price: 143428
   category: Medium
   group: Typan
   access: SyndicateAgent
   shuttlePath: /Maps/_Mono/Shuttles/Syndicate/hydra.yml
   guidebookPage: Null
+  whitelist:
+  - Luna
+  - Frontier
   class:
   - Syndicate
+  - Pursuit # Lua
   engine:
   - Uranium
-  addComponents:
-    - type: IFF
-      color: "#d93204"
+
 - type: gameMap
   id: Hydra
   mapName: 'Hydra'
@@ -27,7 +29,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'NRD Hydra {1}'
+          mapNameTemplate: 'Hydra {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

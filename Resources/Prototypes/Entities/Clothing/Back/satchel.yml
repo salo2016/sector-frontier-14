@@ -186,7 +186,7 @@
   - type: Storage
     maxItemSize: Huge
     grid:
-    - 0,0,7,7 # Frontier: Was 0,0,19,9
+    - 0,0,11,4 # Frontier: Was 0,0,19,9 #Lua 0,0,7,7<0,0,11,4
   - type: Clothing # Frontier
     sprite: _NF/Clothing/Back/Satchels/holding.rsi # Frontier
     clothingVisuals: # Frontier
@@ -194,3 +194,13 @@
       - state: equipped-BACKPACK # Frontier
       - state: equipped-BACKPACK-unlit # Frontier
         shader: unshaded # Frontier
+
+- type: entity
+  parent: ClothingBackpackSatchelHolding
+  id: ClothingBackpackSatchelAdmin
+  name: satchel of administration
+  suffix: Admin
+  description: If you are somehow seeing this, no you're not.
+  components:
+  - type: ExplosionResistance
+    damageCoefficient: 0

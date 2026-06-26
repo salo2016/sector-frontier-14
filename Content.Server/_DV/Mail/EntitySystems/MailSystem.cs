@@ -1,3 +1,4 @@
+using Content.Shared._NF.Bank;
 using Content.Server.Access.Systems;
 using Content.Server.Damage.Components;
 using Content.Server._DV.Cargo.Components;
@@ -543,12 +544,13 @@ namespace Content.Server._DV.Mail.EntitySystems
                 Loc.GetString(mailEntityStrings.NameAddressed, // Frontier: move constant to MailEntityString
                 ("recipient", recipient.Name)));
 
-            var accessReader = EnsureComp<AccessReaderComponent>(uid);
-            // Frontier: TODO - should this be removed for Frontier?
-            foreach (var access in recipient.AccessTags)
-            {
-                accessReader.AccessLists.Add([access]);
-            }
+            // Frontier: - remove access reader checks
+            // var accessReader = EnsureComp<AccessReaderComponent>(uid);
+            // foreach (var access in recipient.AccessTags)
+            // {
+            //     accessReader.AccessLists.Add([access]);
+            // }
+            // End Frontier
         }
 
         /// <summary>

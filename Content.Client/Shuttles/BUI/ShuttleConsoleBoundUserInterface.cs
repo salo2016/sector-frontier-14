@@ -31,6 +31,26 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
         _window.UndockRequest += OnUndockRequest;
         _window.UndockAllRequest += OnUndockAllRequest;
         _window.ToggleFTLLockRequest += OnToggleFTLLockRequest;
+        _window.OnStarMapVisibilityChanged += visible => SendMessage(new ShuttleConsoleStarMapVisibilityMessage(visible));
+        _window.NavContainer.NavRadar.OnRadarClick += (coords) =>
+        {
+            var netCoords = EntMan.GetNetCoordinates(coords);
+            if (_window.NavContainer.NavRadar.IsMouseDown())
+            {
+                var selected = _window.NavContainer.GetSelectedWeapons();
+                if (selected.Count > 0) SendMessage(new ShuttleConsoleFireMessage(selected, netCoords));
+            }
+            else
+            { SendMessage(new ShuttleConsoleFireMessage(new List<NetEntity>(), netCoords)); }
+        };
+        _window.OnWeaponSelectionChanged += () =>
+        {
+            if (_window?.NavContainer == null) return;
+            var hasSelected = _window.NavContainer.GetSelectedWeapons().Count > 0;
+            _window.NavContainer.NavRadar.DefaultCursorShape = hasSelected ? Control.CursorShape.Crosshair : Control.CursorShape.Arrow;
+        };
+        _window.OnFireControlRefresh += () =>
+        { SendMessage(new ShuttleConsoleRefreshFireControlMessage()); };
         NfOpen(); // Frontier
     }
 
@@ -101,4 +121,7 @@ public sealed partial class ShuttleConsoleBoundUserInterface : BoundUserInterfac
 
     private void OnWarpToStar(Star star) // Lua StarMap
     { SendMessage(new WarpToStarMessage(star)); }
+
+    public void NotifyStarMapVisibility(bool visible)
+    { SendMessage(new ShuttleConsoleStarMapVisibilityMessage(visible)); }
 }

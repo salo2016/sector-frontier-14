@@ -12,6 +12,26 @@
     },
     {
       "name": "idvip"
+    },
+    {
+      "name": "synsharehold"
+    },
+    {
+      "name": "idsynsharehold"
+    },
+    {
+      "name": "silver"
+    },
+    {
+      "name": "idadjutant"
+    },
+    {
+      "name": "silver-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "silver-inhand-right",
+      "directions": 4
     }
   ]
 }

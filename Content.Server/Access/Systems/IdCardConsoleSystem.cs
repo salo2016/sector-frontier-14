@@ -90,7 +90,7 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         List<ProtoId<AccessLevelPrototype>>? possibleAccess = null;
         if (component.PrivilegedIdSlot.Item is { Valid: true } item)
         {
-            privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(item).EntityName;
+            privilegedIdName = Comp<MetaDataComponent>(item).EntityName;
             possibleAccess = _accessReader.FindAccessTags(item).ToList();
         }
 
@@ -114,8 +114,8 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         }
         else
         {
-            var targetIdComponent = EntityManager.GetComponent<IdCardComponent>(targetId);
-            var targetAccessComponent = EntityManager.GetComponent<AccessComponent>(targetId);
+            var targetIdComponent = Comp<IdCardComponent>(targetId);
+            var targetAccessComponent = Comp<AccessComponent>(targetId);
 
             var jobProto = targetIdComponent.JobPrototype ?? new ProtoId<JobPrototype>(string.Empty); // Frontier: AccessLevelPrototype<JobPrototype
             if (TryComp<StationRecordKeyStorageComponent>(targetId, out var keyStorage)
@@ -255,6 +255,17 @@ public sealed class IdCardConsoleSystem : SharedIdCardConsoleSystem
         // The suffix is ignored as per request
         // var suffix = newShuttleSuffix;
         var suffix = shuttleDeed.ShuttleNameSuffix;
+
+        if (string.IsNullOrEmpty(suffix))
+        {
+            var fullName = ShipyardSystem.GetFullName(shuttleDeed);
+            var nameParts = fullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (nameParts.Length > 0)
+            {
+                var lastPart = nameParts[^1];
+                if (lastPart.Length == 4 && lastPart.All(char.IsDigit)) { suffix = lastPart; }
+            }
+        }
 
         if (name.Length > MaxNameLength)
             name = name[..MaxNameLength];

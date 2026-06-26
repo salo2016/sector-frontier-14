@@ -1,8 +1,7 @@
-using Content.Server.Body.Components;
 using Content.Server.Medical.Components;
 using Content.Server.PowerCell;
 using Content.Server.Temperature.Components;
-using Content.Shared.Traits.Assorted;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
@@ -14,10 +13,14 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.MedicalScanner;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Content.Shared.Traits.Assorted;
+using Content.Shared.Atmos.Rotting; // Lua
+using Content.Shared._Lua.MedicalScanner.UI; // Lua
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
+using Content.Server._NF.Medical; // Frontier
 using Content.Server._NF.Traits.Assorted; // Frontier
 
 namespace Content.Server.Medical;
@@ -218,6 +221,36 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             unclonable = true;
         // End Frontier: add unclonable
 
+        var printable = HasComp<HealthAnalyzerPrinterComponent>(healthAnalyzer); // Frontier
+
+        // Lua start
+        var rotTime = HealthAnalyzerRotTime.None;
+
+        if (TryComp<RottingComponent>(target, out var rottingComp))
+        {
+            rotTime = rottingComp.TotalRotTime.TotalMinutes switch
+            {
+                <= 5 => HealthAnalyzerRotTime.None,
+                <= 15 => HealthAnalyzerRotTime.TenMinutes, // 10
+                <= 25 => HealthAnalyzerRotTime.TwentyMinutes, // 20
+                <= 35 => HealthAnalyzerRotTime.ThirtyMinutes, // 30
+                <= 50 => HealthAnalyzerRotTime.FortyFiveMinutes, // 45
+                <= 90 => HealthAnalyzerRotTime.Hour, // 60
+                <= 150 => HealthAnalyzerRotTime.TwoHours, // 120
+                <= 210 => HealthAnalyzerRotTime.ThreeHours, // 180
+                <= 300 => HealthAnalyzerRotTime.FourHours, // 240
+                <= 390 => HealthAnalyzerRotTime.SixHours, // 360
+                <= 520 => HealthAnalyzerRotTime.EightHours, // 480
+                <= 660 => HealthAnalyzerRotTime.TenHours, // 600
+                <= 800 => HealthAnalyzerRotTime.TwelveHours, // 720
+                <= 1000 => HealthAnalyzerRotTime.FifteenHours, // 900
+                <= 1200 => HealthAnalyzerRotTime.EighteenHours, // 1080
+                > 1200 => HealthAnalyzerRotTime.Day, // 1440
+                _ => HealthAnalyzerRotTime.None
+            };
+        }
+        // Lua end
+
         _uiSystem.ServerSendUiMessage(healthAnalyzer, HealthAnalyzerUiKey.Key, new HealthAnalyzerScannedUserMessage(
             GetNetEntity(target),
             bodyTemperature,
@@ -225,7 +258,9 @@ public sealed class HealthAnalyzerSystem : EntitySystem
             scanMode,
             bleeding,
             unrevivable,
-            unclonable // Frontier
+            unclonable, // Frontier
+            printable, // Frontier
+            rotTime // Lua
         ));
     }
 }

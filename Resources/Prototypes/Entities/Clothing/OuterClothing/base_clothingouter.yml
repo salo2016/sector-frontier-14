@@ -3,13 +3,41 @@
   parent: [ Clothing, AllowSuitStorageClothing, RecyclableItemClothDurable ] # Frontier: added AllowSuitStorageClothing and RecyclableItemClothDurable
   id: ClothingOuterBase
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: GenericPickup
+      params:
+        volume: -9
+  - type: EmitSoundOnDrop
+    sound:
+      collection: GenericDrop
+      params:
+        volume: -9
+  - type: EmitSoundOnLand
+    sound:
+      collection: GenericDrop
+      params:
+        volume: -9
   - type: Clothing
     slots:
     - outerClothing
+    equipSound:
+      collection: GenericEquip
+  # Goobstation edit end
   - type: Sprite
     state: icon
   - type: StaticPrice # Frontier: setting base price to make material arbitrage happier
     price: 30 # Frontier
+
+# База только для космических скафандров (EVA, хардсьют, софтсьют)
+- type: entity
+  abstract: true
+  parent: ClothingOuterBase
+  id: SpaceOuterClothingBase
+  components:
+  - type: HideInnerClothing
+  - type: RequiresHyposprayDelay
 
 - type: entity
   abstract: true
@@ -103,7 +131,7 @@
 
 - type: entity
   abstract: true
-  parent: [RecyclableItemClothHardsuit, ClothingOuterBase, GeigerCounterClothing, AllowSuitStorageClothing] # Frontier: added RecyclableItemClothHardsuit
+  parent: [RecyclableItemClothHardsuit, SpaceOuterClothingBase, GeigerCounterClothing, AllowSuitStorageClothing] # Frontier: added RecyclableItemClothHardsuit
   id: ClothingOuterHardsuitBase
   name: base hardsuit
   components:
@@ -117,7 +145,7 @@
     heatingCoefficient: 0.01
     coolingCoefficient: 0.01
   - type: ClothingSpeedModifier
-    walkModifier: 0.4
+    walkModifier: 0.6
     sprintModifier: 0.6
   - type: HeldSpeedModifier
   - type: Item
@@ -135,7 +163,6 @@
   - type: ContainerContainer
     containers:
       toggleable-clothing: !type:ContainerSlot {}
-      beakerSlot: !type:ContainerSlot # Lua - imperial hardsuit injection
   - type: GroupExamine
   - type: Tag
     tags:
@@ -152,24 +179,33 @@
       flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/backpack_pickup.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/backpack_drop.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/backpack_drop.ogg
+      params:
+        volume: -4
+  # Goobstation edit end
+  - type: DiseaseProtection #Backmen & Ataraxia anti viral
+    protection: 0.4
   - type: HarpyHideWings # Frontier, needed for Harpies
   - type: StaticPrice # Frontier
     price: 20 # Frontier
     vendPrice: 1500 # Frontier
-  - type: Inject # lua - imperial hardsuit injection
-    openCloseDelay: 1.5
-    autoClose: true
-    autoCloseDelay: 6
-  - type: ItemSlots # lua - imperial hardsuit injection
-    slots: # lua - imperial hardsuit injection
-      beakerSlot: # lua - imperial hardsuit injection
-        whitelist: # lua - imperial hardsuit injection
-          tags: # lua - imperial hardsuit injection
-          - FitsHardsuit # Lua - imperial hardsuit injection
 
 - type: entity
   abstract: true
-  parent: [ClothingOuterBase, AllowSuitStorageClothing]
+  parent: [SpaceOuterClothingBase, AllowSuitStorageClothing]
   id: ClothingOuterEVASuitBase
   name: base EVA Suit
   components:
@@ -195,6 +231,8 @@
       flatReductions:
         Heat: 10 # the average lightbulb only does around four damage!
     slots: OUTERCLOTHING
+  - type: DiseaseProtection #Backmen & Ataraxia anti viral
+    protection: 0.3
 #  - type: PhysicalComposition # Frontier
 #    materialComposition: # Frontier
 #      Durathread: 100 # Frontier

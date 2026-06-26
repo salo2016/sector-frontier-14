@@ -26,6 +26,7 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Hands;
 using Robust.Server.Audio;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Timing;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Random;
@@ -134,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var otherEnt = args.OtherEntity;
 
-            if (!EntityManager.TryGetComponent(otherEnt, out FlammableComponent? flammable))
+            if (!TryComp(otherEnt, out FlammableComponent? flammable))
                 return;
 
             //Only ignite when the colliding fixture is projectile or ignition.
@@ -409,10 +410,10 @@ namespace Content.Server.Atmos.EntitySystems
             flammable.Resisting = true;
 
             _popup.PopupEntity(Loc.GetString("flammable-component-resist-message"), uid, uid);
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), true);
+            _stunSystem.TryUpdateParalyzeDuration(uid, TimeSpan.FromSeconds(2f));
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
-            uid.SpawnTimer(2000, () =>
+            Timer.Spawn(2000, () =>
             {
                 flammable.Resisting = false;
                 flammable.FireStacks -= 1f;
@@ -445,9 +446,14 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
-            while (query.MoveNext(out var uid, out var flammable, out _))
+            var toProcess = new List<(EntityUid, FlammableComponent)>();
             {
+                var query = EntityQueryEnumerator<FlammableComponent, TransformComponent>();
+                while (query.MoveNext(out var uid, out var flammable, out _)) toProcess.Add((uid, flammable));
+            }
+            foreach (var (uid, flammable) in toProcess)
+            {
+                if (Deleted(uid)) continue;
                 // Slowly dry ourselves off if wet.
                 if (flammable.FireStacks < 0)
                 {

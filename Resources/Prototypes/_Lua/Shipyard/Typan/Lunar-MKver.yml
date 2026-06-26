@@ -5,24 +5,26 @@
 - type: vessel
   id: Lunar
   parent: BaseVesselAntag
-  name: ML-Lunar
+  name: Lunar
   description: Небольшой штурмовик обладающий отличной мобильностью.
   price: 70000
-  category: medium
+  category: Small
   group: Typan
   access: SyndicateAgent
   shuttlePath: /Maps/_Lua/Shuttles/Typan/Lunar-MKver.yml
   guidebookPage: Null
+  whitelist:
+  - Luna
+  - Frontier
   class:
   - Syndicate
+  - Pursuit # Lua
   engine:
   - Bananium
-  addComponents:
-    - type: IFF
-      color: "#d93204"
+
 - type: gameMap
   id: Lunar
-  mapName: 'ML-Lunar'
+  mapName: 'Lunar'
   mapPath: /Maps/_Lua/Shuttles/Typan/Lunar-MKver.yml
   minPlayers: 0
   stations:
@@ -30,7 +32,7 @@
       stationProto: StandardFrontierVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'ML-Lunar {1}'
+          mapNameTemplate: 'Lunar {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

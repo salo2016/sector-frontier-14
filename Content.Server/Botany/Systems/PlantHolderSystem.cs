@@ -1,7 +1,9 @@
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Botany;
@@ -28,6 +30,7 @@ using Content.Shared.Database;
 using Content.Shared.Labels.Components;
 using Content.Shared._NF.BindToStation; // Frontier
 using Content.Server.Station.Systems; // Frontier
+using Content.Server._Lua.Botany;
 
 namespace Content.Server.Botany.Systems;
 
@@ -39,6 +42,7 @@ public sealed class PlantHolderSystem : EntitySystem
     [Dependency] private readonly MutationSystem _mutation = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly HandsSystem _hands = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
@@ -51,6 +55,8 @@ public sealed class PlantHolderSystem : EntitySystem
 
     public const float HydroponicsSpeedMultiplier = 1f;
     public const float HydroponicsConsumptionMultiplier = 2f;
+
+    public const int MaxProducePerStation = 240;
 
     private static readonly ProtoId<TagPrototype> HoeTag = "Hoe";
     private static readonly ProtoId<TagPrototype> PlantSampleTakerTag = "PlantSampleTaker";
@@ -267,8 +273,18 @@ public sealed class PlantHolderSystem : EntitySystem
             }
             else
             {
-                _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
-                    ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User);
+                if (TryComp<SoilFlatpackComponent>(uid, out var soilFlatpack) && IsFullShovel(args.Used))
+                {
+                    var spawnCoords = Transform(uid).Coordinates;
+                    var flatpack = Spawn(soilFlatpack.FlatpackPrototype, spawnCoords);
+                    _hands.TryPickupAnyHand(args.User, flatpack);
+                    QueueDel(uid);
+                }
+                else
+                {
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
+                        ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User);
+                }
             }
 
             return;
@@ -718,6 +734,15 @@ public sealed class PlantHolderSystem : EntitySystem
         component.MutationMod = MathHelper.Clamp(component.MutationMod, 0f, 3f);
     }
 
+    private int CountProduceOnStation(EntityUid station)
+    {
+        var count = 0;
+        var query = EntityQueryEnumerator<ProduceComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out _, out var xform))
+        { if (_station.GetOwningStation(uid, xform) == station) count++; }
+        return count;
+    }
+
     public bool DoHarvest(EntityUid plantholder, EntityUid user, PlantHolderComponent? component = null)
     {
         if (!Resolve(plantholder, ref component))
@@ -729,9 +754,9 @@ public sealed class PlantHolderSystem : EntitySystem
 
         if (component.Harvest && !component.Dead)
         {
-            if (TryComp<HandsComponent>(user, out var hands))
+            if (_hands.TryGetActiveItem(user, out var activeItem))
             {
-                if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                if (!_botany.CanHarvest(component.Seed, activeItem))
                 {
                     _popup.PopupCursor(Loc.GetString("plant-holder-component-ligneous-cant-harvest-message"), user);
                     return false;
@@ -741,6 +766,19 @@ public sealed class PlantHolderSystem : EntitySystem
             {
                 return false;
             }
+
+            // Lua - produce limit per station
+            var owningStation = _station.GetOwningStation(plantholder);
+            if (owningStation != null)
+            {
+                var currentProduce = CountProduceOnStation(owningStation.Value);
+                if (currentProduce >= MaxProducePerStation)
+                {
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-produce-limit-reached"), user, PopupType.MediumCaution);
+                    return false;
+                }
+            }
+            // End Lua
 
             _botany.Harvest(component.Seed, user, component.YieldMod);
             AfterHarvest(plantholder, component);
@@ -774,6 +812,10 @@ public sealed class PlantHolderSystem : EntitySystem
             return;
 
         if (component.Seed == null || !component.Harvest)
+            return;
+
+        var owningStation = _station.GetOwningStation(uid);
+        if (owningStation != null && CountProduceOnStation(owningStation.Value) >= MaxProducePerStation)
             return;
 
         _botany.AutoHarvest(component.Seed, Transform(uid).Coordinates);
@@ -907,7 +949,7 @@ public sealed class PlantHolderSystem : EntitySystem
             foreach (var entry in _solutionContainerSystem.RemoveEachReagent(component.SoilSolution.Value, amt))
             {
                 var reagentProto = _prototype.Index<ReagentPrototype>(entry.Reagent.Prototype);
-                reagentProto.ReactionPlant(uid, entry, solution);
+                reagentProto.ReactionPlant(uid, entry, solution, EntityManager, _random, _adminLogger);
             }
         }
 
@@ -1005,5 +1047,12 @@ public sealed class PlantHolderSystem : EntitySystem
         component.SkipAging++; // We're forcing an update cycle, so one age hasn't passed.
         component.ForceUpdate = true;
         Update(uid, component);
+    }
+
+    private bool IsFullShovel(EntityUid used)
+    {
+        if (!TryComp<MetaDataComponent>(used, out var meta)) return false;
+        var protoId = meta.EntityPrototype?.ID;
+        return protoId == "Shovel" || protoId == "NFShovel";
     }
 }

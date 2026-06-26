@@ -16,9 +16,10 @@
   maximumDistance: 5600
   gridPath: /Maps/_NF/POI/caseyscasino.yml
   addComponents:
-  - type: StationTransit
-    routes:
-      MinorPointsOfInterest: 20
+  - type: RadarBlipIcon
+    icon: /Textures/_Lua/Interface/Radar/space-outpost.png
+    scale: 1.2
+    allowWhenHidden: true
 
 - type: gameMap
   id: CaseysCasino

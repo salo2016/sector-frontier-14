@@ -15,11 +15,18 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
     public bool Claimed;
     public bool Cooldown;
     public ushort ActiveMission;
-    public List<SalvageMissionParams> Missions;
+    public List<SalvageMissionListing> Missions;
     public bool CanFinish; // Frontier
     public TimeSpan CooldownTime; // Frontier: separate fail vs. success time
+    public int ActiveExpeditionCount; // Lua
+    public bool IsOurTurnToConfirm; // Lua
+    public bool HasConfirmDeadline; // Lua
+    public TimeSpan ConfirmDeadline; // Lua
+    public bool IsQueued; // Lua
+    public int QueuePosition; // Lua
+    public int QueueTotal; // Lua
 
-    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, bool cooldown, ushort activeMission, List<SalvageMissionParams> missions, bool canFinish, TimeSpan cooldownTime) // Frontier: add canFinish, cooldownTime
+    public SalvageExpeditionConsoleState(TimeSpan nextOffer, bool claimed, bool cooldown, ushort activeMission, List<SalvageMissionListing> missions, bool canFinish, TimeSpan cooldownTime, int activeExpeditionCount, bool isOurTurnToConfirm, bool hasConfirmDeadline, TimeSpan confirmDeadline, bool isQueued, int queuePosition, int queueTotal) // Frontier: add canFinish, cooldownTime, queue lua mod
     {
         NextOffer = nextOffer;
         Claimed = claimed;
@@ -28,6 +35,13 @@ public sealed class SalvageExpeditionConsoleState : BoundUserInterfaceState
         Missions = missions;
         CanFinish = canFinish; // Frontier
         CooldownTime = cooldownTime; // Frontier
+        ActiveExpeditionCount = activeExpeditionCount; // Lua
+        IsOurTurnToConfirm = isOurTurnToConfirm; // Lua
+        HasConfirmDeadline = hasConfirmDeadline; // Lua
+        ConfirmDeadline = confirmDeadline; // Lua
+        IsQueued = isQueued; // Lua
+        QueuePosition = queuePosition; // Lua
+        QueueTotal = queueTotal; // Lua
     }
 }
 
@@ -62,7 +76,16 @@ public sealed partial class SalvageExpeditionConsoleComponent : Component
 public sealed class ClaimSalvageMessage : BoundUserInterfaceMessage
 {
     public ushort Index;
+    public int Seed;
 }
+
+// Lua: queue confirm/cancel
+[Serializable, NetSerializable]
+public sealed class ExpeditionConfirmMessage : BoundUserInterfaceMessage;
+
+[Serializable, NetSerializable]
+public sealed class ExpeditionCancelMessage : BoundUserInterfaceMessage;
+// Lua: queue confirm/cancel
 
 // Frontier: early expedition finish
 [Serializable, NetSerializable]
@@ -143,6 +166,7 @@ public sealed record SalvageMissionParams
 /// Created from <see cref="SalvageMissionParams"/>. Only needed for data the client also needs for mission
 /// display.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed record SalvageMission(
     int Seed,
     string Dungeon,
@@ -212,6 +236,9 @@ public sealed record SalvageMission(
     public readonly SalvageMissionType MissionType = MissionType;
     // End Frontier: additional parameters
 }
+
+[Serializable, NetSerializable]
+public sealed record SalvageMissionListing(SalvageMissionParams Params, SalvageMission Mission);
 
 [Serializable, NetSerializable]
 public enum SalvageConsoleUiKey : byte

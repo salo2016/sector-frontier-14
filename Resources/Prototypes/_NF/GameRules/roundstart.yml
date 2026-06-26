@@ -21,16 +21,16 @@
   id: MajorBluespaceEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: BluespaceCacheError
+#    - id: BluespaceCacheError
     - id: BluespaceCave
     - id: BluespaceVaultError
-    - id: BluespaceVaultSmallError
-    - id: BluespaceSyndicateFTLInterception
-    - id: BluespaceWizardFederationScout
-    - id: BluespaceBloodMoon
+#    - id: BluespaceVaultSmallError
+#    - id: BluespaceSyndicateFTLInterception
+#    - id: BluespaceWizardFederationScout # comment from _Lua
+#    - id: BluespaceBloodMoon
     - id: BluespaceAsteroid
     - id: BluespaceAsteroidBunker
-    - id: BluespaceShipyardLuaTech
+    - id: BluespaceBarkhan-8Tranzit # added by 25Hydra08 for LuaCorp
 
 - type: entity
   id: BluespaceDungeonEventScheduler
@@ -69,7 +69,7 @@
   id: SalvageBluespaceEventsTable
   table: !type:AllSelector # we need to pass a list of rules, since rules have further restrictions to consider via StationEventComp
     children:
-    - id: BluespaceSalvage
+    - id: BluespaceCustomScrapFS #Lua BluespaceSalvage<BluespaceCustomScrapFS
 
 - type: entity
   id: SmugglingEventScheduler
@@ -105,7 +105,7 @@
     - prefRoles: [ NFPirateCaptain ]
       max: 999
       playerRatio: -1
-      lateJoinAdditional: true
+      lateJoinAdditional: false
       allowNonHumans: true
       multiAntagSetting: All
       components: &pirateComponents
@@ -124,7 +124,7 @@
     - prefRoles: [ NFPirateFirstMate ]
       max: 999
       playerRatio: -1
-      lateJoinAdditional: true
+      lateJoinAdditional: false
       allowNonHumans: true
       multiAntagSetting: All
       components: *pirateComponents
@@ -138,7 +138,7 @@
     - prefRoles: [ NFPirate ]
       max: 999
       playerRatio: -1
-      lateJoinAdditional: true
+      lateJoinAdditional: false
       allowNonHumans: true
       multiAntagSetting: All
       components: *pirateComponents

@@ -3,12 +3,15 @@
   parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseMachine]
   name: cryo sleep chamber
   description: Cold pillow, guaranteed.
+  suffix: station
   components:
   - type: Sprite
     # sprite: _NF/Structures/Machines/cryopod.rsi
+    noRot: true
     sprite: _Lua/Structures/cryopod.rsi # Lua
     #snapCardinals: true # Frontier Чтобы это пофиксить я потратил 19 часов....
     layers:
+    # - state: opened
     - state: closed
   - type: Physics
     bodyType: Static
@@ -27,6 +30,45 @@
   - type: Appearance
   - type: Climbable
   - type: CryoSleep
+    shouldReopenRole: false # Lua
+  - type: Construction
+    graph: MachineCryoSleepPod
+    node: MachineCryoSleepPod
+  - type: ContainerContainer
+    containers:
+      body_container: !type:ContainerSlot
+
+- type: entity
+  id: MachineCryoSleepPodPlayer
+  parent: [BaseStructureIndestructible, BaseMachine]
+  name: cryo sleep chamber
+  description: Cold pillow, guaranteed.
+  suffix: player
+  components:
+  - type: Sprite
+    noRot: true
+    sprite: _Lua/Structures/cryopod.rsi
+    layers:
+    # - state: opened
+    - state: closed
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MobLayer
+  - type: MaterialStorage
+  - type: Appearance
+  - type: Climbable
+  - type: CryoSleep
+    shouldReopenRole: false # Lua
   - type: Construction
     graph: MachineCryoSleepPod
     node: MachineCryoSleepPod
@@ -89,7 +131,7 @@
   - type: MedicalBountyRedemption
     bodyContainer: body_container
     taxAccounts:
-      Medical: 7 # 700% #Lua 0.75<7
+      Medical: 0.75
   - type: Appearance
   - type: GenericVisualizer
     visuals:

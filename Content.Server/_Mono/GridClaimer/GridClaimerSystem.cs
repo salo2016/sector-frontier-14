@@ -1,11 +1,8 @@
-// SPDX-FileCopyrightText: 2025 Ilya246
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 using Content.Server.Popups;
 using Content.Server.Worldgen.Components.Debris;
 using Content.Shared.Verbs;
 using Content.Shared.Tiles;
+using Robust.Shared.Spawners;
 
 namespace Content.Server._Mono.GridClaimer;
 
@@ -85,6 +82,8 @@ public sealed class GridClaimerSystem : EntitySystem
         claimable.ClaimedBy.Add(with);
         if (!claimable.Claimed)
             with.Comp.WasDebris = RemComp<OwnedDebrisComponent>(gridUid);
+        if (HasComp<TimedDespawnComponent>(gridUid))
+            RemCompDeferred<TimedDespawnComponent>(gridUid);
     }
 
     public void UnclaimGrid(Entity<GridClaimerComponent> from, bool popup = false)

@@ -1,0 +1,14 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckApronPathologist
+  name: фартук патологоанатома
+  description: Фартук делает "тик-так" - время вскрывать трупы!
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Neck/Misc/pathologist.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Neck/Misc/pathologist.rsi

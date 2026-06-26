@@ -32,7 +32,7 @@ public sealed partial class CCVars
     ///     Sets the maximum length for flavor text (character descriptions).
     /// </summary>
     public static readonly CVarDef<int> MaxFlavorTextLength =
-        CVarDef.Create("ic.flavor_text_length", 512, CVar.SERVER | CVar.REPLICATED);
+        CVarDef.Create("ic.flavor_text_length", 5200, CVar.SERVER | CVar.REPLICATED); // Erida
 
     /// <summary>
     ///     Sets the maximum character length of a job on an ID.
@@ -75,7 +75,7 @@ public sealed partial class CCVars
     ///     Forces SSD characters to sleep after ICSSDSleepTime seconds
     /// </summary>
     public static readonly CVarDef<bool> ICSSDSleep =
-        CVarDef.Create("ic.ssd_sleep", true, CVar.SERVER);
+        CVarDef.Create("ic.ssd_sleep", false, CVar.SERVER); // Frontier: true < false
 
     /// <summary>
     ///     Time between character getting SSD status and falling asleep

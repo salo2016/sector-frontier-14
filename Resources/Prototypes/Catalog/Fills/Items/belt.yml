@@ -87,6 +87,7 @@
 #      - id: TrashBag # Frontier - Not used, too large.
       - id: Holoprojector # Frontier
       - id: LightReplacer
+      - id: WireBrush
 
 - type: entity
   id: ClothingBeltMedicalFilled
@@ -196,7 +197,7 @@
   - type: StorageFill
     contents:
         - id: NFWeaponRevolverInspector # Frontier: add NF prefix
-        - id: NFSpeedLoaderPistol45 # Frontier: SpeedLoaderMagnum<NFSpeedLoaderPistol45
+        - id: SpeedLoader45_magnumFMJ # Lua 45 -> Magnum
 
 - type: entity
   id: ClothingBeltChefFilled

@@ -1,0 +1,53 @@
+- type: technology
+  id: LuaBluespaceArt
+  name: lua-research-technology-bluespace-art
+  entityIcon: SprayPainterMagic
+  discipline: NFService
+  factions:
+  - Nanotrasen
+  - Syndicate
+  tier: 3
+  cost: 20000
+  recipeUnlocks:
+  - SprayPainterMagic
+  - CrayonMagic
+  prerequisiteLineType: Diagonal
+  technologyPrerequisites:
+  - NFAdvancedEntertainment
+  position: -7.565, -3.331
+- type: technology
+  id: LuaWaterRegenerator
+  name: lua-research-technology-water-regenerator
+  entityIcon: WaterRegenerator
+  discipline: NFService
+  factions:
+  - Nanotrasen
+  - Syndicate
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - WaterRegenerator
+  technologyPrerequisites:
+  - NFAdvancedCleaning
+  position: 5.212, 22.518
+- type: technology
+  id: NFHardsuitBotanist
+  name: lua-research-technology-botanist-hardsuit
+  entityIcon: ClothingOuterHardsuitBotanist
+  discipline: NFService
+  factions:
+  - Nanotrasen
+  - Syndicate
+  tier: 2
+  cost: 10000
+  recipeUnlocks:
+  - ClothingOuterHardsuitBotanist
+  position: -8.002, 6.116
+  technologyPrerequisites:
+  - NFAdvancedHydroponicsEquipment
+  factionOverrides:
+    Syndicate:
+      position: -8.02, 6.08
+      technologyPrerequisites:
+      - NFAdvancedHydroponicsEquipment
+...

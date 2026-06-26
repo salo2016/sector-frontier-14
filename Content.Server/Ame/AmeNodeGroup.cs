@@ -119,7 +119,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         }
     }
 
-    public float InjectFuel(int fuel, out bool overloading)
+    public float InjectFuel(int fuel, out bool overloading, EntityUid? controllerUid = null)
     {
         overloading = false;
 
@@ -129,7 +129,11 @@ public sealed class AmeNodeGroup : BaseNodeGroup
 
         var safeFuelLimit = CoreCount * 2;
 
-        var powerOutput = CalculatePower(fuel, CoreCount);
+        var sourceUid = controllerUid ?? _masterController;
+        var multiplier = sourceUid.HasValue && _entMan.TryGetComponent<AmeControllerComponent>(sourceUid.Value, out var ctrl)
+            ? ctrl.PowerMultiplier
+            : 1.0f;
+        var powerOutput = CalculatePower(fuel, CoreCount) * multiplier;
         if (fuel <= safeFuelLimit)
             return powerOutput;
 
@@ -177,8 +181,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         // Unlike the previous solution, increasing fuel and cores always leads to an increase in power, even if by very small amounts.
         // Increasing core count without increasing fuel always leads to reduced power as well.
         // At 18+ cores and 2 inject, the power produced is less than 0, the Max ensures the AME can never produce "negative" power.
-        // return MathF.Max(200000f * MathF.Log10(2 * fuel * MathF.Pow(cores, (float)-0.5)), 0); // Frontier: preferring old calculation for now
-        return 200000f * MathF.Log10(fuel * fuel) * MathF.Pow(0.75f, cores - 1); // Frontier: preferring old calculation for now
+        return MathF.Max(200000f * MathF.Log10(2 * fuel * MathF.Pow(cores, (float)-0.5)), 0);
     }
 
     public int GetTotalStability()

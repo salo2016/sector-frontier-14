@@ -39,6 +39,8 @@ using Content.Server.Station.Components; // Frontier
 using Content.Server.Station.Systems; // Frontier
 using Content.Server.Shuttles.Systems;
 using Content.Server._NF.Salvage.Expeditions.Structure; // Frontier
+using Robust.Shared.GameObjects;
+using Content.Shared._Crescent.SpaceBiomes;
 
 namespace Content.Server.Salvage;
 
@@ -149,7 +151,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         destComp.Enabled = true;
         _metaData.SetEntityName(
             mapUid,
-            _entManager.System<SharedSalvageSystem>().GetFTLName(_prototypeManager.Index<LocalizedDatasetPrototype>("NamesBorer"), _missionParams.Seed));
+            _entManager.System<SharedSalvageSystem>().GetFTLName(_prototypeManager.Index(SalvageSystem.PlanetNames), _missionParams.Seed));
         _entManager.AddComponent<FTLBeaconComponent>(mapUid);
 
         // Saving the mission mapUid to a CD is made optional, in case one is somehow made in a process without a CD entity

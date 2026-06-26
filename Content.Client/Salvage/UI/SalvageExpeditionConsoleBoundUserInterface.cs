@@ -38,6 +38,8 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         _window = this.CreateWindowCenteredLeft<SalvageExpeditionWindow>(); // Frontier: OfferingWindow<SalvageExpeditionWindow
         _window.Title = Loc.GetString("salvage-expedition-window-title");
         _window.OnFinishPressed += () => SendMessage(new FinishSalvageMessage()); // Frontier
+        _window.OnConfirmPressed += () => SendMessage(new ExpeditionConfirmMessage()); // Lua
+        _window.OnCancelPressed += () => SendMessage(new ExpeditionCancelMessage()); // Lua
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -51,21 +53,24 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
         _window.Cooldown = current.CooldownTime;
         _window.NextOffer = current.NextOffer;
         _window.Claimed = current.Claimed;
+        _window.Queued = current.IsQueued;
         _window.SetFinishDisabled(!current.CanFinish); // Frontier
+        _window.SetConfirmDisabled(!current.IsOurTurnToConfirm);
+        _window.SetCancelDisabled(!(current.IsQueued || current.IsOurTurnToConfirm));
+        _window.SetQueueStatus(current.ActiveExpeditionCount, current.QueuePosition, current.QueueTotal, current.IsQueued);
+        _window.SetConfirmDeadline(current.HasConfirmDeadline ? current.ConfirmDeadline : null);
         _window.ClearOptions();
-        var salvage = _entManager.System<SalvageSystem>();
 
         for (var i = 0; i < current.Missions.Count; i++)
         {
-            var missionParams = current.Missions[i];
+            var listing = current.Missions[i];
+            var missionParams = listing.Params;
+            var mission = listing.Mission;
 
             var offering = new OfferingWindowOption();
             offering.Title = Loc.GetString($"salvage-expedition-type-{missionParams.MissionType}");
 
-            var difficultyId = missionParams.Difficulty; // Frontier: Moderate<missionParams.Difficulty
-            var difficultyProto = _protoManager.Index<SalvageDifficultyPrototype>(difficultyId);
-            // TODO: Selectable difficulty soon.
-            var mission = salvage.GetMission(missionParams.MissionType, difficultyProto, missionParams.Seed); // Frontier: add missionParams.MissionType
+            var difficultyProto = _protoManager.Index<SalvageDifficultyPrototype>(mission.Difficulty);
 
             // Difficulty
             // Details
@@ -182,11 +187,12 @@ public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterf
                 SendMessage(new ClaimSalvageMessage()
                 {
                     Index = missionParams.Index,
+                    Seed = missionParams.Seed,
                 });
             };
 
             offering.Claimed = current.ActiveMission == missionParams.Index;
-            offering.Disabled = current.Claimed || current.Cooldown;
+            offering.Disabled = current.Claimed || current.Cooldown || current.IsQueued;
 
             _window.AddOption(offering);
         }

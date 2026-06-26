@@ -1,0 +1,79 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+#VIP Tier tabs (top bar in DonateShop)
+- type: storeCategory
+  id: UplinkVipTierShareholder
+  name: store-vip-tier-shareholder
+  priority: -100
+
+- type: storeCategory
+  id: UplinkVipTierGod
+  name: store-vip-tier-god
+  priority: -90
+
+- type: storeCategory
+  id: UplinkVipTierRank1
+  name: store-vip-tier-rank1
+  priority: -80
+
+- type: storeCategory
+  id: UplinkVipTierRank2
+  name: store-vip-tier-rank2
+  priority: -70
+
+- type: storeCategory
+  id: UplinkVipTierRank3
+  name: store-vip-tier-rank3
+  priority: -60
+
+#VIP item categories
+- type: storeCategory
+  id: UplinkVipHardsuits
+  name: store-merc-category-hardsuit
+
+- type: storeCategory
+  id: UplinkVipClothing
+  name: store-merc-category-clothing
+
+- type: storeCategory
+  id: UplinkVipCloaks
+  name: store-vip-category-cloaks
+
+- type: storeCategory
+  id: UplinkVipBedsheets
+  name: store-vip-category-bedsheets
+
+- type: storeCategory
+  id: UplinkVipUseful
+  name: store-vip-category-useful
+
+- type: storeCategory
+  id: UplinkVipFuel
+  name: store-vip-category-fuel
+
+- type: storeCategory
+  id: UplinkVipBackpack
+  name: store-merc-category-backpack
+
+- type: storeCategory
+  id: UplinkVipGun
+  name: store-merc-category-gun
+
+- type: storeCategory
+  id: UplinkVipAmmo
+  name: store-merc-category-ammo
+
+- type: storeCategory
+  id: UplinkVipNocat
+  name: store-merc-category-nocat
+
+- type: storeCategory
+  id: UplinkVipFlatpack
+  name: store-vip-category-flatpack
+
+- type: storeCategory
+  id: UplinkVipCrates
+  name: store-vip-category-crates
+

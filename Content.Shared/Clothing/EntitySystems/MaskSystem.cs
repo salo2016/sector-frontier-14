@@ -75,13 +75,13 @@ public sealed class MaskSystem : EntitySystem
     private void ToggleMaskComponents(EntityUid uid, MaskComponent mask, EntityUid wearer, string? equippedPrefix = null, bool isEquip = false)
     {
         Dirty(uid, mask);
-        if (mask.ToggleActionEntity is {} action)
+        if (mask.ToggleActionEntity is { } action)
             _actionSystem.SetToggled(action, mask.IsToggled);
 
-        var maskEv = new ItemMaskToggledEvent((wearer, mask), wearer);
+        var maskEv = new ItemMaskToggledEvent((uid, mask), wearer);
         RaiseLocalEvent(uid, ref maskEv);
 
-        var wearerEv = new WearerMaskToggledEvent((wearer, mask));
+        var wearerEv = new WearerMaskToggledEvent((uid, mask));
         RaiseLocalEvent(wearer, ref wearerEv);
     }
 
@@ -161,5 +161,11 @@ public sealed class MaskSystem : EntitySystem
 
         mask.Comp.IsToggleable = toggleable;
         Dirty(mask);
+    }
+
+    public void ClearActionEntity(EntityUid uid, MaskComponent comp)
+    {
+        comp.ToggleActionEntity = null;
+        Dirty(uid, comp);
     }
 }

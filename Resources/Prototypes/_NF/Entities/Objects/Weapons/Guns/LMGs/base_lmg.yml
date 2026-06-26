@@ -1,10 +1,21 @@
 #region base
 - type: entity
-  id: NFBaseWeaponFrameLightMachineGun
-  parent: [ NFBaseWeaponEncumbranceSniper, NFBaseItemWeaponGunMagazineFed ]
-  suffix: Frontier
   abstract: true
+  parent: [ NFBaseWeaponEncumbranceSniper, NFBaseGunMeleeAttackHigh, NFBaseItemWeaponGunMagazineFed ]
+  id: NFBaseWeaponFrameLightMachineGun
+  suffix: Frontier
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: RiflesPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: RiflesDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: RiflesDrop
+  # Goobstation edit end
   - type: Wieldable
     unwieldOnUse: false
   - type: GunRequiresWield
@@ -12,12 +23,12 @@
     minAngle: -0 # Set to 0 because GunRequiresWield
     maxAngle: -0
   - type: Gun
-    projectileSpeed: 30
-    minAngle: 3.1
-    maxAngle: 15.5
-    angleIncrease: 0.8
-    angleDecay: 4
-    fireRate: 6.7 #_Lua 8<6.7
+    projectileSpeed: 55 #Lua
+    minAngle: 2.7
+    maxAngle: 13.5
+    angleIncrease: 0.7
+    angleDecay: 3.5
+    fireRate: 6.7 #Lua 4<6.7
     burstFireRate: 5
     shotsPerBurst: 5
     burstCooldown: 1
@@ -30,22 +41,22 @@
 
 #region manufacturer
 - type: entity
-  id: NFBaseWeaponFrameLightMachineGunGorlex
-  parent: [ BaseC3SyndicateContraband, NFBaseWeaponFrameLightMachineGun ]
   abstract: true
+  parent: [ BaseC3SyndicateContraband, NFBaseWeaponFrameLightMachineGun ]
+  id: NFBaseWeaponFrameLightMachineGunGorlex
   components:
   - type: Gun
-    minAngle: 3.4
-    maxAngle: 17
-    angleIncrease: 1.5
-    angleDecay: 5.4
+    minAngle: 3
+    maxAngle: 15
+    angleIncrease: 1.3
+    angleDecay: 4.7
   - type: NFWeaponDetails
     manufacturer: weapon-details-manufacturer-gorlex-steel-works
 
 #region chamber
 - type: entity
-  id: NFBaseWeaponLightMachineGunChamber20
   abstract: true
+  id: NFBaseWeaponLightMachineGunChamber556x45
   components:
   - type: Gun
     examineCaliber: gun-examine-caliber-20
@@ -60,20 +71,20 @@
     slots:
       gun_magazine:
         name: Magazine
-        startingItem: NFMagazineBoxRifle20
+        startingItem: NFMagazineBoxRifle556x45 #Lua 20 -> 556x45
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
         priority: 2
         whitelist:
           tags:
-            - NFMagazineBoxRifle20
+            - NFMagazineBoxRifle556x45 #Lua 20 -> 556x45
       gun_chamber:
         name: Chamber
-        startingItem: NFCartridgeRifle20
+        startingItem: Cartridge556x45mmFMJ #Lua 20 -> 556x45
         priority: 1
         whitelist:
           tags:
-            - NFCartridgeRifle20
+            - Cartridge556x45mmFMJ #Lua 20 -> 556x45
   - type: ContainerContainer
     containers:
       gun_magazine: !type:ContainerSlot

@@ -1,0 +1,127 @@
+- type: entity
+  abstract: true
+  parent: [BaseItem, BaseC3PirateContraband, RecyclableItemSteelSmall] # Lua: Added RecyclableItemSteelSmall
+  id: BaseAmmoBox127x99mm
+  name: ammunition box (12.7x99mm anti-material)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - Cartridge127x99mm
+    proto: Cartridge127x99mm
+    capacity: 30
+  - type: Item
+    size: Small
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/Ammunition/Boxes/12.7x99mm.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: false
+  - type: Appearance
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/ammobox_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/ammobox_drop.ogg
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/ammobox_drop.ogg
+
+# Standart
+- type: entity
+  parent: BaseAmmoBox127x99mm
+  id: AmmoBox127x99mm
+
+# Mechanical
+- type: entity
+  parent: BaseAmmoBox127x99mm
+  id: AmmoBox127x99mmHP
+  name: ammunition box (12.7x99mm HP)
+  suffix: Need balance test #Lua
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge127x99mmHP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: hollowpoint
+
+# Physical
+- type: entity
+  parent: BaseAmmoBox127x99mm
+  id: AmmoBox127x99mmIncendiary
+  name: ammunition box (12.7x99mm incendiary)
+  suffix: Need balance test #Lua
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge127x99mmIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary
+
+- type: entity
+  parent: BaseAmmoBox127x99mm
+  id: AmmoBox127x99mmUranium
+  name: ammunition box (12.7x99mm uranium)
+  suffix: Need balance test #Lua
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge127x99mmUranium
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: uranium
+
+# Special
+- type: entity
+  parent: BaseAmmoBox127x99mm
+  id: AmmoBox127x99mmEMP
+  name: ammunition box (12.7x99mm EMP)
+  suffix: Need balance test #Lua
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge127x99mmEMP
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: emp
+
+- type: entity
+  parent: BaseAmmoBox127x99mm
+  id: AmmoBox127x99mmCaustic
+  name: ammunition box (12.7x99mm Сaustic)
+  suffix: Need balance test #Lua
+  components:
+  - type: BallisticAmmoProvider
+    proto: Cartridge127x99mmCaustic
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: caustic

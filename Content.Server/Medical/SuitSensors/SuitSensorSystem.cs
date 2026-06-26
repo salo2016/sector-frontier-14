@@ -22,12 +22,14 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.DeviceNetwork.Components;
 using Content.Server.Salvage.Expeditions; // Frontier
 using Content.Server._NF.Medical.SuitSensors; // Frontier
+using Content.Server._Lua.Sectors; // Lua
 using Content.Shared.Emp; // Frontier
 
 namespace Content.Server.Medical.SuitSensors;
@@ -49,8 +51,7 @@ public sealed class SuitSensorSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-
-    [Dependency] private readonly GameTicking.GameTicker _ticker = default!; //Lua Added to check run level
+    [Dependency] private readonly SectorSystem _sectors = default!; // Lua
 
     // Lua start
     private TimeSpan _nextSensorsScan = TimeSpan.Zero;
@@ -143,19 +144,23 @@ public sealed class SuitSensorSystem : EntitySystem
                 if (_nextServerLookup.TryGetValue(uid, out var nextLookup) && curTime < nextLookup)
                     continue;
                 // Lua end
-                if (!_singletonServerSystem.TryGetActiveServerAddress<CrewMonitoringServerComponent>(xform.MapID, out var address) &&
-                    !_singletonServerSystem.TryGetActiveServerAddressGlobal<CrewMonitoringServerComponent>(out address))
+                var hasLocalServer = _singletonServerSystem.TryGetActiveServerAddress<CrewMonitoringServerComponent>(xform.MapID, out var address);
+                var isolated = _sectors.TryGetSectorConfig(xform.MapID, out var sectorCfg) && sectorCfg.CrewMonitoringIsolated;
+                if (!hasLocalServer)
                 {
-                    // Lua start
-                    var backoff = _serverLookupBackoff.TryGetValue(uid, out var currentBackoff)
-                        ? currentBackoff
-                        : ServerLookupInitialBackoff;
+                    if (isolated || !_singletonServerSystem.TryGetActiveServerAddressGlobal<CrewMonitoringServerComponent>(out address))
+                    {
+                        // Lua start
+                        var backoff = _serverLookupBackoff.TryGetValue(uid, out var currentBackoff)
+                            ? currentBackoff
+                            : ServerLookupInitialBackoff;
 
-                    _nextServerLookup[uid] = curTime + backoff;
-                    var nextBackoffTicks = Math.Min(backoff.Ticks * 2, ServerLookupMaxBackoff.Ticks);
-                    _serverLookupBackoff[uid] = new TimeSpan(nextBackoffTicks);
-                    // Lua end
-                    continue;
+                        _nextServerLookup[uid] = curTime + backoff;
+                        var nextBackoffTicks = Math.Min(backoff.Ticks * 2, ServerLookupMaxBackoff.Ticks);
+                        _serverLookupBackoff[uid] = new TimeSpan(nextBackoffTicks);
+                        // Lua end
+                        continue;
+                    }
                 }
 
 
@@ -229,24 +234,9 @@ public sealed class SuitSensorSystem : EntitySystem
         component.StationId ??= _stationSystem.GetOwningStation(uid);
         */
 
-        //Lua: if an item with built-in sensors spawns during the round - force Coordinates mode
-        if (_ticker.RunLevel == GameRunLevel.InRound)
-        {
-            SetSensor((uid, component), SuitSensorMode.SensorCords); //Lua: default to coordinates so medics can find players
-            return;
-        }
-
-        // Иначе (до старта раунда) оставляем прототипное поведение (рандом).
         if (component.RandomMode)
         {
-            var modesDist = new[]
-            {
-                SuitSensorMode.SensorOff,
-                SuitSensorMode.SensorBinary, SuitSensorMode.SensorBinary,
-                SuitSensorMode.SensorVitals, SuitSensorMode.SensorVitals, SuitSensorMode.SensorVitals,
-                SuitSensorMode.SensorCords, SuitSensorMode.SensorCords
-            };
-            component.Mode = _random.Pick(modesDist);
+            component.Mode = SuitSensorMode.SensorCords; // Lua
         }
     }
 
@@ -485,7 +475,7 @@ public sealed class SuitSensorSystem : EntitySystem
 
         // get health mob state
         var isAlive = false;
-        if (EntityManager.TryGetComponent(sensor.User.Value, out MobStateComponent? mobState))
+        if (TryComp(sensor.User.Value, out MobStateComponent? mobState))
             isAlive = !_mobStateSystem.IsDead(sensor.User.Value, mobState);
 
         // get mob total damage
@@ -499,7 +489,12 @@ public sealed class SuitSensorSystem : EntitySystem
             totalDamageThreshold = critThreshold.Value.Int();
 
         // finally, form suit sensor status
+        int? mapHash = null;
+        if (transform.MapUid != null && TryComp<MapComponent>(transform.MapUid.Value, out var mapComp))
+            mapHash = mapComp.MapId.GetHashCode();
+
         var status = new SuitSensorStatus(GetNetEntity(sensor.User.Value), GetNetEntity(uid), userName, userJob, userJobIcon, userJobDepartments, userLocationName); // Frontier: add userLocationName
+        status.MapHash = mapHash;
         switch (sensor.Mode)
         {
             case SuitSensorMode.SensorBinary:
@@ -510,78 +505,51 @@ public sealed class SuitSensorSystem : EntitySystem
                 status.TotalDamage = totalDamage;
                 status.TotalDamageThreshold = totalDamageThreshold;
                 break;
-            // Lua sector adaptation
             case SuitSensorMode.SensorCords:
+                status.IsAlive = isAlive;
+                status.TotalDamage = totalDamage;
+                status.TotalDamageThreshold = totalDamageThreshold;
+                EntityCoordinates coordinates;
+                var xformQuery = GetEntityQuery<TransformComponent>();
+                var locationName = "";
+
+                if (transform.GridUid != null)
                 {
-                    status.IsAlive = isAlive;
-                    status.TotalDamage = totalDamage;
-                    status.TotalDamageThreshold = totalDamageThreshold;
 
-                    var xformQuery = GetEntityQuery<TransformComponent>();
-                    EntityCoordinates coordinates;
-                    string mapName = Loc.GetString("suit-sensor-location-unknown-map");
-                    string gridName = Loc.GetString("suit-sensor-location-space");
+                    coordinates = new EntityCoordinates(transform.GridUid.Value,
+                        Vector2.Transform(_transform.GetWorldPosition(transform, xformQuery),
+                            _transform.GetInvWorldMatrix(xformQuery.GetComponent(transform.GridUid.Value), xformQuery)));
 
-                    if (transform.MapUid is { } mapUid &&
-                        TryComp<MetaDataComponent>(mapUid, out var mapMeta) &&
-                        !string.IsNullOrWhiteSpace(mapMeta.EntityName))
-                    {
-                        mapName = mapMeta.EntityName;
-                    }
-
-                    var onGrid = false;
-
-                    if (transform.GridUid != null)
-                    {
-                        onGrid = true;
-                        coordinates = new EntityCoordinates(
-                            transform.GridUid.Value,
-                            Vector2.Transform(
-                                _transform.GetWorldPosition(transform, xformQuery),
-                                _transform.GetInvWorldMatrix(
-                                    xformQuery.GetComponent(transform.GridUid.Value),
-                                    xformQuery)));
-
-                        if (TryComp<SalvageExpeditionComponent>(transform.GridUid.Value, out _))
-                        {
-                            gridName = Loc.GetString("suit-sensor-location-expedition");
-                        }
-                        else if (TryComp<MetaDataComponent>(transform.GridUid.Value, out var gridMeta) &&
-                                 !string.IsNullOrWhiteSpace(gridMeta.EntityName))
-                        {
-                            gridName = gridMeta.EntityName;
-                        }
-                        else
-                        {
-                            gridName = Loc.GetString("suit-sensor-location-unknown-grid");
-                        }
-                    }
+                    // Frontier: check if sensor is on expedition
+                    if (TryComp<SalvageExpeditionComponent>(transform.MapUid, out var salvageComp))
+                        locationName = Loc.GetString("suit-sensor-location-expedition");
+                    else if (TryComp(transform.GridUid, out MetaDataComponent? meta))
+                        locationName = meta.EntityName;
                     else
-                    {
-                        coordinates = new EntityCoordinates(
-                            transform.MapUid ?? EntityUid.Invalid,
-                            _transform.GetWorldPosition(transform, xformQuery));
-                    }
-
-                    string locationName;
-                    if (onGrid)
-                    {
-                        locationName = $"{mapName}\n{gridName}";
-                    }
-                    else
-                    {
-                        locationName = $"{mapName}\n{Loc.GetString("suit-sensor-location-space")}";
-                    }
-
-                    status.Coordinates = GetNetCoordinates(coordinates);
-                    status.LocationName = locationName;
-                    break;
+                        locationName = Loc.GetString("suit-sensor-location-unknown"); // Frontier
+                    // End Frontier
                 }
+                else if (transform.MapUid != null)
+                {
+
+                    coordinates = new EntityCoordinates(transform.MapUid.Value,
+                        _transform.GetWorldPosition(transform, xformQuery)); // Frontier
+                    locationName = Loc.GetString("suit-sensor-location-space"); // Frontier
+                }
+                else
+                {
+                    coordinates = EntityCoordinates.Invalid;
+
+                    locationName = Loc.GetString("suit-sensor-location-unknown"); // Frontier
+                }
+
+                status.Coordinates = GetNetCoordinates(coordinates);
+                status.LocationName = locationName; // Frontier
+                break;
         }
 
         return status;
     }
-    // Lua sector adaptation
 
     /// <summary>
     ///     Serialize create a device network package from the suit sensors status.
@@ -606,6 +574,8 @@ public sealed class SuitSensorSystem : EntitySystem
             payload.Add(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, status.TotalDamageThreshold);
         if (status.Coordinates != null)
             payload.Add(SuitSensorConstants.NET_COORDINATES, status.Coordinates);
+        if (status.MapHash != null) // Frontier - Crew monitor map check
+            payload.Add(SuitSensorConstants.NET_MAP_HASH, status.MapHash); // Frontier
         if (status.LocationName != null) // Frontier
             payload.Add(SuitSensorConstants.NET_LOCATION_NAME, status.LocationName); // Frontier
 
@@ -637,6 +607,7 @@ public sealed class SuitSensorSystem : EntitySystem
         payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE, out int? totalDamage);
         payload.TryGetValue(SuitSensorConstants.NET_TOTAL_DAMAGE_THRESHOLD, out int? totalDamageThreshold);
         payload.TryGetValue(SuitSensorConstants.NET_COORDINATES, out NetCoordinates? coords);
+        payload.TryGetValue(SuitSensorConstants.NET_MAP_HASH, out int? mapHash); // Frontier - Crew monitor map check
 
         var status = new SuitSensorStatus(ownerUid, suitSensorUid, name, job, jobIcon, jobDepartments, location) // Frontier: add location
         {
@@ -644,6 +615,7 @@ public sealed class SuitSensorSystem : EntitySystem
             TotalDamage = totalDamage,
             TotalDamageThreshold = totalDamageThreshold,
             Coordinates = coords,
+            MapHash = mapHash, // Frontier - Crew monitor map check
         };
         return status;
     }

@@ -17,6 +17,8 @@
     - ringing
     - ringed
     - rang
+    - дзинь
+    - трель
 
 - type: emote
   id: HarpyPew
@@ -34,6 +36,8 @@
     - pew
     - pews
     - pewpew
+    - пиу
+    - пью
 
 - type: emote
   id: HarpyBang
@@ -52,6 +56,9 @@
     - bangs
     - banging
     - banged
+    - бах
+    - бахает
+    - бум
 
 - type: emote
   id: HarpyRev
@@ -70,6 +77,9 @@
     - revs
     - revving
     - revved
+    - ревёт
+    - ревет
+    - ревёт
 
 - type: emote
   id: HarpyCaw
@@ -88,6 +98,9 @@
     - caws
     - cawing
     - cawed
+    - каркает
+    - каркать
+    - кар
 
 #Vulpkanin
 - type: emote
@@ -101,12 +114,18 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [barks.]
+  chatMessages: ["chat-emote-msg-vulpkanin-barks-1", "chat-emote-msg-vulpkanin-barks-2", "chat-emote-msg-vulpkanin-barks-3"] # Lua: [barks.] < ["chat-emote-msg-vulpkanin-barks-1", "chat-emote-msg-vulpkanin-barks-2", "chat-emote-msg-vulpkanin-barks-3"]
   chatTriggers:
     - bark
     - barks
     - barked
     - barking
+    - лает
+    - лаять
+    - гавкает
+    - гавкать
+    - тявкает
+    - гав
 
 - type: emote
   id: Snarl
@@ -119,12 +138,17 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [snarls.]
+  chatMessages: ["chat-emote-msg-vulpkanin-snarls"] # Lua: [snarls.] < ["chat-emote-msg-vulpkanin-snarls"]
   chatTriggers:
     - snarl
     - snarls
     - snarled
     - snarling
+    - огрызается
+    - рык
+    - рррр
+    - оскалился
+    - рявкает # Lua
 
 - type: emote
   id: Whine
@@ -137,12 +161,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [whines.]
+  chatMessages: ["chat-emote-msg-vulpkanin-whines"] # Lua: [whines.] < ["chat-emote-msg-vulpkanin-whines"]
   chatTriggers:
     - whine
     - whines
     - whined
     - whining
+    - скулит
+    - скулить
+    - скуление
+    - скулёж
 
 - type: emote
   id: Howl
@@ -155,12 +183,16 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [howls.]
+  chatMessages: ["chat-emote-msg-vulpkanin-howls-1", "chat-emote-msg-vulpkanin-howls-2"] # Lua: [howls.] < ["chat-emote-msg-vulpkanin-howls-1", "chat-emote-msg-vulpkanin-howls-2"]
   chatTriggers:
     - howl
     - howls
     - howling
     - howled
+    - воет
+    - выть
+    - вой
+    - завывает
 
 - type: emote
   id: Awoo
@@ -173,9 +205,28 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [awoos.]
+  chatMessages: ["chat-emote-msg-vulpkanin-awoos-1", "chat-emote-msg-vulpkanin-awoos-2"] # Lua: [awoos.] < ["chat-emote-msg-vulpkanin-awoos-1", "chat-emote-msg-vulpkanin-awoos-2"]
   chatTriggers:
     - awoo
     - awoos
     - awooing
     - awooed
+    - авуу # Lua: аву < авуу
+    - аууу # Lua: ауу < аууу
+    - издаёт аууу # Lua
+    - издаёт авуу # Lua
+
+- type: emote
+  id: fox_trill
+  name: delta-chat-emote-name-fox-trill
+  category: Vocal
+  available: false
+  whitelist:
+    components:
+    - Vocal
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: ["chat-emote-msg-vulpkanin-trill"]
+  chatTriggers:
+    - издаёт трель

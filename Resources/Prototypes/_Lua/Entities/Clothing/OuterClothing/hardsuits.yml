@@ -2,15 +2,404 @@
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
 
+#region Civilian
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseToggleClothing, HardsuitIdentify, BaseC1Contraband]
+  id: ClothingOuterHardsuitAriralExosuit
+  name: Экзоскафандр Арирал
+  description: Легкий экзоскафандр для подлглядывания за новыми видами.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/ariral.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/ariral.rsi
+  - type: ToggleClothing
+    action: ActionTogglePhaseCloak
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: 0.1
+      lastVisibility: 0.1
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: FireProtection
+    reduction: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.50
+        Radiation: 0.1
+        Caustic: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 1.15
+    sprintModifier: 1.3
+  - type: HeldSpeedModifier
+    mirrorClothingModifier: false
+    walkModifier: 1
+    sprintModifier: 1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetAriralExosuit
+  - type: Tag
+    tags:
+    - Hardsuit
+  - type: RaceRequirement
+    allowedRaces:
+      - Ariral
+
+
+#region Nanotrasen
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3CentCommContraband]
+  id: ClothingOuterHardsuitBlueShield
+  name: скафандр офицера "Синий Щит"
+  description: Скафандр предназначенный для защитника командования.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/blueshield.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Heat: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Radiation: 0.5
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBlueShield
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitNanotrasenStandart
+  name: стандартный скафандр Nanotrasen
+  description: Самый бюрократический скафандр корпорации Nanotrasen. Выглядит нарисованным.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/ntstandardsuit.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/ntstandardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitNanotrasenStandart
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.7
+        Radiation: 0.8
+        Heat: 0.6
+        Cold: 0.8
+        Caustic: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitSecurityPilot
+  name: security pilot's hardsuit
+  description: Robust hardsuit for slayer of the pirate's doom!
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/security_pilot.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/security_pilot.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65
+        Slash: 0.65
+        Piercing: 0.5
+        Heat: 0.8
+        Radiation: 0.2
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitSecurityPilot
+  - type: Item
+    size: Huge
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitBrigmedicWhite
+  name: white brigmedic's hardsuit
+  description: White version of brigmedic's hardsuit. Quite the same, just has different color.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/brigmedic.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.45
+    lowPressureMultiplier: 1000
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBrigmedicWhite
+  - type: Item
+    size: Huge
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.6
+        Piercing: 0.7
+        Heat: 0.6
+        Caustic: 0.5
+        Radiation: 0.4
+        Shock: 0.6
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC2ContrabandUnredeemable]
+  id: ClothingOuterHardsuitCapspaceReinforced
+  name: captain's combat hardsuit
+  description: An elite captain's combat hardsuit. It is given to the best captains, for whom battle encounters happen every Monday.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/capspace_reinforced.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/capspace_reinforced.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.001
+    coolingCoefficient: 0.001
+  - type: FireProtection
+    reduction: 0.8
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.35
+        Slash: 0.35
+        Piercing: 0.35
+        Heat: 0.3
+        Cold: 0.3
+        Caustic: 0.4
+        Radiation: 0.4
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitCapspaceHelmetReinforced
+
+#region FSF
+
 - type: entity
   parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitFSFBaseBravo
+  name: скафандр солдата Браво
+  suffix: КСО, Браво
+  description: A protective hardsuit worn by the leader of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/bravobaseouter.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/bravobaseouter.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients: # /all 62.5//50/10
+        #Mechanical
+        Blunt: 0.375
+        Slash: 0.375
+        Piercing: 0.375
+        #Physical
+        Heat: 0.375
+        Radiation: 0.375
+        #Special
+        Shock: 0.375
+        Caustic: 0.375
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitFSFBaseBravo
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: HardsuitIdentification
+    emaggable: false
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitFSFCommandBravo
+  name: скафандр командира Браво
+  suffix: КСО, Браво
+  description: A protective hardsuit worn by the leader of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/bravocommouter.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/bravocommouter.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Reflect
+    reflectProb: 0.1
+  - type: Armor
+    modifiers:
+      coefficients: # /all 62.5//70/5
+        #Mechanical
+        Blunt: 0.375
+        Slash: 0.375
+        Piercing: 0.375
+        #Physical
+        Heat: 0.375
+        Radiation: 0.375
+        #Special
+        Shock: 0.375
+        Caustic: 0.375
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitFSFCommandBravo
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HardsuitIdentification
+    emaggable: false
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitFSFBaseCharlie
+  name: скафандр солдата Чарли
+  suffix: КСО, Чарли
+  description: A protective hardsuit worn by the leader of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/charliebaseouter.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/charliebaseouter.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients: # /all 75//50/5
+        #Mechanical
+        Blunt: 0.25
+        Slash: 0.25
+        Piercing: 0.25
+        #Physic
+        Heat: 0.25
+        Radiation: 0.25
+        #Special
+        Shock: 0.25
+        Caustic: 0.25
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitFSFBaseCharlie
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HardsuitIdentification
+    emaggable: false
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: ClothingOuterHardsuitSyndieCommander
+  id: ClothingOuterHardsuitFSFCommandCharlie
+  name: скафандр командира Чарли
+  suffix: КСО, Чарли
+  description: A protective hardsuit worn by the leader of an emergency response team.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/charliecommouter.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/SDHardsuits/charliecommouter.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Reflect
+    reflectProb: 0.2
+  - type: Armor
+    modifiers:
+      coefficients: # /all 75//70/0
+        Blunt: 0.25
+        Slash: 0.25
+        Piercing: 0.25
+        Heat: 0.25
+        Radiation: 0.25
+        Shock: 0.25
+        Caustic: 0.25
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitFSFCommandCharlie
+  - type: ClothingSpeedModifier
+    walkModifier: 1
+    sprintModifier: 1
+  - type: HardsuitIdentification
+    emaggable: false
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: [EnergyShieldClothing, BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFCommanderBravo
   name: скафандр командира рейнджеров
   suffix: ФСФ, Браво
   description: A protective hardsuit worn by the leader of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits/fsf_bravo_commander_hardsuit.rsi
   - type: Clothing
@@ -30,26 +419,27 @@
         Caustic: 0.45
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitFSFCommanderBravo
-  - type: Inject #Lua
-    openCloseDelay: 1
-    autoClose: true
-    autoCloseDelay: 3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
   - type: Speech
   - type: TTS
     voice: Adjutant
+  - type: HardsuitReanimation
+  - type: StaminaResistance
+    damageCoefficient: 0.6
+
 
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: [EnergyShieldClothing, BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFSpecialistBravo
   name: средний скафандр рейнджера
   suffix: ФСФ, Браво
   description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits/fsf_bravo_specialist_hardsuit.rsi
   - type: Clothing
@@ -61,39 +451,40 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.5
-        Slash: 0.5
-        Piercing: 0.5
-        Heat: 0.5
-        Radiation: 0.5
-        Caustic: 0.5
-  - type: Tag
-    tags:
-    - Hardsuit
-    - WhitelistChameleon
-  - type: Inject #Lua
-    openCloseDelay: 1
-    autoClose: true
-    autoCloseDelay: 3
+        Blunt: 0.4
+        Slash: 0.4
+        Piercing: 0.4
+        Heat: 0.4
+        Radiation: 0.4
+        Caustic: 0.4
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
   - type: Speech
   - type: TTS
     voice: Adjutant
+  - type: HardsuitReanimation
+  - type: StaminaResistance
+    damageCoefficient: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000
+
 
 ######## CHARLIE
 
 
 - type: entity
-  parent: ClothingOuterHardsuitSyndieCommander
+  parent: [EnergyShieldClothing, BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFCommanderCharlie
   name: скафандр командира рейнджеров
   suffix: ФСФ, Чарли
   description: A protective hardsuit worn by the leader of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits/fsf_charlie_commander_hardsuit.rsi
   - type: Clothing
@@ -113,26 +504,26 @@
         Caustic: 0.35
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitFSFCommanderCharlie
-  - type: Inject #Lua
-    openCloseDelay: 1
-    autoClose: true
-    autoCloseDelay: 3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
   - type: Speech
   - type: TTS
     voice: Adjutant
+  - type: HardsuitReanimation
+  - type: StaminaResistance
+    damageCoefficient: 0.6
 
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: [EnergyShieldClothing, BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFSpecialistCharlie
   name: средний скафандр рейнджера
   suffix: ФСФ, Чарли
   description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits/fsf_charlie_specialist_hardsuit.rsi
   - type: Clothing
@@ -144,44 +535,61 @@
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.4
-        Slash: 0.4
-        Piercing: 0.4
-        Heat: 0.4
-        Radiation: 0.4
-        Caustic: 0.4
-  - type: Tag
-    tags:
-    - Hardsuit
-    - WhitelistChameleon
-  - type: Inject #Lua
-    openCloseDelay: 1
-    autoClose: true
-    autoCloseDelay: 3
+        Blunt: 0.325
+        Slash: 0.325
+        Piercing: 0.325
+        Heat: 0.325
+        Radiation: 0.325
+        Caustic: 0.325
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
   - type: Speech
   - type: TTS
     voice: Adjutant
+  - type: HardsuitReanimation
+  - type: StaminaResistance
+    damageCoefficient: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000
 
 ###### ALT
 
 - type: entity
-  parent: ClothingOuterHardsuitSyndieCommander
+  parent: [BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFCommanderAlt
   name: скафандр командира рейнджеров
-  suffix: СТАРЫЙ, ФСФ, ФРОНТИР
+  suffix: Events, Medium, Standart
   description: A protective hardsuit worn by the leader of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits_Alt/fsf_commander_hardsuit.rsi
   - type: Clothing
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits_Alt/fsf_commander_hardsuit.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitFSFCommanderAlt
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients: # 75/75/75//50/50//50/50//50/10
+        Blunt: 0.25
+        Slash: 0.25
+        Piercing: 0.25
+        Heat: 0.5
+        Radiation: 0.5
+        Shock: 0.5
+        Caustic: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
@@ -190,14 +598,12 @@
     voice: Adjutant
 
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: [BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFMediumAlt
   name: средний скафандр рейнджера
-  suffix: СТАРЫЙ, ФСФ, ФРОНТИР
+  suffix: Events, Medium, Special
   description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits_Alt/fsf_medium_hardsuit.rsi
   - type: Clothing
@@ -208,35 +614,227 @@
     tags:
     - Hardsuit
     - WhitelistChameleon
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients: # 50/50/50//75/75//75/75//50/10
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.5
+        Heat: 0.25
+        Radiation: 0.25
+        Shock: 0.25
+        Caustic: 0.25
+  - type: StaminaResistance
+    damageCoefficient: 0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
   - type: Speech
   - type: TTS
     voice: Adjutant
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000
 
 - type: entity
-  parent: ClothingOuterHardsuitSyndie
+  parent: [BaseC3CentCommContraband, ClothingOuterHardsuitBase]
   id: ClothingOuterHardsuitFSFLightAlt
   name: лёгкий скафандр рейнджера
   suffix: СТАРЫЙ, ФСФ, ФРОНТИР
   description: A protective hardsuit worn by the security officers of an emergency response team.
   components:
-  - type: ThermalCloak
-    enabled: false
   - type: Sprite
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits_Alt/fsf_light_hardsuit.rsi
   - type: Clothing
     sprite: _Lua/Clothing/OuterClothing/Hardsuits/FSFSuits_Alt/fsf_light_hardsuit.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitFSFLightAlt
-  - type: Tag
-    tags:
-    - Hardsuit
-    - WhitelistChameleon
   - type: HardsuitIdentification
     emaggable: false
   - type: HardsuitDNARadial
   - type: Speech
   - type: TTS
     voice: Adjutant
+  - type: StaminaResistance
+    damageCoefficient: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: Item
+    size: Huge
+  - type: StaticPrice
+    price: 5000
+
+#region Modsuits
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitBloodRedHardsuit
+  name: Blood-red hardsuit
+  description: A hardsuit adorned with signature markings of the syndicate. The armor is remarkably nimble for the protection it offers.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/nukeops.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/nukeops.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.35 #Lua 0.4<0.35
+        Slash: 0.35 #Lua 0.4<0.35
+        Piercing: 0.35 #Lua 0.4<0.35
+        Heat: 0.4 #Lua 0.7<0.4
+        Radiation: 0.7
+        Caustic: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85 #Lua 0.95<0.85
+    sprintModifier: 0.85 #Lua 0.95<0.85
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBloodRedHardsuit
+  - type: StaticPrice
+    price: 1500
+    vendPrice: 4000
+  - type: HardsuitIdentification
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: [ClothingOuterHardsuitBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingOuterHardsuitBloodRedHardsuitelite
+  name: Blood-red hardsuit elite
+  description: A hardsuit adorned with signature markings of the syndicate. The armor is remarkably nimble for the protection it offers.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/pmc.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/pmc.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.45
+        Slash: 0.45
+        Piercing: 0.45
+        Heat: 0.2
+        Radiation: 0.1
+        Caustic: 0.5
+  - type: StaminaResistance
+    damageCoefficient: 0.3
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.95
+  - type: HeldSpeedModifier
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBloodRedHardsuitelite
+  - type: StaticPrice
+    price: 1500
+    vendPrice: 4000
+  - type: HardsuitIdentification
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Adjutant
+
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitChiefEngineerMOD
+  name: advanced chief engineer hardsuit
+  description: An elite white hardsuit for Frontier engineers. It is soft and robust.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/engimod.rsi
+  - type: Item
+    size: Huge
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/engimod.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.7
+        Piercing: 0.8
+        Heat: 0.5
+        Cold: 0.65
+        Radiation: 0.1
+        Caustic: 0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.90
+    sprintModifier: 0.90
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitChiefEngineerMOD
+  - type: StaticPrice
+    price: 15000
+    vendPrice: 40000
+  - type: HardsuitIdentification
+  - type: HardsuitDNARadial
+  - type: Speech
+  - type: TTS
+    voice: Noble
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterHardsuitBotanist
+  name: скафандр ботаника
+  description: С ним вас больше не замедляет кудза! А также можно спокойно брать смертокрапиву даже без перчаток!.. А еще помните не слово про яблоки.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/botanist.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Normal
+  - type: Appearance
+  - type: Clothing
+    sprite: _Lua/Clothing/OuterClothing/Hardsuits/botanist.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: HeldSpeedModifier
+  - type: TemperatureProtection
+    heatingCoefficient: 0.1
+    coolingCoefficient: 0.1
+  - type: GroupExamine
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitBotanist
+  - type: ClothingIgnoreKudzu
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
+      storagebase: !type:Container
+        ents: []
+  - type: DamageOnInteractProtection
+    damageProtection:
+      flatReductions:
+        Heat: 10
+        Caustic: 5

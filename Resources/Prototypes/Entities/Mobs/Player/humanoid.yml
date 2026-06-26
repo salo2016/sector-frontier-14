@@ -6,15 +6,95 @@
     - type: RandomHumanoidAppearance
       randomizeName: false
     - type: GhostTakeoverAvailable
+    - type: IdBind
 
 - type: randomHumanoidSettings
   id: EventHumanoidMindShielded
   parent: EventHumanoid
   components:
-    - type: MindShield
+    - type: AutoImplant
+      implants:
+      - MindShieldImplant
+    - type: AntagImmune
 
 - type: randomHumanoidSettings
   id: EventHumanoidMindShieldedHuman
+  parent: EventHumanoidMindShielded
+  speciesBlacklist:
+    - Arachnid
+    - Ariral
+    - Sheleg
+    - Oni
+    - Avali
+    - Diona
+    - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    # - Demon
+    - Shark
+    - Vulpkanin
+    - Felinid
+    - Goblin
+    - Harpy
+
+- type: randomHumanoidSettings
+  id: EventHumanoidMindShieldedCentcom
+  parent: EventHumanoidMindShielded
+  speciesBlacklist:
+    # - Arachnid
+    # - Ariral
+    - Sheleg
+    # - Oni
+    - Avali
+    - Diona
+    - Dwarf
+    # - Human
+    # - Moth
+    # - Reptilian
+    # - SlimePerson
+    - Vox
+    # - Demon
+    # - Shark
+    # - Vulpkanin
+    - Felinid
+    - Goblin
+    - Harpy
+
+- type: randomHumanoidSettings
+  id: EventHumanoidERT
+  parent: EventHumanoidMindShielded
+  # Nanotrasen are a bit racist, but FSCP more racist
+  speciesBlacklist:
+    - Arachnid
+    - Ariral
+    - Sheleg
+    - Oni
+    - Avali
+    - Diona
+    - Dwarf
+    # - Human
+    - Moth
+    - Reptilian
+    - SlimePerson
+    - Vox
+    - Demon
+    - Shark
+    - Vulpkanin
+    - Goblin
+    - Harpy
+    - Felinid
+  randomizeName: false
+  components:
+  - type: AutoImplant
+    implants:
+    - MindShieldImplant
+    - DeathRattleImplantCentcomm
+
+- type: randomHumanoidSettings
+  id: EventHumanoidFSF
   parent: EventHumanoidMindShielded
   speciesBlacklist:
     - Arachnid
@@ -29,91 +109,9 @@
     - Shark
     - Tajaran
     - Vulpkanin
-    - Felinid
-    - Kobolt
-    - XenoSponsor
-    - Goblin
-    - Harpy
-    - IPC
-    - IPS
-
-- type: randomHumanoidSettings
-  id: EventHumanoidMindShieldedCentcom
-  parent: EventHumanoidMindShielded
-  speciesBlacklist:
-    # - Arachnid
-    - Diona
-    # - Dwarf
-    # - Human
-    # - Moth
-    # - Reptilian
-    # - SlimePerson
-    - Vox
-    # - Demon
-    # - Shark
-    # - Tajaran
-    # - Vulpkanin
-    - Felinid
-    - Kobolt
-    # - XenoSponsor
-    - Goblin
-    - Harpy
-    - IPC
-    - IPS
-
-- type: randomHumanoidSettings
-  id: EventHumanoidERT
-  parent: EventHumanoidMindShielded
-  # Nanotrasen are a bit racist, but FSCP more racist
-  speciesBlacklist:
-    # - Arachnid
-    - Diona
-    # - Dwarf
-    # - Human
-    # - Moth
-    # - Reptilian
-    # - SlimePerson
-    - Vox
-    # - Demon
-    # - Shark
-    # - Tajaran
-    # - Vulpkanin
     - Goblin
     - Harpy
     - Felinid
-    - Kobolt
-    - XenoSponsor
-    - IPC
-    - IPS
-  randomizeName: false
-  components:
-    - type: AutoImplant
-      implants:
-      - TrackingImplant
-
-- type: randomHumanoidSettings
-  id: EventHumanoidFSF
-  parent: EventHumanoidMindShielded
-  speciesBlacklist:
-    # - Arachnid
-    - Diona
-    # - Dwarf
-    # - Human
-    # - Moth
-    # - Reptilian
-    # - SlimePerson
-    - Vox
-    # - Demon
-    # - Shark
-    # - Tajaran
-    # - Vulpkanin
-    - Goblin
-    - Harpy
-    - Felinid
-    - Kobolt
-    - XenoSponsor
-    - IPC
-    - IPS
   randomizeName: false
   components:
     - type: AutoImplant

@@ -22,8 +22,8 @@
     color: "#00fa9a"
 
 - type: entity
-  parent: ClothingHeadsetAlt
-  id: ClothingHeadsetAltOutpostSyndicate
+  parent: [ClothingHeadsetAlt, BaseC1SyndicateContraband]
+  id: ClothingHeadsetAltOutpostTypan
   name: полноразмерная кроваво - красная гарнитура
   description: Модифицированный модульный интерком синдиката.
   components:
@@ -38,4 +38,46 @@
   - type: ContainerFill
     containers:
       key_slots:
-      - EncryptionKeyOutpostSyndicate
+      - EncryptionKeyOutpostTypan
+
+- type: entity
+  parent: ClothingHeadsetAlt
+  id: ClothingHeadsetAltVip
+  name: vip over-ear headset
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyMedical
+      - EncryptionKeyTrade
+      - EncryptionKeyTraffic
+      - EncryptionKeyVip
+  - type: Sprite
+    sprite: _Lua/Ears/vipalt.rsi
+  - type: Clothing
+    sprite: _Lua/Ears/vipalt.rsi
+  - type: Headset
+    color: "#F05C29"
+
+- type: entity
+  parent: [ClothingHeadsetAlt, BaseC1SyndicateContraband]
+  id: ClothingHeadsetAltVipSyndicate
+  name: vip over-ear headset
+  suffix: Syndicate
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyCommon
+      - EncryptionKeyMedical
+      - EncryptionKeyTrade
+      - EncryptionKeyTraffic
+      - EncryptionKeyVip
+      - EncryptionKeyOutpostTypan
+  - type: Sprite
+    sprite: _Lua/Ears/vipalt.rsi
+  - type: Clothing
+    sprite: _Lua/Ears/vipalt.rsi
+  - type: Headset
+    color: "#F05C29"

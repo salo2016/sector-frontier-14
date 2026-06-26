@@ -6,7 +6,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
-    baseSprintSpeed : 6
+    baseRunningSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -93,7 +93,7 @@
   - type: CombatMode
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
-    baseSprintSpeed : 7
+    baseRunningSpeed : 7
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -118,6 +118,7 @@
       10: Dead
   - type: Stamina
     critThreshold: 10
+    animationThreshold: 1
   - type: DamageStateVisuals
     states:
       Alive:
@@ -193,8 +194,6 @@
   - type: Bloodstream
     bloodMaxVolume: 0.1
   - type: ZombieImmune
-  - type: TimedDespawn
-    lifetime: 2400
 
 
 - type: entity
@@ -341,7 +340,6 @@
   parent: FoodEggLaid # Frontier: FoodEgg<FoodEggLaid
   suffix: Fertilized, Chicken
   components:
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - MobChicken
@@ -390,7 +388,7 @@
       1: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 5
+    baseRunningSpeed : 5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -486,8 +484,6 @@
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   name: mothroach
@@ -559,7 +555,7 @@
       60: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4
+    baseRunningSpeed : 4
     weightlessAcceleration: 1.5
     weightlessFriction: 1
     baseWeightlessModifier: 1
@@ -783,7 +779,6 @@
   parent: FoodEggLaid # Frontier: FoodEgg<FoodEggLaid
   suffix: Fertilized, Duck
   components:
-    - type: Timer
     - type: TimedSpawner
       prototypes:
       - MobDuckMallard
@@ -803,7 +798,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
-    baseSprintSpeed : 6
+    baseRunningSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1266,7 +1261,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.5
+    baseRunningSpeed: 4.5
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1349,8 +1344,6 @@
   - type: NpcFactionMember
     factions:
     - SimpleHostile
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   name: genetic ancestor
@@ -1470,6 +1463,7 @@
       effects:
       - !type:WashCreamPieReaction
   - type: LabGrown # Frontier
+  - type: Crawler
 
 
 
@@ -1479,6 +1473,7 @@
   parent: MobBaseAncestor
   description: New church of neo-darwinists actually believe that EVERY animal evolved from a monkey. Tastes like pork, and killing them is both fun and relaxing.
   components:
+  - type: DiseaseCarrier
   - type: NameIdentifier
     group: Monkey
   - type: Speech
@@ -1502,6 +1497,9 @@
         Piercing: 4
       groups:
         Burn: 3
+    catchingFailDamage:
+      types:
+        Blunt: 1
     clumsySound:
       path: /Audio/Animals/monkey_scream.ogg
 
@@ -1596,7 +1594,7 @@
       125: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 5
+    baseRunningSpeed: 5
   - type: MeleeWeapon
     soundHit:
       collection: AlienClaw
@@ -1681,6 +1679,9 @@
         Piercing: 7
       groups:
         Burn: 3
+    catchingFailDamage:
+      types:
+        Blunt: 1
     clumsySound:
       path: /Audio/Voice/Reptilian/reptilian_scream.ogg
 
@@ -1805,7 +1806,7 @@
       20: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.9  # DeltaV - Allows them to sneak over traps
-    baseSprintSpeed : 5
+    baseRunningSpeed : 5
   - type: DamageStateVisuals
     states:
       Alive:
@@ -2059,7 +2060,7 @@
   # End Imp: kobold accent, reptilian vocal sounds, and ReptilianHiss emote
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 3
+    baseRunningSpeed: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2116,7 +2117,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseRunningSpeed : 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2165,7 +2166,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
-    baseSprintSpeed: 6
+    baseRunningSpeed: 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -2228,21 +2229,21 @@
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
-  name: parrot
   parent: [ SimpleMobBase, FlyingMobBase ]
-  id: MobParrot
-  categories: [ HideSpawnMenu ] # Frontier
+  id: MobParrotBase
+  name: parrot
+  abstract: true
   description: Infiltrates your domain, spies on you, and somehow still a cool pet.
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 6
+    baseRunningSpeed : 6
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: parrot
-      sprite: Mobs/Animals/parrot.rsi
+      sprite: Mobs/Animals/parrot/parrot.rsi
   - type: Carriable #DeltaV
     freeHandsRequired: 1
   - type: Fixtures
@@ -2274,7 +2275,29 @@
   - type: Vocal
     sounds:
       Unsexed: Parrot
-  - type: ParrotAccent
+  - type: ActiveListener
+  - type: Vocalizer
+  - type: RadioVocalizer
+  - type: ParrotListener
+  - type: ParrotMemory
+  - type: Inventory
+    templateId: parrot
+    speciesId: parrot
+    # transparent displacement map to hide the headset. this should be an animated displacement map to follow the parrot
+    # as it bobs up and down, but this in turn needs some way to change the displacement map on inventory entities when
+    # the parrot dies, otherwise the visuals will be broken
+    displacements:
+      ears:
+        sizeMaps:
+          32:
+            sprite: Mobs/Animals/parrot/displacement.rsi
+            state: ears
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+      enum.StrippingUiKey.Key:
+        type: StrippableBoundUserInterface
   - type: InteractionPopup
     successChance: 0.6
     interactSuccessString: petting-success-bird
@@ -2284,9 +2307,7 @@
       path: /Audio/Animals/parrot_raught.ogg
   - type: Bloodstream
     bloodMaxVolume: 50
-  # Frontier - parrot repeating nearby phrases
-  - type: ActiveListener
-    range: 5
+  # Frontier - parrot repeating nearby phrases UPSTREAM MERGE TODO: DECIDE WHETHER TO USE WIZDEN IMPLEMENTATION
   - type: ParrotSpeech
     blacklist:
       components:
@@ -2296,6 +2317,12 @@
         - RadioSpeaker
         - VendingMachine
   # End Frontier
+
+- type: entity
+  parent: MobParrotBase
+  id: MobParrot
+  components:
+  - type: ParrotAccent # regular parrots have a parrotaccent. Polly is special and does not
 
 - type: entity
   name: penguin
@@ -2367,7 +2394,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed: 3
-    baseSprintSpeed: 5
+    baseRunningSpeed: 5
   - type: InputMover
   - type: MobMover
   - type: HTN
@@ -3037,8 +3064,6 @@
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   name: corgi puppy
@@ -3138,7 +3163,7 @@
     - VimPilot
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 4
+    baseRunningSpeed: 4
   # DeltaV: get cats to fight with mice
   - type: HTN
     rootTask:
@@ -3204,6 +3229,10 @@
   - type: NpcFactionMember
     factions:
     - Syndicate
+  - type: Access
+    tags:
+    - NuclearOperative
+    - SyndicateAgent
   - type: MeleeWeapon
     altDisarm: false
     angle: 0
@@ -3317,7 +3346,7 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 0.5
-    baseSprintSpeed : 1
+    baseRunningSpeed : 1
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Pets/sloth.rsi
@@ -3362,6 +3391,7 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: SlowAccent
   - type: Tag
     tags:
     - VimPilot
@@ -3483,7 +3513,7 @@
       60: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.9  # DeltaV - Allows them to sneak over traps
-    baseSprintSpeed : 4
+    baseRunningSpeed : 4
   - type: Inventory
     speciesId: hamster
     templateId: hamster
@@ -3701,7 +3731,7 @@
       60: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.5
-    baseSprintSpeed : 4.5
+    baseRunningSpeed : 4.5
   - type: Grammar
     attributes:
       gender: epicene
@@ -3859,13 +3889,18 @@
       belt:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/corgi.rsi
-            state: belt_displacement
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_belt_displacement
       ears:
         sizeMaps:
           32:
-            sprite: Mobs/Pets/corgi.rsi
-            state: belt_displacement
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_belt_displacement
+      head:
+        sizeMaps:
+          32:
+            sprite: Mobs/Pets/displacements.rsi
+            state: corgi_head_displacement
   - type: Hands # HANDS!
   - type: Puller
   - type: Cuffable # bad dog!
@@ -3889,3 +3924,6 @@
     - DoorBumpOpener
   - type: StatusIcon # marks them as crew
     bounds: -0.5,-0.5,0.5,0.5
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen

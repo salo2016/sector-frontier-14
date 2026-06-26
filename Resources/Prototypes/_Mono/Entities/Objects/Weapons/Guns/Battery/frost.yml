@@ -1,0 +1,71 @@
+- type: entity
+  name: VFD EN-5 FROST
+  parent: [BaseWeaponBattery, BaseCommandContraband] # Frontier: added BaseCommandContraband #Lua BaseGunWieldable
+  id: WeaponEnergyGunFrost
+  description: A self-recharging energy gun with lethal rounds that can inflict serious damage. Comes with disabling munitions and improved accuracy compared to it's previous versions.
+  suffix: Need balance test #Lua
+  components:
+  - type: Sprite
+    sprite: _Mono/Objects/Weapons/Guns/Battery/frost.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-unshaded-3
+      map: ["enum.GunVisualLayers.MagUnshaded"]
+      shader: unshaded
+  - type: Item
+    shape: #Lua
+    - 0,0,2,1
+    size: Large
+    sprite: _Mono/Objects/Weapons/Guns/Battery/frost.rsi
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+    - suitStorage
+    sprite: _Mono/Objects/Weapons/Guns/Battery/frost.rsi
+#  - type: GunWieldBonus # comment from _Lua
+#    minAngle: -20
+#    maxAngle: -25
+  - type: Gun
+#    minAngle: 21 # comment from _Lua
+#    maxAngle: 34
+    minAngle: 3.1 #Lua
+    maxAngle: 15.5 #Lua
+    angleIncrease: 0.7 #Lua
+    angleDecay: 5 #Lua
+    fireRate: 5
+    selectedMode: FullAuto
+    availableModes:
+    - SemiAuto
+    - FullAuto
+    soundGunshot:
+      path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
+    soundEmpty:
+      path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
+  - type: Battery
+    maxCharge: 500
+    startingCharge: 500
+  - type: ProjectileBatteryAmmoProvider
+    proto: BulletEnergyGunFrostNonLethal
+    fireCost: 20 #Lua 75<20
+  # - type: EnergyGun # comment from _Lua
+  #   fireModes:
+  #   - proto: BulletEnergyGunFrostNonLethal
+  #     fireCost: 20 #Lua 75<20
+  #     name: disable
+  - type: MagazineVisuals
+    magState: mag
+    steps: 4
+    zeroVisible: true
+  - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
+  - type: StaticPrice
+    price: 750
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 20 #Lua 125<20
+  - type: PirateBountyItem # Mono
+    id: ExperimentalFactionWeapon

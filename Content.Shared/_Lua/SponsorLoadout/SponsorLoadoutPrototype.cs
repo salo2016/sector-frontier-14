@@ -1,31 +1,24 @@
-using Content.Shared.Roles;
+// LuaCorp - This file is licensed under AGPLv3
+// Copyright (c) 2026 LuaCorp
+// See AGPLv3.txt for details.
+
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared._Lua.SponsorLoadout;
 
-[Prototype("sponsorLoadout")]
+[Prototype]
 public sealed partial class SponsorLoadoutPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
-    [DataField("entity", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string EntityId { get; } = default!;
+    [DataField("ownerLogin", required: true)]
+    public string OwnerLogin { get; private set; } = default!;
 
-    [DataField("sponsorOnly")]
-    public bool SponsorOnly = false;
+    [DataField("tier")]
+    public string? Tier { get; private set; }
 
-    [DataField("whitelistJobs", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
-    public List<string>? WhitelistJobs { get; }
-
-    [DataField("blacklistJobs", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
-    public List<string>? BlacklistJobs { get; }
-
-    [DataField("speciesRestriction")]
-    public List<string>? SpeciesRestrictions { get; }
-
-    [DataField]
-    public string? Login { get; }
+    [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
+    public List<string> Entities { get; private set; } = new();
 }

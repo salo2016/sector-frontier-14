@@ -11,6 +11,9 @@
     sprite: _NF/Objects/Tanks/Jetpacks/nfsd.rsi
   - type: Clothing
     sprite: _NF/Objects/Tanks/Jetpacks/nfsd.rsi
+  - type: Jetpack
+    acceleration: 1.3
+    moleUsage: 0.001
   - type: Tag
     tags:
       - EmagImmune
@@ -31,3 +34,39 @@
   - type: Tag
     tags:
       - EmagImmune
+
+#Empty pirate
+- type: entity
+  id: JetpackPirate
+  parent: [BaseJetpack, BaseC1PirateContraband] # Lua-changes: BaseC3PirateContraband > BaseC1PirateContraband
+  name: pirate jetpack
+  suffix: Empty
+  components:
+  - type: Item
+    sprite: _NF/Objects/Tanks/Jetpacks/pirate.rsi
+  - type: Sprite
+    sprite: _NF/Objects/Tanks/Jetpacks/pirate.rsi
+  - type: Clothing
+    sprite: _NF/Objects/Tanks/Jetpacks/pirate.rsi
+  - type: Tag
+    tags:
+      - DemagImmune
+  - type: Jetpack
+    radarBlip: false
+
+#Filled pirate
+# - type: entity
+#   id: JetpackPirateFilled
+#   parent: JetpackPirate
+#   name: pirate jetpack
+#   suffix: Filled
+#   components:
+#   - type: GasTank
+#     outputPressure: 42.6
+#     air:
+#       # 13 minutes of thrust
+#       volume: 5
+#       temperature: 293.15
+#       moles:
+#         - 1.025689525 # oxygen
+#         - 1.025689525 # nitrogen

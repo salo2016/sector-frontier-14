@@ -5,23 +5,24 @@
 - type: vessel
   parent: BaseVessel
   id: Explorer
-  name: TY Explorer
-  price: 20370
-  category: Small
+  name: Explorer
+  price: 28930
+  category: Micro
   group: Typan
   access: SyndicateAgent
+  whitelist:
+  - Luna
+  - Frontier
   class:
   - Syndicate
+  - Patrol # Lua
   engine:
-  - Singularity
+  - Plasma # Lua
   shuttlePath: /Maps/_Lua/Shuttles/Typan/explorer.yml
-  addComponents:
 
-    - type: IFF
-      color: "#d93204"
 - type: gameMap
   id: Explorer
-  mapName: 'TY Explorer'
+  mapName: 'Explorer'
   mapPath: /Maps/_Lua/Shuttles/Typan/explorer.yml
   minPlayers: 0
   stations:
@@ -29,7 +30,7 @@
       stationProto: StandardFrontierExpeditionVessel
       components:
         - type: StationNameSetup
-          mapNameTemplate: 'TY Explorer {1}'
+          mapNameTemplate: 'Explorer {1}'
           nameGenerator:
             !type:NanotrasenNameGenerator
             prefixCreator: '14'

@@ -1,11 +1,11 @@
-using System.Numerics;
 using Content.Server.Doors.Systems;
 using Content.Shared.Doors.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.UnitTesting.Pool;
+using System.Numerics;
 
 namespace Content.IntegrationTests.Tests.Doors
 {
@@ -21,6 +21,7 @@ namespace Content.IntegrationTests.Tests.Doors
   components:
   - type: Physics
     bodyType: Dynamic
+  - type: GravityAffected
   - type: Fixtures
     fixtures:
       fix1:

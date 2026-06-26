@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Content.Server._Lua.ChatFilter; // Lua
 using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Database;
@@ -12,6 +13,7 @@ using Content.Server.Discord;
 using Content.Server.Discord.DiscordLink;
 using Content.Server.GameTicking;
 using Content.Server.Players.RateLimiting;
+using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -47,6 +49,8 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly PlayerRateLimitManager _rateLimit = default!;
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
         [Dependency] private readonly DiscordChatLink _discordChatLink = default!;
+        [Dependency] private readonly ChatFilterManager _chatFilter = default!; // Lua
+        [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
 
         [GeneratedRegex(@"^https://(?:(?:canary|ptb)\.)?discord\.com/api/webhooks/(\d+)/((?!.*/).*)$")]
         private static partial Regex DiscordRegex();
@@ -176,7 +180,7 @@ namespace Content.Server.Administration.Systems
                 }
 
                 // Check if the user has been banned
-                var ban = await _dbManager.GetServerBanAsync(null, e.Session.UserId, null, null);
+                var ban = await _dbManager.GetBanAsync(null, e.Session.UserId, null, null);
                 if (ban != null)
                 {
                     var banMessage = Loc.GetString("bwoink-system-player-banned", ("banReason", ban.Reason));
@@ -333,7 +337,7 @@ namespace Content.Server.Administration.Systems
             _typingUpdateTimestamps[args.SenderSession.UserId] = (_timing.RealTime, msg.Typing);
 
             // Non-admins can only ever type on their own ahelp, guard against fake messages
-            var isAdmin = _adminManager.GetAdminData(args.SenderSession)?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var isAdmin = _adminManager.GetAdminData(args.SenderSession, includeDeAdmin: true)?.HasFlag(AdminFlags.Adminhelp, includeDeAdmin: true) ?? false; // Lua deadmin mod
             var channel = isAdmin ? msg.Channel : args.SenderSession.UserId;
             var update = new BwoinkPlayerTypingUpdated(channel, args.SenderSession.Name, msg.Typing);
 
@@ -501,8 +505,21 @@ namespace Content.Server.Administration.Systems
             // Otherwise patch (edit) it
             if (existingEmbed.Id == null)
             {
-                var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+                // Frontier: Replaced with Try/Catch for network issues
+                HttpResponseMessage request;
+                try
+                {
+                    request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
+                        new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Log(LogLevel.Error,
+                        $"Webhook POST failed (network / refused) for user {userId}: {ex.Message}\n{ex}");
+                    _relayMessages.Remove(userId);
+                    _processingChannels.Remove(userId); // Frontier: Very Basic "Retry" logic, There might be times were Source or Target have temporarily network issues.
+                    return;
+                }
 
                 var content = await request.Content.ReadAsStringAsync();
                 if (!request.IsSuccessStatusCode)
@@ -510,6 +527,7 @@ namespace Content.Server.Administration.Systems
                     _sawmill.Log(LogLevel.Error,
                         $"Webhook returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}"); // Frontier: "Discord"<"Webhook"
                     _relayMessages.Remove(userId);
+                    _processingChannels.Remove(userId); // Frontier: Very Basic "Retry" logic, if post fails we discard the embed and make a new one
                     return;
                 }
 
@@ -526,8 +544,21 @@ namespace Content.Server.Administration.Systems
             }
             else
             {
-                var request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{existingEmbed.Id}",
-                    new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+                // Frontier: Replaced with Try/Catch for network issues
+                HttpResponseMessage request;
+                try
+                {
+                    request = await _httpClient.PatchAsync($"{_webhookUrl}/messages/{existingEmbed.Id}",
+                        new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+                }
+                catch (Exception ex)
+                {
+                    _sawmill.Log(LogLevel.Error,
+                        $"Webhook PATCH failed (network / refused) for user {userId} (will discard current embed state): {ex.Message}\n{ex}");
+                    _relayMessages.Remove(userId);
+                    _processingChannels.Remove(userId); // Frontier: Very Basic "Retry" logic, There might be times were Source or Target have temporarily network issues.
+                    return;
+                }
 
                 if (!request.IsSuccessStatusCode)
                 {
@@ -535,6 +566,7 @@ namespace Content.Server.Administration.Systems
                     _sawmill.Log(LogLevel.Error,
                         $"Webhook returned bad status code when patching message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}"); // Frontier: "Discord"<"Webhook"
                     _relayMessages.Remove(userId);
+                    _processingChannels.Remove(userId); // Frontier: Very Basic "Retry" logic, if patch fails we discard the embed and make a new one
                     return;
                 }
             }
@@ -563,13 +595,27 @@ namespace Content.Server.Administration.Systems
 
                     payload = GeneratePayload(message.ToString(), existingEmbed.Username, userId, existingEmbed.CharacterName);
 
-                    var request = await _httpClient.PostAsync($"{_onCallUrl}?wait=true",
-                        new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
-
-                    var content = await request.Content.ReadAsStringAsync();
-                    if (!request.IsSuccessStatusCode)
+                    // Frontier: Replaced with Try/Catch for network issues
+                    HttpResponseMessage request;
+                    try
                     {
-                        _sawmill.Log(LogLevel.Error, $"Webhook returned bad status code when posting relay message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}"); // Frontier: Discord<Webhook
+                        request = await _httpClient.PostAsync($"{_onCallUrl}?wait=true",
+                            new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+                    }
+                    catch (Exception ex)
+                    {
+                        _sawmill.Log(LogLevel.Error,
+                            $"On-call webhook POST failed (network / refused) for user {userId}: {ex.Message}\n{ex}");
+                        request = null!;
+                    }
+
+                    if (request != null)
+                    {
+                        var content = await request.Content.ReadAsStringAsync();
+                        if (!request.IsSuccessStatusCode)
+                        {
+                            _sawmill.Log(LogLevel.Error, $"Webhook returned bad status code when posting relay message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}"); // Frontier: Discord<Webhook
+                        }
                     }
                 }
             }
@@ -665,12 +711,13 @@ namespace Content.Server.Administration.Systems
             base.OnBwoinkTextMessage(message, eventArgs);
 
             var senderSession = eventArgs.SenderSession;
+            var experienced = _playTimeTracking.GetOverallPlaytime(senderSession) >= TimeSpan.FromHours(40);
+            if (!experienced && _chatFilter.IsProhibitedContent(senderSession, message.Text)) return;
 
-            // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
             var personalChannel = senderSession.UserId == message.UserId;
-            var senderAdmin = _adminManager.GetAdminData(senderSession);
-            var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var senderAdmin = _adminManager.GetAdminData(senderSession, includeDeAdmin: true); // Lua deadmin mod
+            var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp, includeDeAdmin: true) ?? false; // Lua deadmin mod
             var authorized = personalChannel && !message.AdminOnly || senderAHelpAdmin;
             if (!authorized)
             {
@@ -715,7 +762,7 @@ namespace Content.Server.Administration.Systems
             {
                 bwoinkText = $"[color=purple]{adminPrefix}{senderName}[/color]";
             }
-            else if (fromWebhook || senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp)) // Frontier: anything sent via webhooks are from an admin.
+            else if (fromWebhook || senderAdmin is not null && senderAdmin.HasFlag(AdminFlags.Adminhelp, includeDeAdmin: true)) // Lua deadmin mod
             {
                 // For Discord messages, use the senderName as-is since it already contains formatting
                 if (fromWebhook)
@@ -744,7 +791,7 @@ namespace Content.Server.Administration.Systems
 
             bwoinkText = $"{(message.AdminOnly ? Loc.GetString("bwoink-message-admin-only") : !message.PlaySound ? Loc.GetString("bwoink-message-silent") : "")}{(fromWebhook ? Loc.GetString("bwoink-message-discord") : "")} {bwoinkText}: {escapedText}";
 
-            var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var senderAHelpAdmin = senderAdmin?.HasFlag(AdminFlags.Adminhelp, includeDeAdmin: true) ?? false; // Lua deadmin mod
             // If it's not an admin / admin chooses to keep the sound and message is not an admin only message, then play it.
             var playSound = (!senderAHelpAdmin || message.PlaySound) && !message.AdminOnly;
             var msg = new BwoinkTextMessage(message.UserId, senderId, bwoinkText, playSound: playSound, adminOnly: message.AdminOnly);
@@ -868,17 +915,14 @@ namespace Content.Server.Administration.Systems
 
         private IList<INetChannel> GetNonAfkAdmins()
         {
-            return _adminManager.ActiveAdmins
-                .Where(p => (_adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false) &&
-                            !_afkManager.IsAfk(p))
+            return _adminManager.AllAdmins.Where(p => (_adminManager.GetAdminData(p, includeDeAdmin: true)?.HasFlag(AdminFlags.Adminhelp, includeDeAdmin: true) ?? false) && !_afkManager.IsAfk(p)) // Lua deadmin mod
                 .Select(p => p.Channel)
                 .ToList();
         }
 
         private IList<INetChannel> GetTargetAdmins()
         {
-            return _adminManager.ActiveAdmins
-                .Where(p => _adminManager.GetAdminData(p)?.HasFlag(AdminFlags.Adminhelp) ?? false)
+            return _adminManager.AllAdmins.Where(p => _adminManager.GetAdminData(p, includeDeAdmin: true)?.HasFlag(AdminFlags.Adminhelp, includeDeAdmin: true) ?? false) // Lua deadmin mod
                 .Select(p => p.Channel)
                 .ToList();
         }

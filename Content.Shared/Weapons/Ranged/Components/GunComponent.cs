@@ -36,6 +36,9 @@ public sealed partial class GunComponent : Component
     [DataField]
     public SoundSpecifier? SoundMode = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/selector.ogg");
 
+    [DataField]
+    public SoundSpecifier? SoundBurstCooldown;
+
     #endregion
 
     #region Recoil
@@ -269,6 +272,20 @@ public sealed partial class GunComponent : Component
     /// </summary>
     [DataField]
     public Vector2 DefaultDirection = new Vector2(0, -1);
+
+    /// <summary>
+    /// Mono
+    /// Recoil to incur per ammo shot, kg*m/s.
+    /// </summary>
+    [DataField]
+    public float Recoil = 25f;
+
+    /// <summary>
+    /// Mono
+    /// Multiplier of how much recoil should rotate you.
+    /// </summary>
+    [DataField]
+    public float RecoilRotation = 0.2f;
 
     /// <summary>
     /// Frontier: add gun caliber text

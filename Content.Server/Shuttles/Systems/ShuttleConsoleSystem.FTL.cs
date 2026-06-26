@@ -17,7 +17,6 @@ namespace Content.Server.Shuttles.Systems;
 public sealed partial class ShuttleConsoleSystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public const float ShuttleFTLRange = 1500f;
@@ -156,7 +155,7 @@ public sealed partial class ShuttleConsoleSystem
         if (!_shuttle.CanFTL(shuttleUid.Value, out var reason))
         {
             PlayDenySound(ent);
-            if (!string.IsNullOrEmpty(reason)) _popupSystem.PopupEntity(reason!, ent.Owner, PopupType.Medium);
+            if (!string.IsNullOrEmpty(reason)) _popup.PopupEntity(reason!, ent.Owner, PopupType.Medium);
             UpdateConsoles(shuttleUid.Value); return;
         }
 
@@ -183,16 +182,18 @@ public sealed partial class ShuttleConsoleSystem
         var xform = Transform(shuttleUid.Value);
         var bounds = xform.WorldMatrix.TransformBox(Comp<MapGridComponent>(shuttleUid.Value).LocalAABB).Enlarged(ShuttleFTLRange);
 
+        var dockedShuttles = new HashSet<EntityUid>(); // Lua
+        _shuttle.GetAllDockedShuttlesIgnoringFTLLock(shuttleUid.Value, dockedShuttles); // Lua
         foreach (var other in _mapManager.FindGridsIntersecting(xform.MapID, bounds))
         {
             if (other.Owner == shuttleUid.Value)
                 continue;
 
-            if (IsGcAbleGrid(other.Owner)) // Lua
-                continue;
+            if (dockedShuttles.Contains(other.Owner)) continue; // Lua
+            if (IsGcAbleGrid(other.Owner)) continue;
 
             PlayDenySound(ent);
-            _popupSystem.PopupEntity(Loc.GetString("shuttle-ftl-proximity"), ent.Owner, PopupType.Medium);
+            _popup.PopupEntity(Loc.GetString("shuttle-ftl-proximity"), ent.Owner, PopupType.Medium);
             UpdateConsoles(shuttleUid.Value);
             return;
         }

@@ -3,7 +3,6 @@
   id: MobVandalizer
   abstract: true
   components:
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - SpawnerHoloGraffitiRandom
@@ -51,11 +50,11 @@
       path: /Audio/Weapons/bladeslice.ogg
   - type: ReplacementAccent
     accent: streetpunk
-  - type: Advertise
-    pack: spacepunkhumanoidchatter
-    minimumWait: 30
-    maximumWait: 120
-    nextAdvertisementTime: 10
+  - type: Vocalizer
+    minVocalizeInterval: 30
+    maxVocalizeInterval: 120
+  - type: DatasetVocalizer
+    dataset: spacepunkhumanoidchatter
   - type: AutoWakeUp
 
 # Humans
@@ -81,12 +80,12 @@
   components:
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
-    baseSprintSpeed : 4
+    baseRunningSpeed : 4
   - type: Loadout
     prototypes:
     - PunkGangerGearPistol
   - type: BasicEntityAmmoProvider
-    proto: NFCartridgePistol35
+    proto: Cartridge9x19mmFMJ #Lua 35 -> 9x19
     capacity: 1
     count: 1
   - type: Gun
@@ -130,7 +129,7 @@
     prototypes:
     - PunkGangerGearShotgun
   - type: BasicEntityAmmoProvider
-    proto: NFShellShotgunBuckshot
+    proto: ShellShotgun23x75mmBuckshot #Lua 4 gauge
     capacity: 1
     count: 1
   - type: Gun
@@ -174,7 +173,7 @@
     prototypes:
     - PunkGangerGearSmg
   - type: BasicEntityAmmoProvider
-    proto: NFCartridgePistol35
+    proto: Cartridge9x19mmFMJ #Lua 35 -> 9x19
     capacity: 6
     count: 6
   - type: Gun

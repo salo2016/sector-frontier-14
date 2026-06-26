@@ -1,0 +1,45 @@
+# LuaCorp - This file is licensed under AGPLv3
+# Copyright (c) 2026 LuaCorp Contributors
+# See AGPLv3.txt for details.
+
+- type: latheRecipe
+  id: SprayPainterMagic
+  completetime: 6
+  result: SprayPainterMagic
+  materials:
+    Bluespace: 100
+    Plastic: 1000
+    Steel: 500
+    Silver: 100
+    Plasma: 200
+
+- type: latheRecipe
+  id: CrayonMagic
+  completetime: 6
+  result: CrayonMagic
+  materials:
+    Bluespace: 100
+    Plastic: 500
+    Plasma: 200
+
+- type: latheRecipe
+  id: WaterRegenerator
+  completetime: 6
+  result: WaterRegenerator
+  materials:
+    Silver: 300
+    Steel: 300
+    Glass: 100
+    Bluespace: 20
+
+- type: latheRecipe
+  id: ClothingOuterHardsuitBotanist
+  completetime: 6
+  result: ClothingOuterHardsuitBotanist
+  materials:
+    Glass: 500
+    Plastic: 2000
+    Plasteel: 3000
+    Durathread: 2000
+    Silver: 1000
+    Gold: 2000

@@ -1,4 +1,5 @@
 using Content.Server.Speech.Components;
+using Content.Shared.Speech;
 using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems
@@ -30,7 +31,10 @@ namespace Content.Server.Speech.EntitySystems
 
             return message.Replace("!", _random.Pick(Faces))
                 .Replace("r", "w").Replace("R", "W")
-                .Replace("l", "w").Replace("L", "W");
+                .Replace("l", "w").Replace("L", "W")
+                //Start ru locale
+                .Replace("р", "в").Replace("Р", "В")
+                .Replace("л", "в").Replace("Л", "В");
         }
 
         private void OnAccent(EntityUid uid, OwOAccentComponent component, AccentGetEvent args)

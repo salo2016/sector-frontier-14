@@ -3,6 +3,23 @@
   parent: [Clothing, RecyclableItemClothBasic] # Frontier: added RecyclableItemClothBasic
   id: ClothingBeltBase
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/toolbelt_pickup.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/toolbelt_drop.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/toolbelt_drop.ogg
+      params:
+        volume: -4
+  # Goobstation edit end
   - type: Sprite
     state: icon
   - type: Item
@@ -20,7 +37,7 @@
 
 - type: entity
   abstract: true
-  parent: ClothingBeltBase
+  parent: [ClothingBeltBase]
   id: ClothingBeltStorageBase
   components:
   - type: Storage
@@ -34,6 +51,42 @@
     containers:
       storagebase: !type:Container
         ents: []
+      item: !type:ContainerSlot #Lua
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Matchbox #Lua
+  - type: ItemSlots #Lua
+    slots:
+      item:
+        name: clothing-webbing-sidearm
+        whitelist:
+          components:
+          - Gun
+          - MeleeWeapon
+          - WeaponCaseInsertable
+  - type: Tag #Lua
+    tags:
+    - Webbing
+
+- type: entity
+  abstract: true
+  parent: [ClothingBeltBase]
+  id: ClothingBeltStorageBaseNoWeaponSlot
+  components:
+  - type: Storage
+    maxItemSize: Normal
+    defaultStorageOrientation: Vertical
+    grid:
+    - 0,0,7,1
+  - type: Item
+    size: Ginormous
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+      item: !type:ContainerSlot #Lua
   - type: UserInterface
     interfaces:
       enum.StorageUiKey.Key:

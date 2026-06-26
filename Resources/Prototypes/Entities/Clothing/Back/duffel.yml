@@ -115,13 +115,16 @@
   name: mime duffel bag
   description: A large duffel bag for holding... mime... stuff.
   components:
-    - type: Sprite
-      sprite: Clothing/Back/Duffels/mime.rsi
-    - type: Storage # Wizden#37444
-      storageOpenSound:
-        collection: null
-      storageInsertSound:
-        collection: null
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/mime.rsi
+  # Lua start
+  #- type: Storage
+  #
+  #  storageOpenSound:
+  #    collection: null
+  #  storageInsertSound:
+  #    collection: null
+  # Lua end
 
 - type: entity
   parent: NFClothingDuffel # Frontier: ClothingBackpackDuffelNFClothingDuffel
@@ -160,7 +163,7 @@
       sprite: Clothing/Back/Duffels/salvage.rsi
 
 - type: entity
-  parent: [NFClothingDuffel, BaseC3Contraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3Contraband, added ContrabandClothing as parent
+  parent: [NFClothingDuffel, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3Contraband, added ContrabandClothing as parent # Lua-changes: BaseC3Contraband > BaseC1SyndicateContrabandNoValue, removed ContrabandClothing
   id: ClothingBackpackDuffelSyndicate
   name: syndicate duffel bag
   description: A large duffel bag for holding various traitor goods.
@@ -174,7 +177,7 @@
     - 0,0,8,4
 
 - type: entity
-  parent: NFClothingDuffel # Frontier: ClothingBackpackDuffelNFClothingDuffelSyndicate
+  parent: [NFClothingDuffel, BaseClearContraband] # Frontier: ClothingBackpackDuffelSyndicate>NFClothingDuffel, BaseSyndicateContraband>BaseC3Contraband # Lua-changes: BaseC3Contraband > BaseClearContraband
   id: ClothingBackpackDuffelSyndicateBundle
   abstract: true
   components:
@@ -182,7 +185,15 @@
       tags: [] # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: NFClothingDuffel # Frontier: ClothingBackpackDuffelNFClothingDuffelSyndicate
+  parent: NFClothingDuffel # Frontier: ClothingBackpackDuffel>NFClothingDuffel
+  id: ClothingBackpackDuffelBundle
+  abstract: true
+  components:
+  - type: Tag
+    tags: [] # ignore "WhitelistChameleon" tag
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateAmmo
   components:
     - type: Sprite
@@ -194,7 +205,7 @@
       equippedPrefix: ammo
 
 - type: entity
-  parent: NFClothingDuffel # Frontier: ClothingBackpackDuffelNFClothingDuffelSyndicateAmmo
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoBundle
   abstract: true
   components:
@@ -202,7 +213,7 @@
       tags: [] # ignore "WhitelistChameleon" tag
 
 - type: entity
-  parent: NFClothingDuffel # Frontier: ClothingBackpackDuffelNFClothingDuffelSyndicate
+  parent: ClothingBackpackDuffelSyndicate
   id: ClothingBackpackDuffelSyndicateMedical
   components:
     - type: Sprite
@@ -214,7 +225,7 @@
       equippedPrefix: med
 
 - type: entity
-  parent: NFClothingDuffel # Frontier: ClothingBackpackDuffelNFClothingDuffelSyndicateMedical
+  parent: ClothingBackpackDuffelSyndicateMedical
   id: ClothingBackpackDuffelSyndicateMedicalBundle
   abstract: true
   components:

@@ -12,11 +12,13 @@ diagnoser-disease-report-cureresist-medium = Сопротивление косм
 diagnoser-disease-report-cureresist-high = Сопротивление космоцилину: [color=red]Сильное[/color]
 diagnoser-no-cures = Для это болезни отсутвуют особые лекарства.
 diagnoser-cure-has = Против заболевания имеются следующие лекарства:
-    Перед лечением внутривенно ввести ипекак 15u
 
 diagnoser-cure-bedrest = Лежать в кровати {$time} секунд, или {$sleep} на сон.
-diagnoser-cure-reagent = Следует принимать {$reagent} в объёме {$units}u.
+#diagnoser-cure-reagent = Следует принимать {$reagent} в объёме {$units}u. # Lua
 diagnoser-cure-wait = Пройдёт само через {$time} секунд.
 diagnoser-cure-temp = Достигните температуру тела ниже {$max}°K или выше чем {$min}°K.
 diagnoser-cure-temp-min = Держите температуру выше {$min}°K.
 diagnoser-cure-temp-max = Держите температуру ниже {$max}°K.
+
+# Lua:
+diagnoser-cure-reagent = {CAPITALIZE($reagent)} в объёме {$units}u.

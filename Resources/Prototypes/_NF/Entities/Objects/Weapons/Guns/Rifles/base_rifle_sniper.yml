@@ -1,10 +1,21 @@
 #region frame
 - type: entity
-  id: NFBaseWeaponFrameRifleSniper
-  parent: [ BaseC1Contraband, NFBaseWeaponEncumbranceSniper, NFBaseItemWeaponGun ]
-  suffix: Frontier
   abstract: true
+  parent: [ BaseC1Contraband, NFBaseWeaponEncumbranceSniper, NFBaseGunMeleeAttackHigh, NFBaseItemWeaponGun ]
+  id: NFBaseWeaponFrameRifleSniper
+  suffix: Frontier
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: RiflesPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: RiflesDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: RiflesDrop
+  # Goobstation edit end
   - type: Wieldable
     unwieldOnUse: false
   - type: GunRequiresWield
@@ -12,11 +23,11 @@
     minAngle: -0 # Set to 0 because GunRequiresWield
     maxAngle: -0
   - type: Gun
-    projectileSpeed: 30
-    minAngle: 1.6
-    maxAngle: 8
-    angleIncrease: 0.4
-    angleDecay: 2
+    projectileSpeed: 65 #Lua
+    minAngle: 1.4
+    maxAngle: 7
+    angleIncrease: 5.6
+    angleDecay: 3.7
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:
@@ -30,32 +41,32 @@
 
 #region manufacturer
 - type: entity
-  id: NFBaseWeaponFrameRifleSniperCybersun
-  parent: [ BaseC3SyndicateContraband, NFBaseWeaponFrameRifleSniper ]
   abstract: true
+  parent: [ BaseC3SyndicateContraband, NFBaseWeaponFrameRifleSniper ]
+  id: NFBaseWeaponFrameRifleSniperCybersun
   components:
   - type: Gun
-    angleIncrease: 0.5
-    angleDecay: 3.5
-    fireRate: 0.8
+    angleIncrease: 5.6
+    angleDecay: 3.7
+    fireRate: 1.8 #Lua 0.8<1.8
   - type: NFWeaponDetails
     class: weapon-details-manufacturer-cybersun-industries
 
 #region chamber
 - type: entity
-  id: NFBaseWeaponRifleChamber60
   abstract: true
+  id: NFBaseWeaponRifleChamber60
   components:
   - type: Gun
     examineCaliber: gun-examine-caliber-60
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
   - type: BallisticAmmoProvider
-    capacity: 5
-    proto: NFCartridgeRifle60
+    capacity: 10 #Lua 5<10
+    proto: Cartridge127x99mm #Lua NFCartridgeRifle60<Cartridge127x99mm
     whitelist:
       tags:
-      - NFCartridgeRifle60
+      - Cartridge127x99mm #Lua NFCartridgeRifle60<Cartridge127x99mm
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container

@@ -1,10 +1,21 @@
 #region frame
 - type: entity
-  id: NFBaseWeaponFrameEnergyPistol
-  parent: [ NFBaseWeaponEncumbrancePistol, BaseWeaponBatterySmall ]
-  suffix: Frontier
   abstract: true
+  parent: [ NFBaseWeaponEncumbrancePistol, NFBaseGunMeleeAttackLow, BaseWeaponBatterySmall ]
+  id: NFBaseWeaponFrameEnergyPistol
+  suffix: Frontier
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: LasersPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: LasersDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: LasersDrop
+  # Goobstation edit end
   - type: Sprite
     layers:
     - state: base
@@ -18,11 +29,11 @@
     zeroVisible: true
   - type: Appearance
   - type: Gun
-    projectileSpeed: 30
-    minAngle: 2.1
-    maxAngle: 10.5
-    angleIncrease: 0.6
-    angleDecay: 3
+    projectileSpeed: 45 #Lua
+    minAngle: 1.8
+    maxAngle: 9
+    angleIncrease: 0.5
+    angleDecay: 2.5
     fireRate: 3
     selectedMode: SemiAuto
     availableModes:
@@ -45,10 +56,10 @@
   abstract: true
   components:
   - type: Gun
-    minAngle: 2.4
-    maxAngle: 12
-    angleIncrease: 0.8
-    angleDecay: 2.7
+    minAngle: 2.1
+    maxAngle: 10.5
+    angleIncrease: 0.7
+    angleDecay: 2.4
     fireRate: 2.6
   - type: NFWeaponDetails
     class: weapon-details-manufacturer-nanotrasen-munitions
@@ -59,10 +70,10 @@
   abstract: true
   components:
   - type: Gun
-    minAngle: 3
-    maxAngle: 15
-    angleIncrease: 1.2
-    angleDecay: 3.8
+    minAngle: 2.2
+    maxAngle: 11
+    angleIncrease: 1.1
+    angleDecay: 3.5
     fireRate: 2
   - type: NFWeaponDetails
     class: weapon-details-manufacturer-frontier-gunsmith-consortium
@@ -139,7 +150,7 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: NFRedLightLaser
+    proto: NFRedMediumLaser #Lua NFRedLightLaser<NFRedMediumLaser
     fireCost: 60
 
 - type: entity
@@ -151,5 +162,26 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
   - type: HitscanBatteryAmmoProvider
-    proto: NFPulse
-    fireCost: 60
+    proto: LuaPulsePistol #Lua NFPulse<LuaPulsePistol
+    fireCost: 25
+
+- type: entity
+  parent: BasicHitscan
+  categories: [ HideSpawnMenu ]
+  id: LuaPulsePistol
+  components:
+  - type: HitscanBasicDamage
+    damage:
+      types:
+        Heat: 15
+        Radiation: 10
+  - type: HitscanBasicVisuals
+    muzzleFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: muzzle_blue
+    travelFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: beam_blue
+    impactFlash:
+      sprite: Objects/Weapons/Guns/Projectiles/projectiles.rsi
+      state: impact_blue

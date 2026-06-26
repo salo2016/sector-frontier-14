@@ -42,6 +42,8 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.ToggleRoundEndSummaryWindow);
             // Lua: allow toggling language menu via keybind (F)
             common.AddFunction(ContentKeyFunctions.OpenLanguageMenu);
+            common.AddFunction(ContentKeyFunctions.OpenCompanyFactionsMenu);
+            common.AddFunction(ContentKeyFunctions.OpenDonateShopMenu);
 
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
@@ -58,10 +60,14 @@ namespace Content.Client.Input
             human.AddFunction(EngineKeyFunctions.MoveLeft);
             human.AddFunction(EngineKeyFunctions.MoveRight);
             human.AddFunction(EngineKeyFunctions.Walk);
+            human.AddFunction(ContentKeyFunctions.ToggleWalk);
+            // Lua: Disabled ToggleKnockdown
+            // human.AddFunction(ContentKeyFunctions.ToggleKnockdown);
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.SwapHandsReverse);
             human.AddFunction(ContentKeyFunctions.Drop);
             human.AddFunction(ContentKeyFunctions.UseItemInHand);
+            human.AddFunction(ContentKeyFunctions.LookUp); // Lua
             human.AddFunction(ContentKeyFunctions.AltUseItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.OpenEmotesMenu);
@@ -129,6 +135,7 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.OpenTileSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenDecalSpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenAdminMenu);
+            common.AddFunction(ContentKeyFunctions.OpenChunkMonitor);
             common.AddFunction(ContentKeyFunctions.OpenGuidebook);
         }
     }

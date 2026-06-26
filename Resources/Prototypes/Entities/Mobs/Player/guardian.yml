@@ -25,7 +25,7 @@
     - type: InputMover
     - type: MovementSpeedModifier
       baseWalkSpeed: 4
-      baseSprintSpeed: 5.5
+      baseRunningSpeed: 5.5
     - type: DamageOnHighSpeedImpact
       damage:
         types:
@@ -243,6 +243,9 @@
           Piercing: 4
         groups:
           Burn: 3
+      catchingFailDamage:
+        types:
+          Blunt: 1
     - type: MeleeWeapon
       angle: 30
       animation: WeaponArcFist

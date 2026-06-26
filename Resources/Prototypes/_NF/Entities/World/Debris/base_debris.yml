@@ -3,8 +3,6 @@
   id: NFBaseDebris
   abstract: true
   components:
-  - type: TimedDespawn # Lua
-    lifetime: 3600
   - type: OwnedDebris
   - type: LocalityLoader
   - type: GCAbleObject
@@ -13,9 +11,8 @@
   - type: LinkedLifecycleGridParent
   - type: ProtectedGrid
     preventArtifactTriggers: true
-  - type: PreventPilot
   - type: IFF
-    flags: HideLabel
+    flags: HideLabel, HideLabelAlways
   - type: ClaimableGrid # Mono
   - type: DetectedAtRangeMultiplier # Mono
     visualBias: 1024

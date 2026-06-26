@@ -42,7 +42,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
         if (arcade.RewardAmount <= 0)
             return;
 
-        EntityManager.SpawnEntity(_random.Pick(arcade.PossibleRewards), xform.Coordinates);
+        Spawn(_random.Pick(arcade.PossibleRewards), xform.Coordinates);
         arcade.RewardAmount--;
     }
 
@@ -67,7 +67,7 @@ public sealed partial class SpaceVillainArcadeSystem : EntitySystem
     private void OnComponentInit(EntityUid uid, SpaceVillainArcadeComponent component, ComponentInit args)
     {
         // Random amount of prizes
-        component.RewardAmount = new Random().Next(component.RewardMinAmount, component.RewardMaxAmount + 1);
+        component.RewardAmount = _random.Next(component.RewardMinAmount, component.RewardMaxAmount + 1);
     }
 
     private void OnSVPlayerAction(EntityUid uid, SpaceVillainArcadeComponent component, SharedSpaceVillainArcadeComponent.SpaceVillainArcadePlayerActionMessage msg)

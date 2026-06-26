@@ -2,6 +2,7 @@
 
 shipyard-console-invalid-vessel = Не удалось приобрести шаттл:
 shipyard-console-menu-title = Меню Верфи
+shipyard-console-menu-title-parking = Парковка шаттлов
 shipyard-console-menu-listing-free = Бесплатно
 shipyard-console-menu-listing-amount = ${ $amount }
 shipyard-console-docking = Шаттл { $vessel } капитана { $owner } в пути, расчётное время прибытия 10 секунд.
@@ -20,10 +21,50 @@ shipyard-console-sale-organic-aboard = Экипаж должен покинут�
 # This error message is bad, but if it happens, something awful's happened.
 shipyard-console-sale-invalid-ship = Шаттл не соответствует нормам и не может быть продан.
 shipyard-console-sale-unknown-reason = Шаттл не может быть продан: { reason }
+#shipyard-console-no-idcard-helper-line1 = Вставьте ID карту чтобы купить или продать корабль. # Lua
+#shipyard-console-no-idcard-helper-line2 = Ваша ID карта находится в КПК. # Lua
 shipyard-console-deed-label = Зарегистрированный шаттл:
-shipyard-console-deed-label-none = Нет
-shipyard-console-appraisal-label = Оценочная стоимость шаттла:{ " " }
+#shipyard-console-appraisal-label = Оценочная стоимость шаттла:{ " " } # Lua
 shipyard-console-no-voucher-redemptions = Все ваучеры использованы.
+shipyard-console-invalid-voucher-type = Этот ваучер не может быть использован на этой консоли.
+shipyard-console-denied = Вы не можете приобрести этот корабль в данный момент.
+shipyard-console-limited = Достигнут предел по активным шаттлам этого типа, попробуйте снова позже.
+
+shipyard-console-contraband-onboard = На борту обнаружена контрабанда.
+shipyard-console-station-resources = На борту обнаружены жизненно важные ресурсы станции.
+shipyard-console-dangerous-materials = На борту обнаружены опасные материалы.
+shipyard-console-cute-pets = Обнаружены милые питомцы на борту.
+shipyard-console-fallback-prevent-sale = Обнаружены ошибки класса YML на борту. Пожалуйста, сообщите об этом, если возможно.
+
+shipyard-console-menu-size-label = Размер:{" "}
+shipyard-console-menu-class-label = Тип:{" "}
+shipyard-console-menu-engine-label = Питание:{" "}
+
+shipyard-console-purchase-available = Приобрести
+shipyard-console-park = Парковать
+shipyard-console-recall = Вызвать
+shipyard-console-parking-already-parked = Этот шаттл уже запаркован.
+shipyard-console-parking-not-parked = Этот шаттл не находится на парковке.
+shipyard-console-parking-no-dock-selected = Сначала выберите стыковочный порт.
+shipyard-console-parking-invalid-dock = Выбран некорректный стыковочный порт.
+shipyard-console-parking-no-docking-path = Не удалось вызвать шаттл на выбранный стыковочный порт.
+shipyard-console-parking-cryo-pod-aboard = На шаттле установлена капсула криогенного сна игрока. Такой шаттл нельзя отправить на парковку.
+shipyard-console-parking-status-parked = Статус: запаркован
+shipyard-console-parking-status-active = Статус: активен
+shipyard-console-guidebook = Документация
+shipyard-console-unassign-deed = Отвязать от ID
+shipyard-console-deed-unassigned = Успешно отвязан от ID карты.
+shipyard-console-confirm-unassign = Вы уверены?
+shipyard-console-unassign-cooldown = Подождите {$minutes} минут(ы) перед отвязкой шаттла.
+shipyard-console-deed-label-none = Нет
+
+# Rename
+shipyard-console-rename-button = Переименовать
+shipyard-console-rename-placeholder = Название
+shipyard-console-rename-empty = Название шаттла не может быть пустым.
+shipyard-console-rename-too-long = Название шаттла не может превышать { $max } символов.
+shipyard-console-rename-success = Шаттл переименован в "{ $name }".
+shipyard-console-rename-failed = Не удалось переименовать шаттл.
 
 shipyard-console-engine-All = Все
 shipyard-console-engine-AME = ДАМ
@@ -62,27 +103,13 @@ shipyard-console-class-Atmospherics = Газодобывающий
 shipyard-console-class-Medical = Медицинский
 shipyard-console-class-Civilian = Гражданский
 shipyard-console-class-Kitchen = Сервисный
+shipyard-console-class-BlackMarket = Чёрный рынок
 
 shipyard-console-category-All = Все
 shipyard-console-category-Micro = Мини
 shipyard-console-category-Small = Маленький
 shipyard-console-category-Medium = Средний
 shipyard-console-category-Large = Большой
-
-shipyard-console-menu-size-label = Размер:{" "}
-shipyard-console-menu-class-label = Тип:{" "}
-shipyard-console-menu-engine-label = Питание:{" "}
-
-shipyard-console-purchase-available = Приобрести
-shipyard-console-sell-button = Продать
-shipyard-console-guidebook = Документация
-shipyard-console-unassign-deed = Отвязать от ID
-
-shipyard-console-contraband-onboard = На борту обнаружена контрабанда.
-shipyard-console-station-resources = На борту обнаружены жизненно важные ресурсы станции.
-shipyard-console-dangerous-materials = На борту обнаружены опасные материалы.
-
-shipyard-console-limited = Достигнут предел по активным шаттлам этого типа, попробуйте снова позже.
 shuttle-console-crewed = Нельзя одновременно использовать консоль шаттла и орудийную консоль. Может попробуете найти члена экипажа?
 shuttle-console-guest-access-granted = Гостевой доступ к дверям и шкафчикам этого корабля предоставлен.
 shuttle-console-guest-access-already-granted = У вас уже есть гостевой доступ к этому кораблю.

@@ -153,6 +153,7 @@ loadout-group-medical-intern-jumpsuit = Интерн, комбинезон
 loadout-group-chemist-jumpsuit = Химик, комбинезон
 loadout-group-chemist-outerclothing = Химик, верхняя одежда
 loadout-group-chemist-backpack = Химик, рюкзак
+loadout-group-chemist-head = Химик, голова
 loadout-group-paramedic-head = Парамедик, голова
 loadout-group-paramedic-jumpsuit = Парамедик, комбинезон
 loadout-group-paramedic-outerclothing = Парамедик, верхняя одежда
@@ -161,3 +162,17 @@ loadout-group-paramedic-shoes = Парамедик, обувь
 loadout-group-reporter-jumpsuit = Репортёр, комбинезон
 loadout-group-boxer-jumpsuit = Боксёр, комбинезон
 loadout-group-boxer-gloves = Боксёр, перчатки
+
+loadout-group-vip-jumpsuit = Акционер, комбинезон
+loadout-group-vip-shoes = Акционер, обувь
+loadout-group-vip-backpack = Акционер, рюкзак
+loadout-group-vip-ears = Акционер, гарнитура
+loadout-group-vip-pda = Акционер, КПК
+loadout-group-vip-neck = Акционер, шея
+
+loadout-group-outpost-syndicate-shareholder-jumpsuit = Акционер Синдиката, комбинезон
+loadout-group-outpost-syndicate-shareholder-shoes = Акционер Синдиката, обувь
+loadout-group-outpost-syndicate-shareholder-backpack = Акционер Синдиката, рюкзак
+loadout-group-outpost-syndicate-shareholder-ears = Акционер Синдиката, гарнитура
+loadout-group-outpost-syndicate-shareholder-pda = Акционер Синдиката, КПК
+loadout-group-outpost-syndicate-shareholder-neck = Акционер Синдиката, шея

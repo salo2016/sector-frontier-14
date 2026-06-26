@@ -48,7 +48,7 @@
     - type: InputMover
     - type: MovementSpeedModifier
       baseWalkSpeed: 3
-      baseSprintSpeed: 5
+      baseRunningSpeed: 5
       baseWeightlessModifier: 1.5
     - type: Sprite
       sprite: Mobs/Demons/behonker.rsi
@@ -119,8 +119,6 @@
     - type: Bloodstream
       bloodMaxVolume: 300
       bloodReagent: Laughter
-    - type: TimedDespawn
-      lifetime: 2400
 
 - type: entity
   name: behonker

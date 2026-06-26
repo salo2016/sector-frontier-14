@@ -1,8 +1,10 @@
-using System.Diagnostics.CodeAnalysis;
+using Content.Server.Store.Conditions;
 using Content.Shared.Mind;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
 using Robust.Shared.Prototypes;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Server.Store.Systems;
 
@@ -23,11 +25,9 @@ public sealed partial class StoreSystem
         {
             foreach (var previousStateListingItem in previousState)
             {
-                if (!previousStateListingItem.IsCostModified
-                    || !TryGetListing(newState, previousStateListingItem.ID, out var found))
-                {
-                    continue;
-                }
+                if (!TryGetListing(newState, previousStateListingItem.ID, out var found)) continue;
+                if (previousStateListingItem.PurchaseAmount > 0) found.PurchaseAmount = previousStateListingItem.PurchaseAmount;
+                if (!previousStateListingItem.IsCostModified) continue;
 
                 foreach (var (modifierSourceId, costModifier) in previousStateListingItem.CostModifiersBySourceId)
                 {
@@ -48,10 +48,29 @@ public sealed partial class StoreSystem
         var clones = new HashSet<ListingDataWithCostModifiers>();
         foreach (var prototype in _proto.EnumeratePrototypes<ListingPrototype>())
         {
-            clones.Add(new ListingDataWithCostModifiers(prototype));
+            // Lua stock mod start
+            var listing = new ListingDataWithCostModifiers(prototype);
+            ExtractStockFromConditions(listing, prototype);
+            clones.Add(listing); // Lua stock mod
+            // Lua stock mod end
         }
 
         return clones;
+    }
+
+    /// <summary>
+    /// Lua stock mod
+    /// </summary>
+    /// <param name="listing"></param>
+    /// <param name="prototype"></param>
+    private void ExtractStockFromConditions(ListingDataWithCostModifiers listing, ListingPrototype prototype)
+    {
+        if (prototype.Conditions == null) return;
+        foreach (var condition in prototype.Conditions)
+        {
+            if (condition is ListingLimitedStockCondition stockCondition)
+            { listing.Stock = stockCondition.Stock; break; }
+        }
     }
 
     /// <summary>
@@ -79,7 +98,11 @@ public sealed partial class StoreSystem
     /// <returns>Whether or not the listing was add successfully</returns>
     public bool TryAddListing(StoreComponent component, ListingPrototype listing)
     {
-        return component.FullListingsCatalog.Add(new ListingDataWithCostModifiers(listing));
+        // Lua stock mod start
+        var listingData = new ListingDataWithCostModifiers(listing);
+        ExtractStockFromConditions(listingData, listing);
+        return component.FullListingsCatalog.Add(listingData); // Lua stock mod
+        // Lua stock mod end
     }
 
     /// <summary>
@@ -119,19 +142,7 @@ public sealed partial class StoreSystem
             if (listing.Conditions != null)
             {
                 var args = new ListingConditionArgs(GetBuyerMind(buyer), storeEntity, listing, EntityManager);
-                var conditionsMet = true;
-
-                foreach (var condition in listing.Conditions)
-                {
-                    if (!condition.Condition(args))
-                    {
-                        conditionsMet = false;
-                        break;
-                    }
-                }
-
-                if (!conditionsMet)
-                    continue;
+                if (!listing.Conditions.All(c => c.Condition(args))) continue;
             }
 
             yield return listing;

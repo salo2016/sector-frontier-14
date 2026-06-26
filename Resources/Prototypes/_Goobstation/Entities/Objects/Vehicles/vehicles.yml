@@ -8,11 +8,6 @@
     # renderOver: East, SouthEast, South, SouthWest, West # Frontier
     renderOver: East, South, West # Frontier
     radarBlip: false # Frontier
-  - type: RadarBlip
-    radarColor: "#8A2BE2"
-    scale: 0.6
-    visibleFromOtherGrids: true
-    requireNoGrid: false
   - type: Strap
     position: Stand
     unbuckleDistanceSquared: 0.09 # Frontier
@@ -65,7 +60,7 @@
   - type: MovementSpeedModifier
     acceleration: 8
     friction: 5 # wheels dont stop instantly
-    baseSprintSpeed: 6
+    baseRunningSpeed: 6
     baseWalkSpeed: 4.5 # default walking speed
   - type: ItemSlots
     slots:
@@ -137,7 +132,7 @@
 
 - type: entity
   id: VehicleSyndicateSegway
-  parent: VehicleSecway
+  parent: [VehicleSecway, BaseC1SyndicateContraband] # Lua-changes: added BaseC1SyndicateContraband
   name: syndicate segway
   description: Be an enemy of the corporation, in style.
   components:
@@ -235,7 +230,7 @@
       visible: false
     noRot: true
   - type: Vehicle
-    requiredHands: 1 # Frontier: 0<1
+    requiredHands: 0
     engineRunning: true
     # renderOver: South, SouthEast, SouthWest # Frontier
     renderOver: North # Frontier
@@ -246,7 +241,7 @@
   - type: MovementSpeedModifier
     acceleration: 10
     friction: 10
-    baseSprintSpeed: 3.5
+    baseRunningSpeed: 3.5
     baseWalkSpeed: 2.5
   - type: StaticPrice
     price: 75
@@ -266,7 +261,7 @@
 
 - type: entity
   id: VehicleHoverchair
-  parent: BaseVehicle
+  parent: VehicleWheelchair # Lua: BaseVehicle < VehicleWheelchair
   name: hoverchair
   description: A luxury hoverchair, kick back and relax.
   components:
@@ -289,7 +284,7 @@
   - type: MovementSpeedModifier
     acceleration: 5 # Frontier: 10<5
     friction: 2.5 # Frontier: 0.5<2.5
-    baseSprintSpeed: 3.5
+    baseRunningSpeed: 3.5
     baseWalkSpeed: 2.5
   - type: StaticPrice
     price: 175

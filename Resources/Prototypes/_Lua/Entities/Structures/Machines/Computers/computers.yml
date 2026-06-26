@@ -2,83 +2,665 @@
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
 
+#region Shipyards
 - type: entity
-  parent: BaseNFFlatpack
-  id: ComputerGunneryConsoleFlatpack
-  name: упакованная консоль управления огнём
-  description: Упакованная консоль управления огнём для наведения и управления огнём оружия, обеспечивающий точное прицеливание и стрельбу.
+  id: MercyShipComputer # TODO: Создать нормальную консоль верфи наёмников, а не консоль верфи случайного материнского корабля
+  parent: BaseMothershipComputer
+  name: mercy shipyard console
   components:
-  - type: Flatpack
-    entity: ComputerGunneryConsole
-  - type: StaticPrice
-    price: 250
-  - type: Sprite
-    sprite: _Lua/Flatpack/flatpack.rsi
-    layers:
-    - state: ship_weapon
+  - type: ShipyardListing
+    shuttles:
+    - EagleMercenary
+    - Caretaker
+    - Hedgehog
+    # - MCXeno # Kideo
 
 - type: entity
-  parent: BaseNFFlatpack
-  id: GunneryServerFlatpack
-  name: упакованный сервер управления огнём
-  description: Упакованный сервер управления огнём для наведения и управления огнём оружия установленного на шаттле.
+  id: ComputerShipyardBASBlackMarket
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, ComputerShipyardBase]
+  name: Консоль верфи Чёрного Рынка
+  description: Старые исследовательские и боевые шаттлы, напичканные запрещенными штучками и не светящиеся в системе - прямо перед вами.
+  suffix: For Asteroid Sector Black market
   components:
-  - type: Flatpack
-    entity: GunneryServerMedium
-  - type: StaticPrice
-    price: 250
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.ASBlackMarket
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.ASBlackMarket:
+        type: ShipyardConsoleBoundUserInterface
   - type: Sprite
-    sprite: _Lua/Flatpack/flatpack.rsi
+    sprite: _NF/Structures/Machines/computers.rsi
     layers:
-    - state: ship_weapon
+    - map: ["computerLayerBody"]
+      state: computer_blackmarket
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shipyard_blackmarket
+    - map: ["computerLayerKeys"]
+      state: blackmarket_key
+  - type: ShipyardConsole
+    shipyardChannel: Freelance
+    taxAccounts:
+      Invalid: 0.40
+    ignoreBaseSaleRate: true # Fixed 70% sale rate.
+    canTransferDeed: false
 
 - type: entity
-  parent: BaseNFFlatpack
-  id: MachineFTLDrive600Flatpack
-  name: упакованный FSS-600 блюспейс двигатель
-  description: Упакованный FSS-600 блюспейс двигатель который увеличивает дальность сверхсветового перемещения корабля до 600 метров
+  name: консоль большой верфи
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseStructureComputer]
+  id: ComputerShipyardLarge
+  description: Используйте чтобы купить или продать шаттл
+  placement:
+    mode: SnapgridCenter
   components:
-  - type: Flatpack
-    entity: MachineFTLDrive600
-  - type: StaticPrice
-    price: 250
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: MetalGlassBreak
+  - type: Computer
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
   - type: Sprite
-    sprite: _Lua/Flatpack/flatpack.rsi
+    netsync: false
+    noRot: true
+    sprite: _NF/Structures/Machines/computers.rsi
     layers:
-    - state: ship_weapon
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shipyard
+    - map: ["computerLayerKeys"]
+      state: telesci_key
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true, shader: shaded }
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    offset: "0, 0.4" # shine from the top, not bottom of the computer
+    castShadows: false
+  - type: EmitSoundOnUIOpen
+    sound:
+      collection: Keyboard
+  - type: ShipyardConsole
+    targetIdSlot:
+      name: id-card-console-target-id
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      ejectOnBreak: true
+      swap: true
+      whitelist:
+        components:
+        - IdCard
+  - type: ActivatableUI
+    singleUser: true
+    key: enum.ShipyardConsoleUiKey.ShipyardLarge
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.ShipyardLarge:
+        type: ShipyardConsoleBoundUserInterface
+  - type: ItemSlots
+  - type: ContainerContainer
+    containers:
+      ShipyardConsole-targetId: !type:ContainerSlot {}
+      board: !type:Container
 
 - type: entity
-  parent: BaseNFFlatpack
-  id: MachineWarpDriveFlatpack
-  name: упакованный межзвёздный блюспейс двигатель
-  description: Упакованный межзвёздный блюспейс двигатель необходимый для межзвёздных путешествий
+  id: ComputerShipyardAnarchyScrapExp
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, ComputerShipyard]
+  name: консоль кораблей из обломков
+  description: Консоль покупки кораблей из обломков
+  suffix: Анархия
   components:
-  - type: Flatpack
-    entity: MachineWarpDrive
-  - type: StaticPrice
-    price: 250
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.AnarchyScrapExp
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.AnarchyScrapExp:
+        type: ShipyardConsoleBoundUserInterface
   - type: Sprite
-    sprite: _Lua/Flatpack/flatpack.rsi
+    sprite: _NF/Structures/Machines/computers.rsi
     layers:
-    - state: ship_weapon
+    - map: ["computerLayerBody"]
+      state: computer_blackmarket
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shipyard_blackmarket
+    - map: ["computerLayerKeys"]
+      state: blackmarket_key
 
 - type: entity
-  parent: BaseNFFlatpack
-  id: PlayerStationAiVesselFlatpack
-  name: упакованный ИИ шаттла
-  description: Упакованный ИИ шаттла, составит компанию вашим путешествиям
+  id: ComputerShipyardTypan
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, ComputerShipyard]
+  name: консоль кораблей синдиката
+  description: Консоль покупки кораблей синдиката
+  suffix: Нордфолл
   components:
-  - type: Flatpack
-    entity: PlayerStationAiVessel
-  - type: StaticPrice
-    price: 250
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.Typan
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.Typan:
+        type: ShipyardConsoleBoundUserInterface
   - type: Sprite
-    sprite: _Lua/Flatpack/flatpack.rsi
+    sprite: _NF/Structures/Machines/computers.rsi
     layers:
-    - state: ship_weapon
+    - map: ["computerLayerBody"]
+      state: computer_blackmarket
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: shipyard_blackmarket
+    - map: ["computerLayerKeys"]
+      state: blackmarket_key
+
+- type: entity
+  id: ComputerShipyardLuatech
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, ComputerShipyard]
+  name: консоль кораблей LuaTech
+  description: Консоль покупки кораблей LuaTech
+  suffix: Lua
+  components:
+  - type: LuaTech
+  - type: ActivatableUI
+    key: enum.ShipyardConsoleUiKey.LuaTech
+  - type: UserInterface
+    interfaces:
+      enum.ShipyardConsoleUiKey.LuaTech:
+        type: ShipyardConsoleBoundUserInterface
+  - type: Sprite
+    sprite: _Lua/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer_holo
+    - map: ["computerLayerKeyboard"]
+      state: holo_generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: holo_shipyardluatech
+    - map: ["computerLayerKeys"]
+      state: holo_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: holo_generic_panel_open
+    - type: PointLight
+      enabled: false
+      color: "#2287af"
+      radius: 1.0
+      energy: 1.5
+
+- type: entity
+  id: SauronCarrierComputer
+  parent: BaseCarrierComputer
+  name: sauron carrier console
+  components:
+  - type: ShipyardListing
+    shuttles:
+    - Runo
 
 
-#LuaTech
+
+#region Bying & Selling
+- type: entity
+  name: Консоль продажи Чёрного рынка
+  suffix: Normal
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseComputer]
+  id: ComputerPalletConsoleBlackMarket
+  description: Продаёт предметы на поддоне третьим лицам
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Lua/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard_trade
+    - map: ["computerLayerScreen"]
+      state: transferBlackMarketN
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: NFCargoPalletConsole
+  - type: ActivatableUI
+    key: enum.CargoPalletConsoleUiKey.Sale
+  - type: UserInterface
+    interfaces:
+      enum.CargoPalletConsoleUiKey.Sale:
+        type: CargoPalletConsoleNFBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: Null
+  - type: MarketModifier
+    buy: false
+  # Dynamic pricing domain removed; using single global system
+
+- type: entity
+  name: Консоль продажи Фрилансера
+  suffix: Normal
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseComputer]
+  id: ComputerPalletConsolePirate
+  description: Продаёт предметы на поддоне Барону
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Lua/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard_trade
+    - map: ["computerLayerScreen"]
+      state: transferPirateN
+    - map: ["computerLayerKeys"]
+      state: tech_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: generic_panel_open
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: NFCargoPalletConsole
+  - type: ActivatableUI
+    key: enum.CargoPalletConsoleUiKey.Sale
+  - type: UserInterface
+    interfaces:
+      enum.CargoPalletConsoleUiKey.Sale:
+        type: CargoPalletConsoleNFBoundUserInterface
+      enum.WiresUiKey.Key:
+        type: WiresBoundUserInterface
+  - type: Computer
+    board: Null
+  - type: MarketModifier
+    buy: false
+
+#x1.50
+- type: entity
+  parent: ComputerPalletConsoleSyndicateMarket
+  id: ComputerPalletConsoleNFVeryHighMarketSyndicate
+  suffix: Very High
+  components:
+  - type: MarketModifier
+    mod: 1.50
+- type: entity
+  parent: ComputerPalletConsoleBlackMarket
+  id: ComputerPalletConsoleNFVeryHighBlackMarket
+  suffix: Very High
+  components:
+  - type: MarketModifier
+    mod: 1.50
+#x1.25
+- type: entity
+  parent: ComputerPalletConsoleSyndicateMarket
+  id: ComputerPalletConsoleNFHighMarketSyndicate
+  suffix: High
+  components:
+  - type: MarketModifier
+    mod: 1.25
+- type: entity
+  parent: ComputerPalletConsoleBlackMarket
+  id: ComputerPalletConsoleNFHighBlackMarket
+  suffix: High
+  components:
+  - type: MarketModifier
+    mod: 1.25
+#x1
+- type: entity
+  parent: ComputerPalletConsoleSyndicateMarket
+  id: ComputerPalletConsoleNFNormalMarketSyndicate
+  suffix: Normal
+  components:
+  - type: MarketModifier
+    mod: 1
+- type: entity
+  parent: ComputerPalletConsoleBlackMarket
+  id: ComputerPalletConsoleNFNormalBlackMarket
+  suffix: Normal
+  components:
+  - type: MarketModifier
+    mod: 1
+#x0.75
+- type: entity
+  parent: ComputerPalletConsoleSyndicateMarket
+  id: ComputerPalletConsoleNFLowMarketSyndicate
+  suffix: Low
+  components:
+  - type: MarketModifier
+    mod: 0.75
+- type: entity
+  parent: ComputerPalletConsoleBlackMarket
+  id: ComputerPalletConsoleNFLowBlackMarket
+  suffix: Low
+  components:
+  - type: MarketModifier
+    mod: 0.75
+#x0.5
+- type: entity
+  parent: ComputerPalletConsoleSyndicateMarket
+  id: ComputerPalletConsoleNFVeryLowMarketSyndicate
+  suffix: Very Low
+  components:
+  - type: MarketModifier
+    mod: 0.5
+- type: entity
+  parent: ComputerPalletConsoleBlackMarket
+  id: ComputerPalletConsoleNVeryLowBlackMarket
+  suffix: Very Low
+  components:
+  - type: MarketModifier
+    mod: 0.5
+#TortugaCustom
+- type: entity
+  parent: ComputerPalletConsolePirate
+  id: ComputerPalletConsoleNFLowMOutpostPirate
+  suffix: x0.75, Тортуга
+  components:
+  - type: MarketModifier
+    mod: 0.75
+  - type: NFCargoPalletConsole
+    contributesToMarket: false
+
+
+
+#region Uplinks
+- type: entity
+  name: стационарный аплинк службы безопасности
+  parent: [BaseStructureDisableToolUse, BaseStructureIndestructible, BaseStructureComputer]
+  id: ComputerUplinkBase
+  description: Покупайте снаряжение за фронтир коин.
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: MetalGlassBreak
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true, shader: shaded }
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    offset: "0, 0.4" # shine from the top, not bottom of the computer
+    castShadows: false
+  - type: EmitSoundOnUIOpen
+    sound:
+      collection: Keyboard
+  - type: UserInterface
+    interfaces:
+      enum.StoreUiKey.Key:
+        type: StoreBoundUserInterface
+  - type: ActivatableUI
+    key: enum.StoreUiKey.Key
+    singleUser: true
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      board: !type:Container
+  - type: Computer
+    board: Null
+
+- type: entity
+  name: стационарный аплинк службы безопасности
+  parent: [BaseStructureDisableToolUse, ComputerUplinkBase, StorePresetSecurityUplink, BaseStructureIndestructible, BaseStructureComputer]
+  id: ComputerUplinkNF
+  description: Покупайте снаряжение за фронтир коин.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: true
+    sprite: _Lua/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: suplink
+    - map: ["computerLayerKeys"]
+      state: uplink_key
+  - type: ContainerContainer
+    containers:
+      machine_board: !type:Container
+      machine_parts: !type:Container
+      board: !type:Container
+  - type: Store
+    balance:
+      FrontierUplinkCoin: 0
+  - type: Tag
+    tags:
+    - SecurityUplink
+
+- type: entity
+  name: стационарный аплинк Нордфолла
+  parent: [BaseStructureDisableToolUse, ComputerUplinkBase, StorePresetUplink, BaseStructureIndestructible, BaseStructureComputer]
+  id: ComputerUplinkTypan
+  description: Покупайте снаряжение за телекристалы.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    netsync: false
+    noRot: true
+    sprite: _Lua/Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      sprite: _NF/Structures/Machines/computers.rsi
+      state: computer_blackmarket
+    - map: ["computerLayerKeyboard"]
+      sprite: _NF/Structures/Machines/computers.rsi
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: suplinktypan
+    - map: ["computerLayerKeys"]
+      state: uplink_key_typan
+  - type: Store
+    balance:
+      Telecrystal: 0
+      Speso: 0
+  - type: Tag
+    tags:
+    - TypanUplink
+
+
+
+#region Finances
+##
+# Finance consoles set
+# - Deposits Overview (Service/Command variants): read-only crew deposits, access-gated
+# - Personal Deposit Terminal: player-managed deposits via ID insertion
+# - Credit Rating Console: lookup by name/ID, shows score and limits
+# - Loan Issuance Console: privileged issuance, requires Command access + ID
+# - Public Loan Board: read-only station loans
+##
+
+#region IFFs
+- type: entity
+  parent: [ComputerIFFSyndicate, ComputerIFF, BaseStructureDisableToolUse, BaseStructureIndestructible]
+  id: ComputerIFFSyndicateTypan
+  name: IFF computer
+  suffix: Syndicate
+  description: Allows you to control the IFF and stealth characteristics of this vessel.
+
+
+
+#region Shuttle Computers
+- type: entity
+  parent: ComputerShuttle
+  id: ComputerShuttleWithFrontierDisk
+  suffix: Диск Фронтир
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskFrontier
+
+- type: entity
+  parent: ComputerShuttle
+  id: ComputerShuttleWithMercenaryDisk
+  suffix: Диск Наёмники
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskMercenary
+
+- type: entity
+  parent: ComputerShuttle
+  id: ComputerShuttleWithNordfallDisk
+  suffix: Диск Нордфолл
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskNordfall
+
+- type: entity
+  parent: ComputerShuttle
+  id: ComputerShuttleWithPirateDisk
+  suffix: Диск Пираты
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskPirate
+
+- type: entity
+  parent: ComputerShuttle
+  id: ComputerShuttleWithCentComDisk
+  suffix: Диск ЦентКом
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskCentCom
+
+- type: entity
+  parent: ComputerTabletopShuttle
+  id: ComputerTabletopShuttleWithFrontierDisk
+  suffix: Диск Фронтир
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskFrontier
+
+- type: entity
+  parent: ComputerTabletopShuttle
+  id: ComputerTabletopShuttleWithMercenaryDisk
+  suffix: Диск Наёмники
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskMercenary
+
+- type: entity
+  parent: ComputerTabletopShuttle
+  id: ComputerTabletopShuttleWithNordfallDisk
+  suffix: Диск Нордфолл
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskNordfall
+
+- type: entity
+  parent: ComputerTabletopShuttle
+  id: ComputerTabletopShuttleWithPirateDisk
+  suffix: Диск Пираты
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskPirate
+
+- type: entity
+  parent: ComputerTabletopShuttle
+  id: ComputerTabletopShuttleWithCentComDisk
+  suffix: Диск ЦентКом
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskCentCom
+
+#region Shuttle LuaTech
+- type: entity
+  parent: [ComputerShuttleLuaTech, ComputerShuttle, BaseComputerShuttle, BaseShuttleIntercom]
+  id: ComputerShuttleTabletopLuaTech
+  name: консоль управления шаттлом
+  description: Используется для пилотирования корабля.
+  suffix: Lua, Tabletop
+  components:
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.35,0.25,0.35"
+        density: 190
+        mask:
+          - TabletopMachineMask
+        layer:
+          - TabletopMachineLayer
+  - type: Sprite
+    sprite: _Lua/Structures/Machines/computers.rsi
+    drawdepth: SmallObjects
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer_tabletop_holo
+    - map: ["computerLayerKeyboard"]
+      state: holo_generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: holo_shuttlecontrolluatech
+    - map: ["computerLayerKeys"]
+      state: holo_key
+    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      state: holo_generic_panel_open
+
 - type: entity
   parent: [ComputerShuttle, BaseComputerShuttle, BaseShuttleIntercom]
   id: ComputerShuttleLuaTech
@@ -176,36 +758,13 @@
 
 - type: entity
   parent: [ComputerShuttleLuaTech, ComputerShuttle, BaseComputerShuttle, BaseShuttleIntercom]
-  id: ComputerShuttleTabletopLuaTech
-  name: консоль управления шаттлом
-  description: Используется для пилотирования корабля.
-  suffix: Lua, Tabletop
+  id: ComputerShuttleLuaTechDisk
+  suffix: Lua, Диск Луатех
   components:
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.25,-0.35,0.25,0.35"
-        density: 190
-        mask:
-          - TabletopMachineMask
-        layer:
-          - TabletopMachineLayer
-  - type: Sprite
-    sprite: _Lua/Structures/Machines/computers.rsi
-    drawdepth: SmallObjects
-    layers:
-    - map: ["computerLayerBody"]
-      state: computer_tabletop_holo
-    - map: ["computerLayerKeyboard"]
-      state: holo_generic_keyboard
-    - map: ["computerLayerScreen"]
-      state: holo_shuttlecontrolluatech
-    - map: ["computerLayerKeys"]
-      state: holo_key
-    - map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
-      state: holo_generic_panel_open
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskLuaTech
 
 - type: entity
   parent: [ComputerShuttleTabletopLuaTech, ComputerShuttleLuaTech, ComputerShuttle, BaseComputerShuttle, BaseShuttleIntercom]
@@ -256,3 +815,60 @@
     containers:
       disk_slot:
       - CoordinatesDiskCentCom
+
+- type: entity
+  parent: [ComputerShuttleTabletopLuaTech, ComputerShuttleLuaTech, ComputerShuttle, BaseComputerShuttle, BaseShuttleIntercom]
+  id: ComputerShuttleTabletopLuaDisk
+  suffix: Lua, Tabletop, Диск Луатех
+  components:
+  - type: ContainerFill
+    containers:
+      disk_slot:
+      - CoordinatesDiskLuaTech
+
+
+
+#region Other
+- type: entity
+  id: ComputerStarmapDiskMerger
+  name: компьютер объединения координат
+  parent: BaseComputer
+  components:
+  - type: Computer
+    board: ComputerStarmapDiskMergerCircuitboard
+  - type: ActivatableUI
+    key: enum.DiskMergerUiKey.Key
+  - type: UserInterface
+    interfaces:
+      enum.DiskMergerUiKey.Key:
+        type: DiskMergerBoundUserInterface
+  - type: ItemSlots
+    slots:
+      disk_a:
+        name: Диск A
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - StarMapCoordinatesDisk
+      disk_b:
+        name: Диск B
+        insertSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectSound:
+          path: /Audio/Machines/terminal_insert_disc.ogg
+        ejectOnBreak: true
+        swap: false
+        whitelist:
+          components:
+          - StarMapCoordinatesDisk
+  - type: ContainerContainer
+    containers:
+      board: !type:Container {}
+      disk_a: !type:ContainerSlot {}
+      disk_b: !type:ContainerSlot {}
+  - type: CoordinatesDiskMerger

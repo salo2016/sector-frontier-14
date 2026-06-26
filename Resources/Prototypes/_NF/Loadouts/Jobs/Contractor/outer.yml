@@ -858,6 +858,19 @@
     outerClothing: ClothingOuterCoatBomberRandomized
 
 - type: loadout
+  id: ContractorClothingOuterCoatRandomized
+  name: punk coat (random)
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT2
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: NFCoatCapable
+  price: 1200
+  equipment:
+    outerClothing: ClothingOuterCoatRandomized
+
+- type: loadout
   id: ContractorClothingOuterCoatAcidRaincoat
   effects:
   - !type:GroupLoadoutEffect
@@ -919,6 +932,18 @@
 
 
 #T3 for lols
+- type: loadout
+  id: ContractorClothingSlimArmor
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: ContractorT3
+  hideEffects:
+  - !type:GroupLoadoutEffect
+    proto: NFCoatCapable
+  price: 4000
+  equipment:
+    outerClothing: ClothingOuterArmorBasicSlim
+
 - type: loadout
   id: ContractorWetFloorSign
   effects:

@@ -3,11 +3,6 @@
   parent: VehicleATV
   id: NFVehicleATV
   components:
-  - type: RadarBlip
-    radarColor: "#8A2BE2"
-    scale: 0.6
-    visibleFromOtherGrids: true
-    requireNoGrid: false
   - type: Sprite
     sprite: _NF/Objects/Vehicles/atv.rsi
     layers:
@@ -91,10 +86,10 @@
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
       noRot: true
     - type: MovementSpeedModifier
-      acceleration: 2
-      friction: 1.5
+      baseAcceleration: 2
+      baseFriction: 1.5
       baseWalkSpeed: 4.5
-      baseSprintSpeed: 7
+      baseRunningSpeed: 7
     - type: UnpoweredFlashlight
     - type: PointLight
       enabled: false
@@ -145,6 +140,7 @@
     southOffset: 0, -0.15
     eastOffset: 0, -0.15
     westOffset: 0, -0.15
+    requiredHands: 0 # Lua
     engineRunning: true
     hornSound:
       collection: BikeHorn
@@ -160,10 +156,10 @@
       visible: false
     noRot: true
   - type: MovementSpeedModifier
-    acceleration: 1
-    friction: 0.8
+    baseAcceleration: 1
+    baseFriction: 0.8
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.3
+    baseRunningSpeed: 4.3
   - type: Destructible
     thresholds:
     - trigger:
@@ -208,6 +204,9 @@
   name: hoverbike
   description: A turbine with bike handles. Very safe.
   components:
+  - type: Strap
+    size: 200
+    unbuckleDistanceSquared: 0.15
   - type: MovementIgnoreGravity
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
@@ -217,10 +216,10 @@
     volume: 5
     enabled: false
   - type: MovementSpeedModifier
-    acceleration: 2
-    friction: 1.5
-    baseWalkSpeed: 4.5
-    baseSprintSpeed: 7
+    baseAcceleration: 1.7
+    baseFriction: 0.6
+    baseWalkSpeed: 4.3
+    baseRunningSpeed: 8
   - type: Sprite
     sprite: _NF/Objects/Vehicles/hoverbike.rsi
     layers:
@@ -270,6 +269,11 @@
   - type: PointLight
     radius: 7
     energy: 3
+  - type: Vehicle
+    passengerSouthOffset: 0, 0.18
+    passengerNorthOffset: 0, 0.18
+    passengerEastOffset: 0, 0.18
+    passengerWestOffset: 0, 0.18
 
 - type: entity
   parent: NFVehicleHoverbike
@@ -470,6 +474,9 @@
   name: mail carrier hoverbike
   description: You better run, better run, faster than my mail.
   components:
+  - type: Strap
+    size: 200
+    unbuckleDistanceSquared: 0.15
   - type: MovementIgnoreGravity
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
@@ -526,6 +533,10 @@
       collection: NFVehicleHorn # resetting from the motorbike
       params:
         variation: 0.125
+    passengerSouthOffset: 0, 0.3
+    passengerNorthOffset: 0, 0.3
+    passengerEastOffset: 0, 0.3
+    passengerWestOffset: 0, 0.3
 
 - type: entity
   parent: VehicleHoverbikeMailcarrier
@@ -558,21 +569,28 @@
 - type: entity
   parent:
   - VehicleHoverbikeMailcarrier
-  #- BaseC2ContrabandUnredeemable
+  - BaseC2ContrabandUnredeemable # Lua-changes: remove Frontier comment
   id: NFVehicleHoverbikeNfsd
   name: NFSD hoverbike
   description: An NFSD issued turbine with bike handles. Very safe.
   components:
+  - type: Strap
+    size: 200
+    unbuckleDistanceSquared: 0.15
   - type: Vehicle
     sirenSound:
       collection: PoliceSiren
       params:
         variation: 0.125
+    passengerSouthOffset: 0, 0.18
+    passengerNorthOffset: 0, 0.18
+    passengerEastOffset: 0, 0.18
+    passengerWestOffset: 0, 0.18
   - type: MovementSpeedModifier # Very petty on my end
-    acceleration: 1.9
-    friction: 1.4
-    baseWalkSpeed: 4.3
-    baseSprintSpeed: 6.8
+    baseAcceleration: 1.6
+    baseFriction: 0.6
+    baseWalkSpeed: 4.2
+    baseRunningSpeed: 7.8
   - type: Sprite
     sprite: _NF/Objects/Vehicles/hoverbike.rsi
     layers:
@@ -657,10 +675,14 @@
   parent:
   - VehicleHoverbikeMailcarrier
   #- BaseC3PirateContraband
+  - BaseC1PirateContraband # Lua
   id: VehicleHoverbikePirate
   name: pirate hoverbike
   description: Yarr! Dis be me sovereign space shuttle. Now, whaur me rum?
   components:
+  - type: Strap
+    size: 200
+    unbuckleDistanceSquared: 0.15
   - type: Storage
     grid:
     - 0,0,5,3
@@ -710,6 +732,10 @@
     - DemagImmune
   - type: Vehicle
     radarBlip: false
+    passengerSouthOffset: 0, 0.3
+    passengerNorthOffset: 0, 0.3
+    passengerEastOffset: 0, 0.3
+    passengerWestOffset: 0, 0.3
 
 - type: entity
   parent: VehicleHoverbikePirate
@@ -743,10 +769,14 @@
   parent:
   - VehicleHoverbikeMailcarrier
   #- BaseC3SyndicateContraband
+  - BaseC1SyndicateContraband # Lua
   id: VehicleHoverbikeSyndicate
   name: syndicate hoverbike
   description: This thing screams style. And war crimes.
   components:
+  - type: Strap
+    size: 200
+    unbuckleDistanceSquared: 0.15
   - type: Storage
     grid:
     - 0,0,8,4
@@ -800,6 +830,10 @@
     - DemagImmune
   - type: Vehicle
     radarBlip: false
+    passengerSouthOffset: 0, 0.18
+    passengerNorthOffset: 0, 0.18
+    passengerEastOffset: 0, 0.18
+    passengerWestOffset: 0, 0.18
 
 - type: entity
   parent: VehicleHoverbikeSyndicate
@@ -835,7 +869,6 @@
   name: dumpster
   description: It only has one wheel!
   components:
-  - type: Timer
   - type: TimedSpawner
     prototypes:
     - SpawnGoblinMadeToolMalfunction
@@ -871,10 +904,10 @@
       state: overlay-icon
       shader: unshaded
   - type: MovementSpeedModifier
-    acceleration: 1
-    friction: 0.8
+    baseAcceleration: 0.6
+    baseFriction: 0.5
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 4.3
+    baseRunningSpeed: 6
   - type: Destructible
     thresholds:
     - trigger:

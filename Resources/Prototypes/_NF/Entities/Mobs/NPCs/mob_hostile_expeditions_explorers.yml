@@ -16,12 +16,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Critical
-      105: Dead
+      160: Critical #Lua 80>160
+      210: Dead #Lua 105<210
   - type: SlowOnDamage
     speedModifierThresholds:
-      48: 0.7
-      64: 0.5
+      96: 0.7 #Lua 48<96
+      128: 0.5 #Lua 64<128
   - type: DamageStateVisuals
   - type: RotationVisuals
     defaultRotation: 90
@@ -46,11 +46,11 @@
         Structural: 30
     soundHit:
       collection: MetalThud
-  - type: Advertise
-    pack: mercenaryhumanoidchatter
-    minimumWait: 30
-    maximumWait: 120
-    nextAdvertisementTime: 10
+  - type: Vocalizer
+    minVocalizeInterval: 30
+    maxVocalizeInterval: 120
+  - type: DatasetVocalizer
+    dataset: mercenaryhumanoidchatter
   - type: AutoWakeUp
   - type: PointLight
     enabled: true
@@ -60,6 +60,9 @@
     energy: 1
     mask: /Textures/Effects/LightMasks/cone.png
     color: "#47f8ff"
+  - type: Tag #Lua
+    tags:
+    - DoorBumpOpener
 
 # Variations
 #region Tier 1
@@ -127,6 +130,8 @@
         Structural: 30
     soundHit:
       collection: MetalThud
+  - type: Damageable #Lua
+    damageModifierSet: MobHostileDamageModifierSetExplorersMeleeT1
 
 - type: entity
   name: scrapper
@@ -206,6 +211,8 @@
     availableModes:
     - SemiAuto
     soundGunshot: /Audio/Weapons/Guns/Gunshots/kinetic_accel.ogg
+  - type: Damageable #Lua
+    damageModifierSet: MobHostileDamageModifierSetExplorersSpitT1
 
 #region Tier 2
 - type: entity
@@ -221,7 +228,7 @@
     prototypes:
     - MobHumanoidExplorerGearMeleeT2
   - type: Damageable
-    damageModifierSet: MobHostileDamageModifierSetMedium
+    damageModifierSet: MobHostileDamageModifierSetExplorersMeleeT2 #Lua
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -263,7 +270,7 @@
     prototypes:
     - MobHumanoidExplorerGearRangedT2
   - type: Damageable
-    damageModifierSet: MobHostileDamageModifierSetMedium
+    damageModifierSet: MobHostileDamageModifierSetExplorersSpitT2 #Lua
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -314,7 +321,7 @@
     prototypes:
     - MobHumanoidExplorerGearMeleeT3
   - type: Damageable
-    damageModifierSet: MobHostileDamageModifierSetHigh
+    damageModifierSet: MobHostileDamageModifierSetExplorersMeleeT3 #Lua
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -367,7 +374,7 @@
     prototypes:
     - MobHumanoidExplorerGearRangedT3
   - type: Damageable
-    damageModifierSet: MobHostileDamageModifierSetHigh
+    damageModifierSet: MobHostileDamageModifierSetExplorersSpitT3 #Lua
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -447,7 +454,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      160: Dead
+      320: Dead #Lua 160<320
   - type: Destructible
     thresholds:
     - trigger:
@@ -568,6 +575,8 @@
   - type: ActionGun
     action: ActionSeismicCharge
     gunProto: SeismicChargeGun
+  - type: NPCUseActionOnTarget #Lua
+    actionId: ActionSeismicCharge
 
 - type: entity
   id: SeismicChargeGun

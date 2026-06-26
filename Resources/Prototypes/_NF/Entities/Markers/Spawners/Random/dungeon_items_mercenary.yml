@@ -135,17 +135,17 @@
     prototypes:
     - SpawnDungeonLootGunT2
     - SpawnDungeonLootGunT2
+    - SpawnDungeonLootGunT3L # Lua
     - SpawnDungeonLootMeleeT2
+    - SpawnDungeonLootMeleeT3L # Lua
     - SpawnDungeonLootAmmoLethal
     chance: 0.8
     offset: 0.0
     rarePrototypes:
     - SpawnDungeonLootMeleeT3
-    - SpawnDungeonLootMeleeT3L # Lua
     - SpawnDungeonLootGunT3
-    - SpawnDungeonLootGunT3L # Lua
     - SpawnDungeonLootExplosivesT2
-    rareChance: 0.1
+    rareChance: 0.2 #Lua 0.1<0.2
 
 - type: entity
   name: random weapon
@@ -324,6 +324,21 @@
     - ClothingOuterVestWeb
     rareChance: 0.1
 
+- type: entityTable
+  id: TableHardsuitMerc
+  table: !type:GroupSelector
+    children:
+    - id: ClothingOuterHardsuitMercenary
+      weight: 0.35
+    - id: ClothingOuterHardsuitPrivateSecurity
+      weight: 0.30
+    - id: ClothingOuterHardsuitSurplus
+      weight: 0.20
+    - id: ClothingOuterHardsuitScaf
+      weight: 0.10
+    - id: ClothingOuterHardsuitNoble
+      weight: 0.05
+
 - type: entity
   name: random hardsuits
   id: SpawnDungeonLootHardsuitsMercenary
@@ -339,15 +354,11 @@
       - sprite: _NF/Markers/general.rsi
         state: questionmark
         color: red
-  - type: RandomSpawner
-    prototypes:
-    - ClothingOuterHardsuitMercenary
-    - ClothingOuterHardsuitPrivateSecurity
-    chance: 1
+  - type: EntityTableSpawner
     offset: 0.0
-    rarePrototypes:
-    - ClothingOuterHardsuitScaf
-    rareChance: 0.1
+    table: !type:NestedSelector
+      tableId: TableHardsuitMerc
+      prob: 1
 
 #region Furniture/Lockers
 - type: entity
@@ -400,10 +411,12 @@
     - SuitStoragePrivateSecurity
     - SuitStorageEVAMercenary
     - SuitStorageEVAPrivateSec
+    - SuitStorageSurplus
     chance: 1
     offset: 0.0
     rarePrototypes:
     - SuitStorageScaf
+    - SuitStorageNoble
     rareChance: 0.1
 
 - type: entity
@@ -584,20 +597,16 @@
         color: red
   - type: RandomSpawner
     prototypes:
-    - AmmoTechFab
+#    - AmmoTechFab # comment from _Lua
     - MercenaryTechFab
     - MercenaryTechFabFlatpack
     - MercenaryTechFabCircuitboardNF
-    - AmmoTechFabFlatpack
-    - RMCAmmoTechFab # Lua
-    - NF14AmmoTechFab # Lua
+#    - AmmoTechFabFlatpack # comment from _Lua
     chance: 1
     offset: 0.0
     rarePrototypes:
     - MercenaryTechFab
     - MercenaryTechFabFlatpack
     - MercenaryTechFabCircuitboardNF
-    - AmmoTechFabFlatpack
-    - MercenaryTechFabCircuitboardHackedNF
-    - MercenaryTechFabHacked
+#    - AmmoTechFabFlatpack # comment from _Lua
     rareChance: 0.005

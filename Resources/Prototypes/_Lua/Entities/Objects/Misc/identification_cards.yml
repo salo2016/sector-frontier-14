@@ -314,8 +314,8 @@
     job: FSFSpecialistCharlie
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardCargo
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardCargo
   name: ID карта
   description: Карта, необходимая для доступа в различные отделы станции
   components:
@@ -324,7 +324,7 @@
     layers:
     - state: typancardcargo
   - type: PresetIdCard
-    job: OutpostSyndicateCargotech
+    job: OutpostTypanCargotech
   - type: Access
     tags:
     - SyndicateAgent
@@ -332,8 +332,8 @@
 
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardCom
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardCom
   name: ID карта
   description: Карта, необходимая для доступа в различные отделы станции
   components:
@@ -342,7 +342,7 @@
     layers:
     - state: typancardcom
   - type: PresetIdCard
-    job: OutpostSyndicateTelecommunicationsOfficer
+    job: OutpostTypanTelecommunicationsOfficer
   - type: Access
     tags:
     - Armory
@@ -357,8 +357,8 @@
     - NuclearOperative
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardEng
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardEng
   name: ID карта
   description: Карта, необходимая для доступа в различные отделы станции
   components:
@@ -367,7 +367,7 @@
     layers:
     - state: typancardeng
   - type: PresetIdCard
-    job: OutpostSyndicateAtmosTech
+    job: OutpostTypanAtmosTech
   - type: Access
     tags:
     - Engineering
@@ -377,8 +377,8 @@
     - AllAccess
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardMed
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardMed
   name: ID карта
   description: Карта, необходимая для доступа в различные отделы станции
   components:
@@ -387,7 +387,7 @@
     layers:
     - state: typancardmed
   - type: PresetIdCard
-    job: OutpostSyndicateMedic
+    job: OutpostTypanMedic
   - type: Access
     tags:
     - SyndicateAgent
@@ -396,8 +396,8 @@
     - AllAccess
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardRd
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardRd
   name: ID карта
   description: Карта, необходимая для доступа в различные отделы станции
   components:
@@ -406,7 +406,7 @@
     layers:
     - state: typancardrd
   - type: PresetIdCard
-    job: OutpostSyndicateRD
+    job: OutpostTypanRD
   - type: Access
     tags:
     - SyndicateAgent
@@ -415,8 +415,8 @@
     - AllAccess
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardScience
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardScience
   name: ID карта
   description: Карта, необходимая для доступа в различные отделы станции
   components:
@@ -425,7 +425,7 @@
     layers:
     - state: typancardscience
   - type: PresetIdCard
-    job: OutpostSyndicateScience
+    job: OutpostTypanScience
   - type: Access
     tags:
     - SyndicateAgent
@@ -434,8 +434,8 @@
     - AllAccess
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardBotanist
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardBotanist
   name: ID карта
   components:
   - type: Sprite
@@ -443,7 +443,7 @@
     layers:
     - state: typancardbotanist
   - type: PresetIdCard
-    job: OutpostSyndicateBotanist
+    job: OutpostTypanBotanist
   - type: Access
     tags:
     - SyndicateAgent
@@ -452,8 +452,8 @@
     - AllAccess
 
 - type: entity
-  parent: IDCardStandard
-  id: OutpostSyndicateIDCardChef
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDCardChef
   name: ID карта
   components:
   - type: Sprite
@@ -461,7 +461,25 @@
     layers:
     - state: typancardchef
   - type: PresetIdCard
-    job: OutpostSyndicateChef
+    job: OutpostTypanChef
+  - type: Access
+    tags:
+    - SyndicateAgent
+    - NuclearOperative
+    groups:
+    - AllAccess
+
+- type: entity
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: OutpostTypanIDResearcher
+  name: ID карта
+  components:
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/typanresearcher.rsi
+    layers:
+    - state: typancardresearcher
+  - type: PresetIdCard
+    job: OutpostTypanResearcher
   - type: Access
     tags:
     - SyndicateAgent
@@ -471,18 +489,119 @@
 
 - type: entity
   parent: IDCardStandard
-  id: OutpostSyndicateIDResearcher
+  id: OpsLuaTechIDCard
   name: ID карта
+  description: Карта, необходимая для доступа в различные отделы станции
+  components:
+  - type: AgentIDCard
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/opsluatech.rsi
+    layers:
+    - state: opsluatech
+  - type: PresetIdCard
+    job: OpsLuaTech
+
+- type: entity
+  parent: IDCardStandard
+  id: VipIDCard
+  name: vip ID card
+  components:
+  - type: PresetIdCard
+    job: Vip
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+    layers:
+    - state: vip
+    - state: idvip
+  - type: Clothing
+    sprite: _NF/Objects/Misc/id_cards.rsi
+
+- type: entity
+  parent: [IDCardStandard, BaseC3SyndicateContraband]
+  id: SynShareholderIDCard
+  name: shareholder ID card
+  components:
+  - type: PresetIdCard
+    job: OutpostSyndicateShareholder
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+    layers:
+    - state: synsharehold
+    - state: idsynsharehold
+  - type: Clothing
+    sprite: _NF/Objects/Misc/id_cards.rsi
+
+- type: entity
+  parent: IDCardStandard
+  id: AdjutantIDCard
+  name: adjutant ID card
+  components:
+  - type: PresetIdCard
+    job: Adjutant
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+    layers:
+    - state: silver
+    - state: idadjutant
+  - type: Clothing
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+
+- type: entity
+  parent: IDCardStandard
+  id: SCSoldierIDCard
+  name: ID карта Солдата Кодекса
+  suffix: Need balance test
+  components:
+  - type: PresetIdCard
+    job: StormCreedSoldier
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+    layers:
+    - state: synsharehold
+    - state: idsynsharehold
+  - type: Clothing
+    sprite: _NF/Objects/Misc/id_cards.rsi
+
+- type: entity
+  parent: IDCardStandard
+  id: SCFirstmateIDCard
+  name: ID карта Штурмана Кодекса
+  suffix: Need balance test
+  components:
+  - type: PresetIdCard
+    job: StormCreedFirstmate
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+    layers:
+    - state: synsharehold
+    - state: idsynsharehold
+  - type: Clothing
+    sprite: _NF/Objects/Misc/id_cards.rsi
+
+- type: entity
+  parent: IDCardStandard
+  id: SCCaptainIDCard
+  name: ID карта Командира Кодекса
+  suffix: Need balance test
+  components:
+  - type: PresetIdCard
+    job: StormCreedCaptain
+  - type: Sprite
+    sprite: _Lua/Objects/Misc/id_cards.rsi
+    layers:
+    - state: synsharehold
+    - state: idsynsharehold
+  - type: Clothing
+    sprite: _NF/Objects/Misc/id_cards.rsi
+
+- type: entity
+  parent: IDCardStandard
+  id: FrontierEngineerIDCard
+  name: ID карта Инженера ЭИК
   components:
   - type: Sprite
-    sprite: _Lua/Objects/Misc/typanresearcher.rsi
     layers:
-    - state: typancardresearcher
+    - state: default
+    - state: idstationengineer
   - type: PresetIdCard
-    job: OutpostSyndicateResearcher
-  - type: Access
-    tags:
-    - SyndicateAgent
-    - NuclearOperative
-    groups:
-    - AllAccess
+    job: FrontierEngineer

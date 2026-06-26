@@ -1,27 +1,32 @@
 # LuaWorld - This file is licensed under AGPLv3
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
+# Author: germanreutt (discord)
 
 - type: vessel
   parent: BaseVessel
   id: GFShukra
-  name: SYN-GF Shukra
+  name: Shukra
   description: Этот корабль оборудован радаром и несет мощные дальнобойные орудия, однако за огневую мощь расплачивается слабой броней.
   limit: 2
   price: 226148
-  category: Large
+  category: Medium
   group: Typan
+  whitelist:
+  - Frontier
+  - Luna
   class:
   - Syndicate
+  - Medical # Lua
+  - Chemistry # Lua
+  - Fighter # Lua
   engine:
-  - Singularity
+  - AME # Lua
   shuttlePath: /Maps/_Lua/Shuttles/Typan/shukra-2.yml
-  addComponents:
-    - type: IFF
-      color: "#d93204"
+
 - type: gameMap
   id: GFShukra
-  mapName: 'SYN-GF Shukra'
+  mapName: 'Shukra'
   mapPath: /Maps/_Lua/Shuttles/Typan/shukra-2.yml
   minPlayers: 0
   stations:
@@ -29,7 +34,7 @@
       stationProto: StandardFrontierVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'SYN-GF Shukra {1}'
+        mapNameTemplate: 'Shukra {1}'
         nameGenerator:
           !type:NanotrasenNameGenerator
             prefixCreator: '14'

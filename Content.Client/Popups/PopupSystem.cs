@@ -46,6 +46,8 @@ namespace Content.Client.Popups
         // WD EDIT START
         private static readonly Dictionary<PopupType, string> FontSizeDict = new()
         {
+            { PopupType.Small, "10" },
+            { PopupType.SmallCaution, "10" },
             { PopupType.Medium, "12" },
             { PopupType.MediumCaution, "12" },
             { PopupType.Large, "15" },
@@ -108,7 +110,14 @@ namespace Content.Client.Popups
                     _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, GetNetCoordinates(coordinates)));
             }
 
-            // WD EDIT START
+            var popupData = new WorldPopupData(message, type, coordinates, entity);
+            if (_aliveWorldLabels.TryGetValue(popupData, out var existingLabel))
+            {
+                WrapAndRepeatPopup(existingLabel, popupData.Message);
+                return;
+            }
+
+            // WD EDIT START - log to chat only when creating a new popup (avoid spam on repeats)
             if (_shouldLogInChat &&
                 _playerManager.LocalEntity != null &&
                 _examine.InRangeUnOccluded(_playerManager.LocalEntity.Value, coordinates, 10))
@@ -118,18 +127,11 @@ namespace Content.Client.Popups
                     ? "#C62828"
                     : "#AEABC4";
 
-                var wrappedMessage = $"[font size={fontsize}][color={fontcolor}]{message}[/color][/font]";
+                var wrappedMessage = $"[font size={fontsize}][color={fontcolor}][italic]{message}[/italic][/color][/font]";
                 var chatMsg = new ChatMessage(ChatChannel.Emotes, message, wrappedMessage, GetNetEntity(EntityUid.Invalid), null);
                 _uiManager.GetUIController<ChatUIController>().ProcessChatMessage(chatMsg);
             }
             // WD EDIT END
-
-            var popupData = new WorldPopupData(message, type, coordinates, entity);
-            if (_aliveWorldLabels.TryGetValue(popupData, out var existingLabel))
-            {
-                WrapAndRepeatPopup(existingLabel, popupData.Message);
-                return;
-            }
 
             var label = new WorldPopupLabel(coordinates)
             {

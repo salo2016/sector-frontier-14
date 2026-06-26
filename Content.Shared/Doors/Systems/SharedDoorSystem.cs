@@ -23,6 +23,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Map.Components;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Doors.Systems;
 
@@ -46,14 +47,13 @@ public abstract partial class SharedDoorSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPowerReceiverSystem _powerReceiver = default!;
 
-
-    [ValidatePrototypeId<TagPrototype>]
-    public const string DoorBumpTag = "DoorBumpOpener";
+    public static readonly ProtoId<TagPrototype> DoorBumpTag = "DoorBumpOpener";
 
     /// <summary>
     ///     A set of doors that are currently opening, closing, or just queued to open/close after some delay.
     /// </summary>
     private readonly HashSet<Entity<DoorComponent>> _activeDoors = new();
+    private readonly List<Entity<DoorComponent>> _activeDoorsBuffer = new();
 
     private readonly HashSet<Entity<PhysicsComponent>> _doorIntersecting = new();
 
@@ -561,7 +561,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             if (door.CrushDamage != null)
                 _damageableSystem.TryChangeDamage(entity, door.CrushDamage, origin: uid);
 
-            _stunSystem.TryParalyze(entity, stunTime, true);
+            _stunSystem.TryUpdateParalyzeDuration(entity, stunTime);
         }
 
         if (door.CurrentlyCrushing.Count == 0)
@@ -761,7 +761,14 @@ public abstract partial class SharedDoorSystem : EntitySystem
     {
         var time = GameTiming.CurTime;
 
-        foreach (var ent in _activeDoors.ToList())
+        _activeDoorsBuffer.Clear();
+        _activeDoorsBuffer.EnsureCapacity(_activeDoors.Count);
+        foreach (var ent in _activeDoors)
+        {
+            _activeDoorsBuffer.Add(ent);
+        }
+
+        foreach (var ent in _activeDoorsBuffer)
         {
             var door = ent.Comp;
             if (door.Deleted || door.NextStateChange == null)

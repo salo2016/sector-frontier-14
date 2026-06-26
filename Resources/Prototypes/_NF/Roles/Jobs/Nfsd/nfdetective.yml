@@ -14,6 +14,9 @@
     longerPlaytimeLessSec:
     - !type:OverallPlaytimeRequirement
       time: 360000 # 100 hours
+    - !type:RoleTimeRequirement
+      role: JobSecurityOfficer
+      time: 10800 # 3 hours as deputy
   startingGear: NFDetectiveGear
   icon: JobIconNFDetective
   supervisors: job-supervisors-bailiff
@@ -43,14 +46,15 @@
   storage:
     back:
     - Flash
-    - NFSpeedLoaderPistol45Overpressure
-    - NFSpeedLoaderPistol45Rubber
+    - SpeedLoader45_magnumFMJ #Lua 45 -> Magnum
+    - SpeedLoader45_magnumRubber #Lua 45 -> Magnum
     - ForensicPad
     - ForensicScanner
     - FrontierUplinkCoin10
-    - LogProbeCartridge
     - RubberStampDetective
     - ContrabandForensicsModule
+  cartridges:
+  - LogProbeCartridge
 
 - type: chameleonOutfit
   id: NFDetectiveChameleonOutfit

@@ -295,10 +295,11 @@
 - type: entity
   name: cryostasis beaker
   parent: BaseBeakerMetallic
-  description: Used to contain chemicals or solutions without reactions.
+  description: Used to contain chemicals or solutions without reactions. Now unspillable!
   id: CryostasisBeaker
   components:
   - type: Spillable
+    spillWhenThrown: false
     solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
@@ -349,13 +350,12 @@
       injector:
         maxVol: 5
   - type: Injector
-    injectOnly: false
     ignoreMobs: true
     ignoreClosed: false
-    minTransferAmount: 1
-    maxTransferAmount: 5
-    transferAmount: 1
-    toggleState: 1 # draw
+    activeModeProtoId: DropperDrawMode
+    allowedModes:
+    - DropperDrawMode
+    - DropperInjectMode
   - type: ExaminableSolution
     solution: dropper
   - type: UserInterface
@@ -427,7 +427,10 @@
       injector:
         maxVol: 15
   - type: Injector
-    injectOnly: false
+    activeModeProtoId: SyringeDrawMode
+    allowedModes:
+    - SyringeDrawMode
+    - SyringeInjectMode
   - type: ExaminableSolution
     solution: injector
   - type: Spillable
@@ -443,14 +446,17 @@
   - type: Tag
     tags:
     - Syringe
+  # Lua start
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 25
+      Steel: 5
+  # Lua end
 
 - type: entity
   parent: BaseSyringe
   id: Syringe
   components:
-  - type: Injector
-    transferAmount: 15
-    toggleState: Draw
   - type: Tag
     tags:
     - Syringe
@@ -473,17 +479,13 @@
     solutions:
       injector:
         maxVol: 5
-  - type: Injector
-    minTransferAmount: 1
-    maxTransferAmount: 5
-    transferAmount: 5
   - type: SolutionContainerVisuals
     maxFillLevels: 3
     fillBaseName: minisyringe
     inHandsMaxFillLevels: 3
     inHandsFillBaseName: -fill-
   - type: EmbeddableProjectile
-    offset: "-0.1,0"
+    offset: "0,-0.1"
     minimumSpeed: 3
     removalTime: 0.25
     embedOnThrow: false
@@ -529,7 +531,7 @@
   id: PrefilledSyringe
   components:
   - type: Injector
-    toggleState: Inject
+    activeModeProtoId: SyringeInjectMode
 
 - type: entity
   id: SyringeBluespace
@@ -552,8 +554,10 @@
       injector:
         maxVol: 100
   - type: Injector
-    delay: 2.5
-    injectOnly: false
+    activeModeProtoId: BluespaceSyringeDrawMode
+    allowedModes:
+    - BluespaceSyringeInjectMode
+    - BluespaceSyringeDrawMode
   - type: SolutionContainerVisuals
     maxFillLevels: 2
     fillBaseName: syringe
@@ -584,10 +588,10 @@
         maxVol: 10
         canReact: false
   - type: Injector
-    injectOnly: false
-    minTransferAmount: 5
-    maxTransferAmount: 10
-    transferAmount: 10
+    activeModeProtoId: CryostasisSyringeDrawMode
+    allowedModes:
+    - CryostasisSyringeInjectMode
+    - CryostasisSyringeDrawMode
   - type: Tag
     tags:
     - Syringe
@@ -671,3 +675,11 @@
       tags:
       - Pill
   - type: Dumpable
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/pillbottle_pickup.ogg
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/pillbottle_drop.ogg
+  # Goobstation edit en

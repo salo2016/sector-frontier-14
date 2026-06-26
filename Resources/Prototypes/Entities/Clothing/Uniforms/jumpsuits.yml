@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingUniformBase
+  parent: [ClothingUniformBase, BaseC3CentCommContraband] # Lua-changes: added BaseC3CentCommContraband
   id: ClothingUniformJumpsuitDeathSquad
   name: death squad uniform
   description: Advanced armored jumpsuit used by special forces in special operations.
@@ -8,6 +8,9 @@
     sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/deathsquad.rsi
+  - type: Tag
+    tags:
+    - ClothMade # screw the WhitelistChameleon tag
 
 - type: entity
   parent: ClothingUniformBase
@@ -64,9 +67,9 @@
   description: It's a blue jumpsuit with some gold markings denoting the rank of "Captain".
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/captain.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/captain.rsi
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/captain.rsi # Lua
 
 - type: entity
   parent: ClothingUniformBase
@@ -531,9 +534,9 @@
   description: 'What can brown do for you?'
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/qm.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/qm.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/qm.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/qm.rsi # Lua
 
 - type: entity
   parent: ClothingUniformBase # Frontier: remove BaseCommandContraband
@@ -608,21 +611,23 @@
   description: A jumpsuit made of strong material, providing robust protection.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/security.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/security.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-left
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-right
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/security.rsi # Lua
+# - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-left
+#        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
+#      right:
+#      - state: inhand-right
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-right
+#        sprite: Clothing/Uniforms/Jumpsuit/security.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -642,9 +647,23 @@
   description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/security_grey.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/security_grey.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/security_grey.rsi # Lua
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-left
+#        sprite: Clothing/Uniforms/Jumpsuit/security_gray.rsi
+#      right:
+#      - state: inhand-right
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-right
+#        sprite: Clothing/Uniforms/Jumpsuit/security_gray.rsi
 
 - type: entity
   parent: [ClothingUniformBase, BaseC2ContrabandUnredeemable] # Frontier: BaseSecurityContraband<BaseC2ContrabandUnredeemable
@@ -664,21 +683,23 @@
   description: A formal security suit for officers complete with Nanotrasen belt buckle.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/warden.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
-  - type: Item
-    inhandVisuals:
-      left:
-      - state: inhand-left
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-left
-      right:
-      - state: inhand-right
-        color: "#C12D30"
-        sprite: Clothing/Uniforms/Jumpsuit/color.rsi
-      - state: overlay-inhand-right
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/warden.rsi # Lua
+#  - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-left
+#        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
+#     right:
+#      - state: inhand-right
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-right
+#        sprite: Clothing/Uniforms/Jumpsuit/warden.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -769,7 +790,7 @@
       sprite: Clothing/Uniforms/Jumpsuit/lawyergood.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent
+  parent: [UnsensoredClothingUniformBase, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContrabandNoValue, removed ContrabandClothing
   id: ClothingUniformJumpsuitPyjamaSyndicateBlack
   name: black syndicate pyjamas
   description: For those long nights in perma.
@@ -780,7 +801,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicateblack.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent
+  parent: [UnsensoredClothingUniformBase, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContrabandNoValue, removed ContrabandClothing
   id: ClothingUniformJumpsuitPyjamaSyndicatePink
   name: pink syndicate pyjamas
   description: For those long nights in perma.
@@ -791,7 +812,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/pyjamasyndicatepink.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent
+  parent: [UnsensoredClothingUniformBase, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContrabandNoValue, removed ContrabandClothing
   id: ClothingUniformJumpsuitPyjamaSyndicateRed
   name: red syndicate pyjamas
   description: For those long nights in perma.
@@ -819,9 +840,9 @@
   description: A suit for special occasions.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/capformal.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/capformal.rsi
+    sprite: _ADT/Clothing/Uniforms/Jumpsuit/capformal.rsi # Lua
 
 - type: entity
   parent: [ClothingUniformBase, BaseC2ContrabandUnredeemable] # Frontier: added BaseC2ContrabandUnredeemable
@@ -846,7 +867,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hosformal.rsi
 
 - type: entity
-  parent: [UnsensoredClothingUniformBase, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent
+  parent: [UnsensoredClothingUniformBase, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContrabandNoValue, removed ContrabandClothing
   id: ClothingUniformJumpsuitOperative
   name: operative jumpsuit
   description: Uniform for elite syndicate operatives performing tactical operations in deep space.
@@ -855,6 +876,8 @@
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/operative.rsi
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   parent: ClothingUniformBase
@@ -883,7 +906,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/mercenary.rsi
 
 - type: entity
-  parent: UnsensoredClothingUniformBase
+  parent: [UnsensoredClothingUniformBase, BaseC1SpiderClanContraband] # Lua-changes: added BaseC1SpiderClanContraband
   id: ClothingUniformJumpsuitNinja
   name: ninja jumpsuit
   description: Comfortable ninja suit, for convenience when relaxing and when you need to practice.
@@ -1154,7 +1177,7 @@
     sprite: Clothing/Uniforms/Jumpsuit/hawaiyellow.rsi
 
 - type: entity
-  parent: [ClothingUniformBase, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as a parent
+  parent: [ClothingUniformBase, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as a parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContrabandNoValue, removed ContrabandClothing
   id: ClothingUniformJumpsuitSyndieFormal
   name: syndicate formal suit
   description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
@@ -1215,9 +1238,23 @@
   description: A sign of skill and prestige within the security department.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/senior_officer.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+    sprite: _Lua/Clothing/Uniforms/Jumpsuit/senior_officer.rsi # Lua
+# - type: Item
+#    inhandVisuals:
+#      left:
+#      - state: inhand-left
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-left
+#        sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+#      right:
+#      - state: inhand-right
+#        color: "#C12D30"
+#        sprite: Clothing/Uniforms/Jumpskirt/color.rsi
+#      - state: overlay-inhand-right
+#        sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
 
 - type: entity
   parent: ClothingUniformBase

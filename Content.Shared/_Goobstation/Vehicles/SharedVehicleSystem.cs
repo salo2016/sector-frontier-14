@@ -11,7 +11,6 @@ using Content.Shared.Hands.EntitySystems; // Lua
 using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Content.Shared._NF.Vehicle.Components; // Frontier
@@ -29,7 +28,6 @@ using Content.Shared.Weapons.Melee.Events; // Frontier
 using Content.Shared.Emag.Systems; // Frontier
 using Robust.Shared.Map; // Lua
 using System.Numerics; // Lua
-using Robust.Shared.GameObjects; // Lua
 
 namespace Content.Shared._Goobstation.Vehicles; // Frontier: migrate under _Goobstation
 
@@ -56,10 +54,12 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     public static readonly EntProtoId HornActionId = "ActionHorn";
     public static readonly EntProtoId SirenActionId = "ActionSiren";
 
-    // Lua antispam popup
-    private readonly Dictionary<EntityUid, TimeSpan> _lastNoHandsPopup = new();
-    private static readonly TimeSpan NoHandsPopupCooldown = TimeSpan.FromSeconds(2);
-    // Lua antispam popup
+    // Lua start
+    private readonly Dictionary<EntityUid, TimeSpan> _lastNoHandsPopup = new(); // Antispam popup
+    private static readonly TimeSpan NoHandsPopupCooldown = TimeSpan.FromSeconds(2); // Antispam popup
+    private static int ClampRequiredHands(int requiredHands)
+    { return requiredHands < 0 ? 0 : requiredHands; }
+    // Lua end
 
     public override void Initialize()
     {
@@ -195,50 +195,69 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         args.Handled = true;
     }
 
-    // Lua start (fuck driver cowboy)
-    private bool TryOccupyHands(EntityUid rider, EntityUid vehicle)
+    // Lua start (hands occupancy)
+    private bool TryOccupyHands(EntityUid rider, EntityUid vehicle, int requiredHands)
     {
+        requiredHands = ClampRequiredHands(requiredHands);
+        if (requiredHands == 0) return true;
         if (!TryComp<HandsComponent>(rider, out var hands))
             return false;
-
-        var emptyHands = hands.Hands.Values.Where(hand => hand.IsEmpty).ToList();
-        if (emptyHands.Count < 2)
-            return false;
-
-        foreach (var _ in emptyHands.Take(2))
-            _virtualItem.TrySpawnVirtualItemInHand(vehicle, rider);
-
+        var alreadyOccupied = 0;
+        var emptyHands = new List<string>();
+        foreach (var handId in hands.Hands.Keys)
+        {
+            if (_hands.HandIsEmpty((rider, hands), handId))
+            { emptyHands.Add(handId); continue; }
+            if (_hands.TryGetHeldItem((rider, hands), handId, out var heldEntity) && TryComp<VirtualItemComponent>(heldEntity.Value, out var virt) && virt.BlockingEntity == vehicle)
+            { alreadyOccupied++; }
+        }
+        var needed = requiredHands - alreadyOccupied;
+        if (needed <= 0) return true;
+        if (emptyHands.Count < needed) return false;
+        foreach (var handId in emptyHands.Take(needed))
+        { if (!_virtualItem.TrySpawnVirtualItemInHand(vehicle, rider, out _, dropOthers: false, empty: handId)) return false; }
         return true;
     }
 
-    private void EnsureHandsAreCorrect(EntityUid rider, EntityUid vehicle)
+    private bool EnsureHandsAreCorrect(EntityUid rider, EntityUid vehicle, int requiredHands)
     {
-        if (!TryComp<HandsComponent>(rider, out var hands))
-            return;
-
-        foreach (var hand in hands.Hands.Values)
+        requiredHands = ClampRequiredHands(requiredHands);
+        if (!TryComp<HandsComponent>(rider, out var hands)) return requiredHands == 0;
+        var matchingVirtualItems = new List<EntityUid>();
+        var emptyHands = new List<string>();
+        foreach (var handId in hands.Hands.Keys)
         {
-            if (hand.IsEmpty
-                || !TryComp<VirtualItemComponent>(hand.HeldEntity, out var virt)
-                || virt.BlockingEntity != vehicle)
-            {
-                _virtualItem.TrySpawnVirtualItemInHand(vehicle, rider);
-            }
+            if (_hands.HandIsEmpty((rider, hands), handId))
+            { emptyHands.Add(handId); continue; }
+            if (_hands.TryGetHeldItem((rider, hands), handId, out var heldEntity) && TryComp<VirtualItemComponent>(heldEntity.Value, out var virt) && virt.BlockingEntity == vehicle)
+            { matchingVirtualItems.Add(heldEntity.Value); }
         }
+        if (matchingVirtualItems.Count > requiredHands)
+        {
+            foreach (var extra in matchingVirtualItems.Skip(requiredHands))
+            { if (TryComp<VirtualItemComponent>(extra, out var virt)) _virtualItem.DeleteVirtualItem((extra, virt), rider); }
+        }
+        var current = Math.Min(matchingVirtualItems.Count, requiredHands);
+        var needed = requiredHands - current;
+        if (needed > 0)
+        {
+            if (emptyHands.Count < needed) return false;
+            foreach (var handId in emptyHands.Take(needed))
+            { if (!_virtualItem.TrySpawnVirtualItemInHand(vehicle, rider, out _, dropOthers: false, empty: handId)) return false; }
+        }
+        if (requiredHands == 0 && matchingVirtualItems.Count > 0) _virtualItem.DeleteInHandsMatching(rider, vehicle);
+        return true;
     }
-// Lua start
+    // Lua start
     private bool ShouldShowNoHandsPopup(EntityUid user)
     {
-        if (!_net.IsClient)
-            return true;
-
+        if (!_net.IsClient) return true;
         var now = _timing.CurTime;
-        if (_lastNoHandsPopup.TryGetValue(user, out var last) && now - last < NoHandsPopupCooldown)
-            return false;
+        if (_lastNoHandsPopup.TryGetValue(user, out var last) && now - last < NoHandsPopupCooldown) return false;
         _lastNoHandsPopup[user] = now;
         return true;
     }
-// Lua end
+    // Lua end
 
     public override void Update(float frameTime)
     {
@@ -250,20 +269,43 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             if (Transform(rider).ParentUid is { } vehicle &&
                 HasComp<VehicleComponent>(vehicle))
             {
-                EnsureHandsAreCorrect(rider, vehicle);
+                var vehicleComp = Comp<VehicleComponent>(vehicle);
+                if (vehicleComp.Driver == rider && !EnsureHandsAreCorrect(rider, vehicle, vehicleComp.RequiredHands))
+                {
+                    _buckle.TryUnbuckle(rider, vehicle);
+                    if (ShouldShowNoHandsPopup(rider)) _popup.PopupPredicted(Loc.GetString("vehicle-no-free-hands"), vehicle, rider);
+                }
             }
 
             // Lua start
             if (TryComp(rider, out BuckleComponent? buckle) && buckle.BuckledTo is { } strapEnt)
             {
                 var strapUid = strapEnt;
-                if (HasComp<VehicleComponent>(strapUid))
+                if (TryComp<VehicleComponent>(strapUid, out var vehicleComp))
                 {
                     var riderXform = Transform(rider);
                     if (riderXform.ParentUid != strapUid)
                     {
-                        var coords = new EntityCoordinates(strapUid, Vector2.Zero);
+                        Vector2 offset = Vector2.Zero;
+                        if (vehicleComp.Passenger == rider)
+                        { offset = GetPassengerOffset(new Entity<VehicleComponent>(strapUid, vehicleComp)); }
+                        var coords = new EntityCoordinates(strapUid, offset);
                         _transform.SetCoordinates(rider, riderXform, coords, rotation: null);
+                    }
+                    else if (vehicleComp.Passenger == rider)
+                    {
+                        var passengerOffset = GetPassengerOffset(new Entity<VehicleComponent>(strapUid, vehicleComp));
+                        var currentOffset = riderXform.LocalPosition;
+                        if ((currentOffset - passengerOffset).LengthSquared() > 0.01f)
+                        {
+                            var coords = new EntityCoordinates(strapUid, passengerOffset);
+                            _transform.SetCoordinates(rider, riderXform, coords, rotation: null);
+                        }
+                        if (TryComp<StrapComponent>(strapUid, out var strapComp))
+                        {
+                            strapComp.BuckleOffset = passengerOffset;
+                            Dirty(strapUid, strapComp);
+                        }
                     }
                 }
             } // Lua end
@@ -273,9 +315,11 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
     private void OnStrapAttempt(Entity<VehicleComponent> ent, ref StrapAttemptEvent args)
     {
-        var driver = args.Buckle.Owner; // i dont want to re write this shit 100 fucking times
+        var rider = args.Buckle.Owner; // i dont want to re write this shit 100 fucking times
+        bool isDriver = ent.Comp.Driver == null;
+        bool isPassenger = !isDriver && ent.Comp.Passenger == null;
 
-        if (ent.Comp.Driver != null)
+        if (!isDriver && !isPassenger)
         {
             args.Cancelled = true;
             return;
@@ -290,73 +334,143 @@ public abstract partial class SharedVehicleSystem : EntitySystem
         }
         // End Frontier
 
-        if (ent.Comp.RequiredHands != 2)
+        // Lua start
+        if (isDriver)
         {
-            for (int hands = 2; hands < ent.Comp.RequiredHands; hands++)
+            //if (ent.Comp.RequiredHands != 2)
+            //{
+            //    for (int hands = 2; hands < ent.Comp.RequiredHands; hands++)
+            //    {
+            //        if (!_virtualItem.TrySpawnVirtualItemInHand(ent.Owner, driver, false))
+            //        {
+            //            args.Cancelled = true;
+            //            _virtualItem.DeleteInHandsMatching(driver, ent.Owner);
+            //            return;
+            //        }
+            //    }
+
+            var requiredHands = ClampRequiredHands(ent.Comp.RequiredHands);
+            if (requiredHands > 0)
             {
-                if (!_virtualItem.TrySpawnVirtualItemInHand(ent.Owner, driver, false))
+                if (!TryComp<HandsComponent>(rider, out var hands))
                 {
                     args.Cancelled = true;
-                    _virtualItem.DeleteInHandsMatching(driver, ent.Owner);
+                    return;
+                }
+
+                var emptyHands = hands.Hands.Keys.Count(handId => _hands.HandIsEmpty((rider, hands), handId));
+                if (emptyHands < requiredHands)
+                {
+                    if (ShouldShowNoHandsPopup(rider)) _popup.PopupPredicted(Loc.GetString("vehicle-no-free-hands"), ent, rider);
+                    args.Cancelled = true;
                     return;
                 }
             }
         }
+        // Lua end
 
         // AddHorns(driver, ent); // Frontier: delay until mounted
     }
 
+    private Vector2 GetPassengerOffset(Entity<VehicleComponent> vehicle)
+    {
+        var angle = _transform.GetWorldRotation(vehicle);
+        if (angle < 0) angle += 2 * MathF.PI;
+        Vector2 offset;
+        if (angle >= 7 * MathF.PI / 4 || angle < MathF.PI / 4) offset = vehicle.Comp.PassengerEastOffset;
+        else if (angle >= MathF.PI / 4 && angle < 3 * MathF.PI / 4) offset = vehicle.Comp.PassengerNorthOffset;
+        else if (angle >= 3 * MathF.PI / 4 && angle < 5 * MathF.PI / 4) offset = vehicle.Comp.PassengerWestOffset;
+        else offset = vehicle.Comp.PassengerSouthOffset;
+        return offset;
+    }
+
     protected virtual void OnStrapped(Entity<VehicleComponent> ent, ref StrappedEvent args) //Lua: private void<protected virtual void
     {
-        var driver = args.Buckle.Owner;
-        // Lua start (fuck driver cowboy)
-        if (!TryOccupyHands(driver, ent.Owner))
+        var rider = args.Buckle.Owner;
+        bool isDriver = ent.Comp.Driver == null;
+        bool isPassenger = !isDriver && ent.Comp.Passenger == null;
+
+        if (isDriver)
         {
-            _buckle.TryUnbuckle(driver, ent.Owner);
-            // Lua start: покажем сообщение не чаще раза в NoHandsPopupCooldown и только предсказуемо
-            if (ShouldShowNoHandsPopup(driver))
-                _popup.PopupPredicted(Loc.GetString("vehicle-no-free-hands"), ent, driver); // lua end
-            return;
+            // Lua start (fuck driver cowboy)
+            if (!TryOccupyHands(rider, ent.Owner, ent.Comp.RequiredHands))
+            {
+                _buckle.TryUnbuckle(rider, ent.Owner);
+                if (ShouldShowNoHandsPopup(rider)) _popup.PopupPredicted(Loc.GetString("vehicle-no-free-hands"), ent, rider);
+                return;
+            }
+            // Lua end  (fuck driver cowboy)
+            if (!TryComp(rider, out MobMoverComponent? mover))
+                return;
+
+            ent.Comp.Driver = rider;
+            Dirty(ent); // Frontier
+            _appearance.SetData(ent.Owner, VehicleState.DrawOver, true);
+            _appearance.SetData(ent.Owner, VehicleState.Animated, ent.Comp.EngineRunning); // Frontier
+            var riderComp = EnsureComp<VehicleRiderComponent>(rider); // Frontier
+            Dirty(rider, riderComp); // Frontier
+
+            if (!ent.Comp.EngineRunning)
+                return;
+
+            Mount(rider, ent.Owner);
         }
-        // Lua end  (fuck driver cowboy)
-        if (!TryComp(driver, out MobMoverComponent? mover) || ent.Comp.Driver != null)
-            return;
+        else if (isPassenger)
+        {
+            ent.Comp.Passenger = rider;
+            Dirty(ent);
+            var riderComp = EnsureComp<VehicleRiderComponent>(rider);
+            Dirty(rider, riderComp);
+            var passengerOffset = GetPassengerOffset(ent);
+            if (TryComp<StrapComponent>(ent.Owner, out var strapComp))
+            {
+                strapComp.BuckleOffset = passengerOffset;
+                Dirty(ent.Owner, strapComp);
+            }
 
-        ent.Comp.Driver = driver;
-        Dirty(ent); // Frontier
-        _appearance.SetData(ent.Owner, VehicleState.DrawOver, true);
-        _appearance.SetData(ent.Owner, VehicleState.Animated, ent.Comp.EngineRunning); // Frontier
-        var rider = EnsureComp<VehicleRiderComponent>(driver); // Frontier
-        Dirty(driver, rider); // Frontier
-
-        if (!ent.Comp.EngineRunning)
-            return;
-
-        Mount(driver, ent.Owner);
+            var riderXform = Transform(rider);
+            var coords = new EntityCoordinates(ent.Owner, passengerOffset);
+            _transform.SetCoordinates(rider, riderXform, coords, rotation: null);
+        }
     }
 
     protected virtual void OnUnstrapped(Entity<VehicleComponent> ent, ref UnstrappedEvent args) //Lua: private void<protected virtual void
     {
-        if (ent.Comp.Driver != args.Buckle.Owner)
-            return;
+        var rider = args.Buckle.Owner;
 
-        Dismount(args.Buckle.Owner, ent);
-        _appearance.SetData(ent.Owner, VehicleState.DrawOver, false);
-        _appearance.SetData(ent.Owner, VehicleState.Animated, false); // Frontier
-        RemComp<VehicleRiderComponent>(args.Buckle.Owner); // Frontier
+        if (ent.Comp.Driver == rider)
+        {
+            Dismount(rider, ent);
+            _appearance.SetData(ent.Owner, VehicleState.DrawOver, false);
+            _appearance.SetData(ent.Owner, VehicleState.Animated, false); // Frontier
+            RemComp<VehicleRiderComponent>(rider); // Frontier
+        }
+        else if (ent.Comp.Passenger == rider)
+        {
+            ent.Comp.Passenger = null;
+            Dirty(ent); // Frontier
+            RemComp<VehicleRiderComponent>(rider); // Frontier
+        }
     }
 
     private void OnDropped(EntityUid uid, VehicleComponent comp, VirtualItemDeletedEvent args)
     {
-        if (comp.Driver != args.User)
-            return;
+        if (comp.Driver == args.User)
+        {
+            _buckle.TryUnbuckle(args.User, args.User);
 
-        _buckle.TryUnbuckle(args.User, args.User);
-
-        Dismount(args.User, uid);
-        _appearance.SetData(uid, VehicleState.DrawOver, false);
-        _appearance.SetData(uid, VehicleState.Animated, false); // Frontier
-        RemComp<VehicleRiderComponent>(args.User); // Frontier
+            Dismount(args.User, uid);
+            _appearance.SetData(uid, VehicleState.DrawOver, false);
+            _appearance.SetData(uid, VehicleState.Animated, false); // Frontier
+            RemComp<VehicleRiderComponent>(args.User); // Frontier
+        }
+        else if (comp.Passenger == args.User)
+        {
+            _buckle.TryUnbuckle(args.User, args.User);
+            comp.Passenger = null;
+            Dirty(uid, comp);
+            RemComp<VehicleRiderComponent>(args.User);
+        }
     }
 
     // Frontier: do not hit your own vehicle

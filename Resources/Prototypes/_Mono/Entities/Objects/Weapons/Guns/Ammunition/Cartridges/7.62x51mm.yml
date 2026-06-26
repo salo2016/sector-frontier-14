@@ -1,0 +1,149 @@
+- type: entity
+  id: BaseCartridge762x51mm
+  name: cartridge (7.62x51mm FMJ)
+  suffix: Need balance test #Lua
+  parent: [ BaseCartridge, BaseC1Contraband ] # Frontier: BaseSecurityContraband<BaseC1Contraband
+  description: A decently sized full-power round.
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Cartridge
+    - Cartridge762x51mmFMJ
+  - type: CartridgeAmmo
+    deleteOnSpawn: true
+    proto: Bullet762x51mmFMJ
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
+    layers:
+    - state: base
+      map: ["enum.AmmoVisualLayers.Base"]
+  - type: Appearance
+  - type: SpentAmmoVisuals
+  - type: StaticPrice
+    price: 1
+
+# Standart
+- type: entity
+  id: Cartridge762x51mmFMJ
+  name: cartridge (7.62x51mm FMJ)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmFMJ
+
+- type: entity
+  id: Cartridge762x51mmPractice
+  name: cartridge (7.62x51mm practice)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmPractice
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#dbdbdb"
+
+- type: entity
+  id: Cartridge762x51mmRubber
+  name: cartridge (7.62x51mm rubber)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmRubber
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#43c4f7"
+
+# Mechanical
+- type: entity
+  id: Cartridge762x51mmHP
+  name: cartridge (7.62x51mm hollow-point)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmHP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#991d39"
+
+# Physical
+- type: entity
+  id: Cartridge762x51mmIncendiary
+  name: cartridge (7.62x51mm Incendiary)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmIncendiary
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#f44336"
+
+- type: entity
+  id: Cartridge762x51mmUranium
+  name: cartridge (7.62x51mm Uranium)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmUranium
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#6b9747"
+
+# Special
+- type: entity
+  id: Cartridge762x51mmEMP
+  name: cartridge (7.62x51mm EMP)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmEMP
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#044492"
+
+- type: entity
+  id: Cartridge762x51mmCaustic
+  name: cartridge (7.62x51mm Caustic)
+  suffix: Need balance test #Lua
+  parent: BaseCartridge762x51mm
+  components:
+  - type: CartridgeAmmo
+    proto: Bullet762x51mmCaustic
+  - type: Sprite
+    layers:
+      - state: base
+        map: [ "enum.AmmoVisualLayers.Base" ]
+      - state: tip
+        map: [ "enum.AmmoVisualLayers.Tip" ]
+        color: "#8b9229"

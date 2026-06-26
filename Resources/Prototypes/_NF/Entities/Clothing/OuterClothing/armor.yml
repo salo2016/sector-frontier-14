@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ ClothingOuterBaseLarge, BaseC2ContrabandUnredeemable ]
+  parent: [ ClothingOuterArmorBasic, BaseC2ContrabandUnredeemable ]
   id: ClothingOuterArmorSrCarapace
   name: "station representative's carapace"
   description: "A premium armored chestpiece that provides above average protection for its size. It offers maximum mobility and flexibility thanks to the premium composite materials. Issued only to the station representative."
@@ -23,10 +23,41 @@
     damageCoefficient: 0.60
   - type: GroupExamine
 
+# mercenary armored bio suit
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterBioArmoredMercenary
+  name: mercenary bio suit
+  description: Favorite protective gear of any syndicate chemical warfare enjoyers.
+  suffix: T1 Armor, Medium, Special
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/OuterClothing/Bio/mercenary.rsi
+  - type: Clothing
+    sprite: _NF/Clothing/OuterClothing/Bio/mercenary.rsi
+  - type: Armor #Lua; # 30/30/30//45/45//45/45//50
+    modifiers:
+      coefficients:
+        Slash: 0.7
+        Piercing: 0.7
+        Blunt: 0.7
+        Heat: 0.55
+        Radiation: 0.55
+        Shock: 0.55
+        Caustic: 0.55
+        Poison: 0.55
+  - type: StaminaResistance #Lua
+    damageCoefficient: 0.5
+  # - type: ClothingSpeedModifier
+  #   walkModifier: 0.95
+  #   sprintModifier: 0.95
+  - type: ExplosionResistance
+    damageCoefficient: 0.5 #Lua 0.84<0.5
+
 # Syndicate armored bio suit
 - type: entity
   parent:
-  - BaseC3SyndicateContraband
+  - BaseC1SyndicateContraband # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   - ClothingOuterBioGeneral
   - ContrabandClothing
   id: ClothingOuterBioArmoredSyndicate
@@ -52,7 +83,7 @@
     damageCoefficient: 0.60
 
 - type: entity
-  parent: [ ClothingOuterBaseLarge, BaseC2ContrabandUnredeemable ]
+  parent: [ ClothingOuterArmorBasic, BaseC2ContrabandUnredeemable ]
   id: ClothingOuterArmorNfsd
   name: NFSD armor
   description: Get shot, maybe survive?

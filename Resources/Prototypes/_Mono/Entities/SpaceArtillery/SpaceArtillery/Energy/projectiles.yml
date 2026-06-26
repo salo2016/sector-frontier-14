@@ -1,17 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Avalon
-# SPDX-FileCopyrightText: 2025 Blu
-# SPDX-FileCopyrightText: 2025 Disguised Bear
-# SPDX-FileCopyrightText: 2025 Ilya246
-# SPDX-FileCopyrightText: 2025 Onezero0
-# SPDX-FileCopyrightText: 2025 Redrover1760
-# SPDX-FileCopyrightText: 2025 RikuTheKiller
-# SPDX-FileCopyrightText: 2025 core-mene
-# SPDX-FileCopyrightText: 2025 starch
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
 # MARAUDER
-
 - type: entity
   id: ShipMediumPlasmaProjectile
   name: plasma projectile
@@ -48,7 +35,31 @@
     intensitySlope: 6
     maxIntensity: 25
     maxTileBreak: 1
+  
+# type 2048
 
+- type: entity
+  name: cerberus spread
+  parent: ShipMediumPlasmaProjectile
+  id: CerberusSpread
+  components:
+  - type: ProjectileSpread
+    proto: ShipMediumPlasmaProjectile
+    count: 3
+    spread: 8
+
+#Scylla
+
+- type: entity
+  name: Scylla spread
+  parent: ShipMediumPlasmaProjectile
+  id: ScyllaSpread
+  components:
+  - type: ProjectileSpread
+    proto: 20mmBulletArmorPiercing
+    count: 20
+    spread: 90
+      
 # Autopulser
 
 - type: entity
@@ -160,8 +171,6 @@
   - type: PointLight
     color: "#C92BCC"
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
-  - type: MiningGatheringHard
 
 # RUBICON
 
@@ -236,8 +245,6 @@
     maxIntensity: 55
     maxTileBreak: 5
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
-  - type: MiningGatheringHard
 
 # region Laser Hitscans
 

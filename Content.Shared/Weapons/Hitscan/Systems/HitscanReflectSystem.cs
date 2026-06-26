@@ -1,18 +1,16 @@
-// SPDX-FileCopyrightText: 2025 beck-thompson
-// SPDX-FileCopyrightText: 2025 bitcrushing
-//
-// SPDX-License-Identifier: MIT
-
+using Content.Shared.Damage;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Weapons.Hitscan.Components;
 using Content.Shared.Weapons.Hitscan.Events;
 using Content.Shared.Weapons.Ranged.Events;
 using Content.Shared.Weapons.Reflect;
-using Robust.Shared.Random;
 
 namespace Content.Shared.Weapons.Hitscan.Systems;
 
 public sealed class HitscanReflectSystem : EntitySystem
 {
+    [Dependency] private readonly DamageableSystem _damageable = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -28,8 +26,11 @@ public sealed class HitscanReflectSystem : EntitySystem
         if (hitscan.Comp.CurrentReflections >= hitscan.Comp.MaxReflections)
             return;
 
-        // Mono - Added null as default DamageSpecifier? Damage parameter
-        var ev = new HitScanReflectAttemptEvent(args.Shooter ?? args.Gun, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false, null);
+        var damage = TryComp<HitscanBasicDamageComponent>(hitscan, out var dmgComp)
+            ? dmgComp.Damage * _damageable.UniversalHitscanDamageModifier
+            : null;
+
+        var ev = new HitScanReflectAttemptEvent(args.Shooter ?? args.Gun, args.Gun, hitscan.Comp.ReflectiveType, args.ShotDirection, false, damage);
         RaiseLocalEvent(args.HitEntity.Value, ref ev);
 
         if (!ev.Reflected)

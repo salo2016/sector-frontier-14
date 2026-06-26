@@ -17,11 +17,12 @@
 #   spawnGroup: Required
 #   gridPath: /Maps/_NF/POI/lodge.yml
 #   addComponents:
+  # - type: RadarBlipIcon
+  #   icon: /Textures/_Lua/Interface/Radar/space-outpost.png
+  #   scale: 1.2
+  #   allowWhenHidden: true
 #   - type: IFF
 #     color: "#3737F8"
-#   - type: StationTransit
-#     routes:
-#       SpawnPoints: 20
 
 # - type: gameMap
 #   id: Lodge

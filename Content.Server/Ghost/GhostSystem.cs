@@ -44,6 +44,8 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Server.Preferences.Managers;
+using Content.Server.Sponsors;
+using Content.Shared._Lua.SponsorLoadout;
 using Robust.Shared.Network;
 
 namespace Content.Server.Ghost
@@ -78,11 +80,13 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IAdminManager _admin = default!; // Frontier
         [Dependency] private readonly CryoSleepSystem _cryo = default!; // Frontier
         [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
+        [Dependency] private readonly SponsorManager _sponsorManager = default!;
 
         private EntityQuery<GhostComponent> _ghostQuery;
         private EntityQuery<PhysicsComponent> _physicsQuery;
 
         private static readonly ProtoId<TagPrototype> AllowGhostShownByEventTag = "AllowGhostShownByEvent";
+        private static readonly ProtoId<DamageTypePrototype> AsphyxiationDamageType = "Asphyxiation";
 
         public override void Initialize()
         {
@@ -655,19 +659,29 @@ namespace Content.Server.Ghost
             if (!_player.TryGetSessionById(mindId, out var session))
                 return;
 
-            // Only apply admin OOC color if the player is actually an admin
-            if (!_admin.IsAdmin(session))
+            Color? color = null;
+            if (_admin.IsAdmin(session) &&
+                _preferencesManager.TryGetCachedPreferences(session.UserId, out var prefs) &&
+                prefs.AdminOOCColor != Color.Transparent)
+            {
+                color = prefs.AdminOOCColor;
+            }
+            else if (_sponsorManager.TryGetActiveSponsor(session.UserId, out var sponsor))
+            {
+                color = sponsor.Role switch
+                {
+                    var r when string.Equals(r, DonorGroups.Shareholder, StringComparison.OrdinalIgnoreCase)
+                        => Color.FromHex("#F05C29"),
+                    var r when string.Equals(r, DonorGroups.God, StringComparison.OrdinalIgnoreCase)
+                        => Color.FromHex("#00FF4A"),
+                    _ => (Color?) null
+                };
+            }
+
+            if (color == null)
                 return;
 
-            if (!_preferencesManager.TryGetCachedPreferences(session.UserId, out var prefs))
-                return;
-
-            // Only apply the color if it's not transparent (the default)
-            if (prefs.AdminOOCColor == Color.Transparent)
-                return;
-
-            // Make the color slightly transparent for ghosts
-            var ghostColor = prefs.AdminOOCColor;
+            var ghostColor = color.Value;
 
             if (TryComp<GhostComponent>(ghostEntity, out var ghostComp))
             {
@@ -697,9 +711,9 @@ namespace Content.Server.Ghost
             if (playerEntity != null && viaCommand)
             {
                 if (forced)
-                    _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
+                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} was forced to ghost via command");
                 else
-                    _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
+                    _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} is attempting to ghost via command");
             }
 
             var handleEv = new GhostAttemptHandleEvent(mind, canReturnGlobal);
@@ -765,14 +779,14 @@ namespace Content.Server.Ghost
                         dealtDamage = playerDeadThreshold - damageable.TotalDamage;
                     }
 
-                    DamageSpecifier damage = new(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), dealtDamage);
+                    DamageSpecifier damage = new(_prototypeManager.Index(AsphyxiationDamageType), dealtDamage);
 
                     _damageable.TryChangeDamage(playerEntity, damage, true);
                 }
             }
 
             if (playerEntity != null)
-                _adminLog.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
+                _adminLog.Add(LogType.Mind, $"{ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
             var ghost = SpawnGhost((mindId, mind), position, canReturn);
 

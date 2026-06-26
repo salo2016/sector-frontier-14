@@ -25,7 +25,6 @@ public sealed class GatewayGeneratorSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfgManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
@@ -37,8 +36,8 @@ public sealed class GatewayGeneratorSystem : EntitySystem
     [Dependency] private readonly SharedSalvageSystem _salvage = default!;
     [Dependency] private readonly TileSystem _tile = default!;
 
-    [ValidatePrototypeId<LocalizedDatasetPrototype>]
-    private const string PlanetNames = "NamesBorer";
+    private static readonly ProtoId<LocalizedDatasetPrototype> PlanetNames = "NamesBorer";
+    private static readonly ProtoId<BiomeTemplatePrototype> BiomeTemplate = "Grassland";
 
     // TODO:
     // Fix shader some more
@@ -102,7 +101,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         var random = new Random(seed);
         var mapUid = _maps.CreateMap();
 
-        var gatewayName = _salvage.GetFTLName(_protoManager.Index<LocalizedDatasetPrototype>(PlanetNames), seed);
+        var gatewayName = _salvage.GetFTLName(_protoManager.Index(PlanetNames), seed);
         _metadata.SetEntityName(mapUid, gatewayName);
 
         var origin = new Vector2i(random.Next(-MaxOffset, MaxOffset), random.Next(-MaxOffset, MaxOffset));
@@ -113,7 +112,7 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         };
         AddComp(mapUid, restricted);
 
-        _biome.EnsurePlanet(mapUid, _protoManager.Index<BiomeTemplatePrototype>("Grasslands"), seed);
+        _biome.EnsurePlanet(mapUid, _protoManager.Index(BiomeTemplate), seed);
 
         var grid = Comp<MapGridComponent>(mapUid);
 
@@ -195,15 +194,22 @@ public sealed class GatewayGeneratorSystem : EntitySystem
         if (TryComp(ent.Owner, out BiomeComponent? biomeComp) && generatorComp != null)
         {
             // - Loot
-            var lootLayers = generatorComp.LootLayers.ToList();
-
-            for (var i = 0; i < generatorComp.LootLayerCount; i++)
+            if (generatorComp.LootLayerCount <= 0)
             {
-                var layerIdx = random.Next(lootLayers.Count);
-                var layer = lootLayers[layerIdx];
-                lootLayers.RemoveSwap(layerIdx);
-
-                _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
+                foreach (var layer in generatorComp.LootLayers)
+                    _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
+            }
+            else
+            {
+                var lootLayers = generatorComp.LootLayers.ToList();
+                var count = Math.Min(generatorComp.LootLayerCount, lootLayers.Count);
+                for (var i = 0; i < count; i++)
+                {
+                    var layerIdx = random.Next(lootLayers.Count);
+                    var layer = lootLayers[layerIdx];
+                    lootLayers.RemoveSwap(layerIdx);
+                    _biome.AddMarkerLayer(ent.Owner, biomeComp, layer.Id);
+                }
             }
 
             // - Mobs

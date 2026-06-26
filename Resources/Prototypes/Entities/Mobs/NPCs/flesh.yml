@@ -31,7 +31,7 @@
   - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
     baseWalkSpeed: 1
-    baseSprintSpeed: 1.5
+    baseRunningSpeed: 1.5
   - type: MobState
     allowedStates:
     - Alive
@@ -42,6 +42,7 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
+    animationThreshold: 25
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -59,8 +60,6 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   parent: BaseMobFlesh
@@ -141,7 +140,7 @@
       30: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
+    baseRunningSpeed: 2.5
 
 - type: entity
   parent: BaseMobFlesh
@@ -166,7 +165,7 @@
       30: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
+    baseRunningSpeed: 2.5
 
 - type: entity
   parent: BaseMobFlesh
@@ -196,7 +195,7 @@
       100: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.5
-    baseSprintSpeed: 2.5
+    baseRunningSpeed: 2.5
   - type: MeleeWeapon
     soundHit:
         path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -235,7 +234,7 @@
   - type: MovementAlwaysTouching
   - type: MovementSpeedModifier
     baseWalkSpeed: 1
-    baseSprintSpeed: 1.5
+    baseRunningSpeed: 1.5
   - type: MobState
     allowedStates:
     - Alive
@@ -246,6 +245,7 @@
       75: Dead
   - type: Stamina
     critThreshold: 50
+    animationThreshold: 25
   - type: Butcherable
     spawned:
     - id: FoodMeat
@@ -263,8 +263,6 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   parent: BaseMobFleshSalvage
@@ -345,7 +343,7 @@
       30: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
+    baseRunningSpeed: 2.5
 
 - type: entity
   parent: BaseMobFleshSalvage
@@ -370,4 +368,4 @@
       30: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 2.5
+    baseRunningSpeed: 2.5

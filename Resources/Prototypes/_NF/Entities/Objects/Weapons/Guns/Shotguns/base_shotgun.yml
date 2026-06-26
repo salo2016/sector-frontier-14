@@ -1,19 +1,30 @@
 #region frame
 - type: entity
-  id: NFBaseWeaponFrameShotgun
-  parent: [ NFBaseWeaponEncumbrancePistol, NFBaseItemWeaponGun ]
   abstract: true
+  parent: [ NFBaseWeaponEncumbranceRifle, NFBaseGunMeleeAttackLow, NFBaseItemWeaponGun ]
+  id: NFBaseWeaponFrameShotgun
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: ShotgunsPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: ShotgunsDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: ShotgunsDrop
+  # Goobstation edit end
   - type: Sprite
     layers:
     - state: icon
       map: [ "enum.GunVisualLayers.Base" ]
   - type: Gun
-    projectileSpeed: 20
-    minAngle: 4.1
-    maxAngle: 20.5
-    angleIncrease: 2
-    angleDecay: 4
+    projectileSpeed: 40 #Lua
+    minAngle: 3.4
+    maxAngle: 17
+    angleIncrease: 0.9
+    angleDecay: 4.5
     fireRate: 1.5
     selectedMode: SemiAuto
     availableModes:
@@ -26,11 +37,13 @@
     price: 400
   - type: NFWeaponDetails
     class: weapon-details-class-shotgun
+  - type: GunJam
+    canJam: false
 
 - type: entity
-  id: NFBaseWeaponFrameShotgunWieldable
-  parent: [ NFBaseWeaponEncumbranceRifle, NFBaseWeaponFrameShotgun ]
   abstract: true
+  parent: [ NFBaseWeaponEncumbranceRifle, NFBaseGunMeleeAttackMedium, NFBaseWeaponFrameShotgun ]
+  id: NFBaseWeaponFrameShotgunWieldable
   components:
   - type: Wieldable
     unwieldOnUse: false
@@ -41,8 +54,8 @@
 
 #region chamber
 - type: entity
-  id: NFBaseWeaponShotgunChamber50
   abstract: true
+  id: NFBaseWeaponShotgunChamber23x75 #Lua 4 gauge
   components:
   - type: Gun
     examineCaliber: gun-examine-caliber-50
@@ -50,18 +63,18 @@
       path: /Audio/Weapons/Guns/Gunshots/shotgun.ogg
   - type: BallisticAmmoProvider
     capacity: 7
-    proto: NFShellShotgunBuckshot
+    proto: ShellShotgun23x75mmBuckshot #Lua 4 gauge
     whitelist:
       tags:
-      - ShellShotgun
+      - ShellShotgun23x75mmBuckshot #Lua 4 gauge
   - type: ContainerContainer
     containers:
       ballistic-ammo: !type:Container
         ents: []
 
 - type: entity
-  id: NFBaseWeaponShotgunChamber50Magazine
   abstract: true
+  id: NFBaseWeaponShotgunChamber23x75Magazine #Lua 4 gauge
   components:
   - type: Sprite # janky here, but mag is optional and tied with chamber
     layers:

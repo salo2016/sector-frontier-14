@@ -10,18 +10,21 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Content.Shared.Localizations;
 using Content.Shared.Power;
 using Content.Server.Construction; // Frontier
 using Content.Server.Construction.Components; // Frontier
+using Content.Shared.Construction.Components; // Frontier
 using Content.Shared.DeviceLinking.Events; // Frontier
 
 namespace Content.Server.Shuttles.Systems;
@@ -29,7 +32,6 @@ namespace Content.Server.Shuttles.Systems;
 public sealed class ThrusterSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly SharedMapSystem _mapSystem = default!;
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
@@ -38,6 +40,12 @@ public sealed class ThrusterSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly ConstructionSystem _construction = default!; // Frontier
     [Dependency] private readonly SharedTransformSystem _transform = default!; // Frontier
+    [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    private const string GrillePrototypeId = "Grille";
+    private static readonly HashSet<string> CablePrototypeIds = new() { "CableApcExtension", "CableHV", "CableMV" };
+    private readonly HashSet<EntityUid> _burnOverlapSet = new();
 
     // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
     // This is done for each direction available.
@@ -104,7 +112,7 @@ public sealed class ThrusterSystem : EntitySystem
             args.PushMarkup(enabled);
 
             if (component.Type == ThrusterType.Linear &&
-                EntityManager.TryGetComponent(uid, out TransformComponent? xform) &&
+                TryComp(uid, out TransformComponent? xform) &&
                 xform.Anchored)
             {
                 var nozzleLocalization = ContentLocalizationManager.FormatDirection(xform.LocalRotation.Opposite().ToWorldVec().GetDir()).ToLower();
@@ -133,7 +141,7 @@ public sealed class ThrusterSystem : EntitySystem
         foreach (var change in args.Changes)
         {
             // If the old tile was space but the new one isn't then disable all adjacent thrusters
-            if (change.NewTile.IsSpace(_tileDefManager) || !change.OldTile.IsSpace(_tileDefManager))
+            if (_turf.IsSpace(change.NewTile) || !_turf.IsSpace(change.OldTile))
                 continue;
 
             var tilePos = change.GridIndices;
@@ -203,8 +211,8 @@ public sealed class ThrusterSystem : EntitySystem
         // TODO: Don't make them rotatable and make it require anchoring.
 
         if (!component.Enabled ||
-            !EntityManager.TryGetComponent(uid, out TransformComponent? xform) ||
-            !EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
+            !TryComp(uid, out TransformComponent? xform) ||
+            !TryComp(xform.GridUid, out ShuttleComponent? shuttleComponent))
         {
             return;
         }
@@ -356,7 +364,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.IsOn = true;
 
-        if (!EntityManager.TryGetComponent(xform.GridUid, out ShuttleComponent? shuttleComponent))
+        if (!TryComp(xform.GridUid, out ShuttleComponent? shuttleComponent))
             return;
 
         // Logger.DebugS("thruster", $"Enabled thruster {uid}");
@@ -378,7 +386,7 @@ public sealed class ThrusterSystem : EntitySystem
                 }
 
                 // Don't just add / remove the fixture whenever the thruster fires because perf
-                if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent) &&
+                if (TryComp(uid, out PhysicsComponent? physicsComponent) &&
                     component.BurnPoly.Count > 0)
                 {
                     var shape = new PolygonShape();
@@ -418,7 +426,7 @@ public sealed class ThrusterSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
             _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
         }
@@ -482,7 +490,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         component.IsOn = false;
 
-        if (!EntityManager.TryGetComponent(gridId, out ShuttleComponent? shuttleComponent))
+        if (!TryComp(gridId, out ShuttleComponent? shuttleComponent))
             return;
 
         // Logger.DebugS("thruster", $"Disabled thruster {uid}");
@@ -528,7 +536,7 @@ public sealed class ThrusterSystem : EntitySystem
                 throw new ArgumentOutOfRangeException();
         }
 
-        if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+        if (TryComp(uid, out AppearanceComponent? appearance))
         {
             _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
         }
@@ -540,7 +548,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         _ambient.SetAmbience(uid, false);
 
-        if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+        if (TryComp(uid, out PhysicsComponent? physicsComponent))
         {
             _fixtureSystem.DestroyFixture(uid, BurnFixture, body: physicsComponent);
         }
@@ -579,7 +587,7 @@ public sealed class ThrusterSystem : EntitySystem
         var mapGrid = Comp<MapGridComponent>(xform.GridUid.Value);
         var tile = _mapSystem.GetTileRef(xform.GridUid.Value, mapGrid, new Vector2i((int)Math.Floor(x), (int)Math.Floor(y)));
 
-        return tile.Tile.IsSpace();
+        return _turf.IsSpace(tile);
     }
 
     #region Burning
@@ -593,24 +601,24 @@ public sealed class ThrusterSystem : EntitySystem
 
         while (query.MoveNext(out var ent, out var comp)) // Frontier: add out var ent
         {
-            if (comp.NextFire > curTime)
-                continue;
-
+            if (comp.NextFire > curTime) continue;
             comp.NextFire += comp.FireCooldown;
-
-            if (!comp.Firing || comp.Colliding.Count == 0 || comp.Damage == null)
-                continue;
-
-            foreach (var uid in comp.Colliding.ToArray())
+            if (!comp.Firing || comp.Damage == null) continue;
+            if (comp.Type == ThrusterType.Angular) continue;
+            if (comp.BurnPoly.Count < 3) continue;
+            var xform = Transform(ent);
+            if (xform.GridUid is not { } gridUid) continue;
+            var shape = new PolygonShape();
+            if (!shape.Set(comp.BurnPoly)) continue;
+            var physTransform = new Robust.Shared.Physics.Transform(xform.LocalPosition, xform.LocalRotation);
+            _burnOverlapSet.Clear();
+            _lookup.GetLocalEntitiesIntersecting(gridUid, shape, physTransform, _burnOverlapSet);
+            foreach (var uid in _burnOverlapSet)
             {
-                // Frontier: make sure they're still in danger
-                // Frontier TODO: Actually fix the cause of this bug (EndCollideEvent not firing on buckled entities)
-                if (!_transform.InRange(ent, uid, 2f))
-                {
-                    comp.Colliding.Remove(uid);
-                    continue;
-                }
-                // End Frontier
+                if (uid == ent) continue;
+                if (IsGrilleOrChild(uid)) continue;
+                if (IsCableOrChild(uid)) continue;
+                if (!_transform.InRange(ent, uid, 2.5f)) continue;
 
                 _damageable.TryChangeDamage(uid, comp.Damage);
             }
@@ -631,6 +639,26 @@ public sealed class ThrusterSystem : EntitySystem
             return;
 
         component.Colliding.Remove(args.OtherEntity);
+    }
+
+    private bool IsGrilleOrChild(EntityUid uid)
+    {
+        var protoId = MetaData(uid).EntityPrototype?.ID;
+        if (string.IsNullOrEmpty(protoId)) return false;
+        if (protoId == GrillePrototypeId) return true;
+        foreach (var parent in _prototype.EnumerateParents<EntityPrototype>(protoId, includeSelf: false))
+        { if (parent.ID == GrillePrototypeId) return true; }
+        return false;
+    }
+
+    private bool IsCableOrChild(EntityUid uid)
+    {
+        var protoId = MetaData(uid).EntityPrototype?.ID;
+        if (string.IsNullOrEmpty(protoId)) return false;
+        if (CablePrototypeIds.Contains(protoId)) return true;
+        foreach (var parent in _prototype.EnumerateParents<EntityPrototype>(protoId, includeSelf: false))
+        { if (CablePrototypeIds.Contains(parent.ID)) return true; }
+        return false;
     }
 
     /// <summary>

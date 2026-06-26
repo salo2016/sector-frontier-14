@@ -3,8 +3,8 @@
 # See AGPLv3.txt for details.
 
 - type: entity
-  parent: ClothingHandsGlovesSyntheticBase
-  id: ClothingHandsRDOutpostSyndicate
+  parent: [ClothingHandsGlovesSyntheticBase, BaseC1SyndicateContrabandNoValue]
+  id: ClothingHandsRDOutpostTypan
   name: перчатки директора исследований
   description: Тактические перчатки, защищающие его обладателя от нежелательных соприкосновений.
   components:
@@ -17,8 +17,8 @@
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
 
 - type: entity
-  parent: ClothingHandsButcherable
-  id: ClothingHandsScienceOutpostSyndicate
+  parent: [ClothingHandsButcherable, BaseC1SyndicateContrabandNoValue]
+  id: ClothingHandsScienceOutpostTypan
   name: перчатки ученого синдиката
   description: Удобные перчатки для проведения различных экспериментов.
   components:

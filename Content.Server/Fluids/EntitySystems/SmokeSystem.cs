@@ -1,8 +1,8 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Shared.EntityEffects.Effects;
 using Content.Server.Spreader;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -75,6 +75,9 @@ public sealed class SmokeSystem : EntitySystem
             if (curTime < smoke.NextSecond)
                 continue;
 
+            if (!Exists(smoke.SmokeEntity) || !_smokeQuery.HasComponent(smoke.SmokeEntity))
+            { RemComp<SmokeAffectedComponent>(uid); continue; }
+
             smoke.NextSecond += TimeSpan.FromSeconds(1);
             SmokeReact(uid, smoke.SmokeEntity);
         }
@@ -102,6 +105,9 @@ public sealed class SmokeSystem : EntitySystem
         var exists = Exists(entity);
 
         if (!TryComp<PhysicsComponent>(args.OtherEntity, out var body))
+            return;
+
+        if (TerminatingOrDeleted(args.OtherEntity))
             return;
 
         foreach (var ent in _physics.GetContactingEntities(args.OtherEntity, body))
@@ -243,8 +249,7 @@ public sealed class SmokeSystem : EntitySystem
     /// </summary>
     public void SmokeReact(EntityUid entity, EntityUid smokeUid, SmokeComponent? component = null)
     {
-        if (!Resolve(smokeUid, ref component))
-            return;
+        if (!Resolve(smokeUid, ref component, false)) return;
 
         if (!_solutionContainerSystem.ResolveSolution(smokeUid, SmokeComponent.SolutionName, ref component.Solution, out var solution) ||
             solution.Contents.Count == 0)
@@ -288,7 +293,7 @@ public sealed class SmokeSystem : EntitySystem
         if (blockIngestion)
             return;
 
-        if (_blood.TryAddToChemicals(entity, transferSolution, bloodstream))
+        if (_blood.TryAddToChemicals((entity, bloodstream), transferSolution))
         {
             // Log solution addition by smoke
             _logger.Add(LogType.ForceFeed, LogImpact.Medium, $"{ToPrettyString(entity):target} ingested smoke {SharedSolutionContainerSystem.ToPrettyString(transferSolution)}");

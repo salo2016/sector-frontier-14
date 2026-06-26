@@ -41,10 +41,11 @@
     back:
     - Flash
     - RubberStampStc
-    - EncryptionKeyStationMaster
+    - BoxFolderStc
     - ShipVoucherFrontierStc
+    - TrafficManagerTablet
   encryptionKeys:
-  - BoxFolderStc
+  - EncryptionKeyStationMaster
 
 - type: chameleonOutfit
   id: StationTrafficControllerChameleonOutfit

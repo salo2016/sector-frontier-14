@@ -50,8 +50,8 @@
     Steel: 100
     Plastic: 100
     Glass: 50
-    Plasma: 50
-    Silver: 50
+    Plasma: 200 # Frontier < 50 to 200
+    Silver: 300 # Frontier < 50 to 300
 
 - type: latheRecipe
   parent: BasePartRecipe
@@ -238,3 +238,21 @@
     Silver: 750
     Plasma: 1500
     Uranium: 150
+
+- type: latheRecipe
+  id: FloorTileItemBluespace
+  result: FloorTileItemBluespace
+  completetime: 1
+  materials:
+    Steel: 100
+    Plastic: 100
+    Bluespace: 60
+
+- type: latheRecipe
+  id: FloorTileItemSepia
+  result: FloorTileItemSepia
+  completetime: 1
+  materials:
+    Steel: 100
+    Plastic: 100
+    Bluespace: 60

@@ -11,8 +11,8 @@
       - id: Multitool
       - id: HandHeldMassScanner
       - id: RemoteSignaller
-      - id: InflatableWallStack5
-      - id: InflatableDoorStack1
+      - id: NFInflatableWallStack5
+      - id: NFInflatableDoorStack1
 
 - type: entity
   id: ClothingBeltNfsdFilled
@@ -20,7 +20,7 @@
 
 - type: entity
   id: ClothingBeltNfsdWebbingFilledBrigmedic
-  parent: ClothingBeltNfsdWebbing
+  parent: ClothingBeltWebbingMedicNFSD
   suffix: Filled, Brigmedic
   components:
   - type: StorageFill

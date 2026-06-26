@@ -25,10 +25,14 @@
       - Snout
 
 - type: entity
-  parent: ClothingMaskGasChameleon
+  parent: [ClothingMaskGasChameleon, BaseC1SyndicateContraband] # Lua-changes: added BaseC1SyndicateContraband
   id: ClothingMaskGasVoiceChameleon
   suffix: Voice Mask, Chameleon
   components:
+    - type: Sprite
+      sprite: _ADT/Clothing/Mask/gas_voice.rsi # Lua
+    - type: Clothing
+      sprite: _ADT/Clothing/Mask/gas_voice.rsi # Lua
     - type: VoiceMask
     - type: HideLayerClothing
       slots:
@@ -39,6 +43,8 @@
           type: ChameleonBoundUserInterface
         enum.VoiceMaskUIKey.Key:
           type: VoiceMaskBoundUserInterface
+    - type: Contraband # Lua
+      hideValues: true
 
 - type: entity
   parent: ClothingMaskBase
@@ -80,7 +86,7 @@
     - Snout
   - type: IngestionBlocker
   - type: StaticPrice
-    price: 5000
+    price: 10000 #Lua 5000<10000
   # Frontier: pick random sprite on spawn
   - type: RandomSprite
     available:
@@ -90,3 +96,4 @@
           icon-joy: ""
           icon-anger: ""
   # End Frontier: random sprite on spawn
+  - type: NFTreasure # Frontier

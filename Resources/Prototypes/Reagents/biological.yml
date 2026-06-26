@@ -22,6 +22,11 @@
           - !type:OrganType
             type: Human
             shouldHave: false
+      - !type:SatiateHunger #Lua_Start
+        factor: 1
+        conditions:
+          - !type:OrganType
+            type: Demon #Lua_End
     Food:
       effects:
         - !type:AdjustReagent
@@ -189,7 +194,7 @@
     collection: FootstepBlood
     params:
       volume: 6
-  pricePerUnit: 60
+  pricePerUnit: 0
 
 - type: reagent
   id: Fat

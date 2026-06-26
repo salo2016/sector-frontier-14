@@ -74,9 +74,9 @@
         Heat : 1.5 #per second, scales with temperature & other constants
   - type: TemperatureSpeed
     thresholds:
-      301: 0.8
-      295: 0.6
-      285: 0.4
+      301: 0.9
+      295: 0.8
+      285: 0.7
   - type: Wagging
   - type: Inventory
     speciesId: reptilian
@@ -94,6 +94,12 @@
     cosmeticOnly: false # Frontier
   - type: TallWhitelist # Frontier
     scale: 1.2 # Frontier
+  - type: LuaSprint # Lua
+    maxSprint: 112
+    drainPerSecond: 5.8
+    regenPerSecond: 6.8
+    regenDelay: 0.31
+    recoverThresholdFraction: 0.29
 
 - type: entity
   parent: BaseSpeciesDummy

@@ -1,15 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Blu
-# SPDX-FileCopyrightText: 2025 Disguised Bear
-# SPDX-FileCopyrightText: 2025 Ilya246
-# SPDX-FileCopyrightText: 2025 Redrover1760
-# SPDX-FileCopyrightText: 2025 RikuTheKiller
-# SPDX-FileCopyrightText: 2025 core-mene
-# SPDX-FileCopyrightText: 2025 starch
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
-
 # VESPERA
-
 - type: entity
   id: ShipMissileASM417
   name: ASM-417 Mini Missile
@@ -47,8 +36,6 @@
     intensitySlope: 8
     maxIntensity: 25
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
-  - type: MiningGatheringHard
   - type: TargetSeeking
     acceleration: 300
     detectionRange: 500
@@ -96,8 +83,6 @@
     intensitySlope: 10
     maxIntensity: 55
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
-  - type: MiningGatheringHard
   - type: TargetSeeking
     acceleration: 200
     detectionRange: 600
@@ -145,8 +130,6 @@
     intensitySlope: 30
     totalIntensity: 6000
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
-  - type: MiningGatheringHard
   - type: TargetSeeking
     acceleration: 50
     detectionRange: 600
@@ -199,8 +182,6 @@
     maxIntensity: 50
     maxTileBreak: 1
   - type: GatheringProjectile
-  - type: MiningGatheringSoft
-  - type: MiningGatheringHard
   - type: TargetSeeking
     acceleration: 200
     detectionRange: 600

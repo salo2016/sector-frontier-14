@@ -22,7 +22,7 @@
     - state: trade_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [EncryptionKey, BaseC2Contraband]
   id: EncryptionKeyMercenary
   name: Mercenary control encryption key
   description: An encryption key for mercenary.
@@ -41,7 +41,7 @@
     - state: merc_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [EncryptionKey, BaseC3CentCommContrabandNoValue]
   id: EncryptionKeyDeathSquad
   name: ключ шифрования эскадрона смерти
   description: Ключ шифрования отряда, несущего смерть.
@@ -56,7 +56,7 @@
     - state: nano_label
 
 - type: entity
-  parent: EncryptionKey
+  parent: [EncryptionKey, BaseC3CentCommContrabandNoValue]
   id: EncryptionKeyKSO
   name: ключ шифрования КСО
   description: Ключ шифрования Корпуса Специальных Операций.
@@ -71,11 +71,11 @@
     - state: nano_label
 
 - type: entity
-  parent: EncryptionKey
-  id: EncryptionKeyOutpostSyndicate
+  parent: [EncryptionKey, BaseC3SyndicateContraband]
+  id: EncryptionKeyOutpostTypan
   name: красный ключ шифрования
   description: Ключ шифрования, используемый... хм... кем же?
-  suffix: Нордфолл
+  suffix: Тайпан
   components:
   - type: EncryptionKey
     channels:
@@ -100,3 +100,22 @@
     layers:
     - state: crypt_silver
     - state: nano_label
+
+- type: entity
+  parent: EncryptionKey
+  id: EncryptionKeyVip
+  name: Vip control encryption key
+  description: An encryption key for vip.
+  components:
+  - type: EncryptionKey
+    channels:
+    - Vip
+    defaultChannel: Vip
+  - type: Item
+    sprite: _Lua/encryption_keys.rsi
+    size: Tiny
+  - type: Sprite
+    sprite: _Lua/encryption_keys.rsi
+    layers:
+    - state: crypt_black
+    - state: vip_label

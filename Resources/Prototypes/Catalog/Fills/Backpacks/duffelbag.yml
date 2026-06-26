@@ -53,9 +53,22 @@
   - type: StorageFill
     contents:
       - id: NFWeaponSubMachineGunC20r # Frontier: WeaponSubMachineGunC20r<NFWeaponSubMachineGunC20r
-      - id: NFMagazineSubMachineGun35 # Frontier: MagazinePistolSubMachineGun<NFMagazineSubMachineGun35
+      - id: Magazine9x19mmSubMachineGunFMJ # Lua 35 -> 9x19
         amount: 2
 #     - id: SMGSuppressor
+
+# Frontier TODO: Balance this and readd
+#- type: entity
+#  parent: ClothingBackpackDuffelSyndicateBundle
+#  id: ClothingBackpackDuffelSyndicateFilledRifle
+#  name: Estoc DMR bundle
+#  description: "For medium-range sharpshooting, the Estoc DMR. Bundled with three magazines."
+#  components:
+#  - type: StorageFill
+#    contents:
+#    - id: WeaponRifleEstoc
+#    - id: MagazineRifle
+#      amount: 2
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -66,7 +79,7 @@
   - type: StorageFill
     contents:
       - id: NFWeaponRevolverRitland45 # Frontier: WeaponRevolverPythonAP<NFWeaponRevolverRitland45
-      - id: NFSpeedLoaderPistol45 # Frontier: SpeedLoaderMagnumAP<NFSpeedLoaderPistol45
+      - id: SpeedLoader45_magnumFMJ #Lua 45 -> Magnum
         amount: 2
 
 - type: entity
@@ -78,7 +91,7 @@
   - type: StorageFill
     contents:
       - id: NFWeaponLightMachineGunL6 # Frontier: WeaponLightMachineGunL6<NFWeaponLightMachineGunL6
-      - id: NFMagazineBoxRifle20 # Frontier: MagazineLightRifleBox<NFMagazineBoxRifle20
+      - id: NFMagazineBoxRifle556x45 #Lua 20 -> 556x45
 
 # - type: entity
 #   parent: ClothingBackpackDuffelSyndicateBundle
@@ -116,17 +129,19 @@
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateAmmoFilled
   name: ammo bundle
-  description: "Reloading! Contains 4 magazines for the C-20r, 5 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  description: "Reloading! Contains 4 magazines for the C-20r, 5 drums for the Bulldog, 3 magazines for the Estoc DMR, and 2 ammo boxes for the L6 SAW."
   components:
   - type: StorageFill
     contents:
-      - id: NFMagazineSubMachineGun35 # Frontier: MagazinePistolSubMachineGun<NFMagazineSubMachineGun35
+      - id: Magazine9x19mmSubMachineGunFMJ # Lua 35 -> 9x19
         amount: 4
       - id: NFMagazineShotgunDrum # Frontier: MagazineShotgun<NFMagazineShotgunDrum
         amount: 4
+      - id: NFMagazineRifle20 # Frontier: MagazineRifle<NFMagazineRifle20
+        amount: 3
       - id: NFMagazineShotgunDrumSlug # Frontier: MagazineShotgunSlug<NFMagazineShotgunDrumSlug
         amount: 1
-      - id: NFMagazineBoxRifle20 # Frontier: MagazineLightRifleBox<NFMagazineBoxRifle20
+      - id: NFMagazineBoxRifle556x45 #Lua 20 -> 556x45
         amount: 2
 
 - type: entity
@@ -201,7 +216,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: ChameleonPDA
+        # - id: ChameleonPDA # comment 219 227 229 from _Lua
         - id: ClothingUniformJumpsuitChameleon
         - id: ClothingOuterChameleon
         - id: ClothingNeckChameleon
@@ -209,9 +224,9 @@
         - id: ClothingHeadHatChameleon
         - id: ClothingHandsChameleon
         - id: ClothingEyesChameleon
-        - id: ClothingHeadsetChameleon
+        # - id: ClothingHeadsetChameleon
         - id: ClothingShoesChameleon
-        - id: ChameleonControllerImplanter
+        # - id: ChameleonControllerImplanter
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -279,7 +294,8 @@
     contents:
       - id: SyringeRomerol
       - id: NFWeaponRevolverRitland45 # Frontier: WeaponRevolverPython<NFWeaponRevolverRitland45
-      - id: NFAmmunitionBoxPistol45Incendiary # Frontier: MagazineBoxMagnumIncendiary<NFAmmunitionBoxPistol45Incendiary
+      - id: AmmoBox45_magnumFMJ # Lua 45 -> Magnum
+        amount: 2
       - id: PillAmbuzolPlus
       - id: PillAmbuzol
         amount: 3
@@ -326,6 +342,19 @@
         amount: 2
 
 - type: entity
+  parent: [ ClothingBackpackDuffelBundle, BaseC3Contraband ] # Frontier BaseMajorContraband<BaseC3Contraband
+  id: ClothingBackpackDuffelAcolyteBundle
+  name: acolyte armor bundle
+  description: "Contains the Acolyte Armor, the must have of any cult leader."
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterArmorCult
+    - id: ClothingHeadHelmetCult
+    - id: ClothingShoesCult
+    - id: BedsheetCult
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledStarterKit
   name: basic operative bundle
@@ -334,13 +363,13 @@
   - type: StorageFill
     contents:
       - id: NFWeaponSubMachineGunC20r # Frontier: WeaponSubMachineGunC20r<NFWeaponSubMachineGunC20r
-      - id: NFMagazineSubMachineGun35 # Frontier: MagazinePistolSubMachineGun<NFMagazineSubMachineGun35
+      - id: Magazine9x19mmSubMachineGunFMJ # Lua 35 -> 9x19
         amount: 2 # Frontier: 3<2
-      - id: NFMagazinePistol35 # Frontier: MagazinePistol<NFMagazinePistol35
+      - id: Magazine9x19mmPistolFMJ # Lua 35 -> 9x19
+        amount: 2
       - id: SyndicateJawsOfLife
       - id: C4
         amount: 2
       - id: MedkitCombatFilled
       - id: EmpImplanter
       - id: ClothingShoesBootsMagSyndie
-      - id: AgentIDCard

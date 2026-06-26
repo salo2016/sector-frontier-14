@@ -1,19 +1,3 @@
-// SPDX-FileCopyrightText: 2023 Cheackraze
-// SPDX-FileCopyrightText: 2023 Checkraze
-// SPDX-FileCopyrightText: 2023 Mnemotechnican
-// SPDX-FileCopyrightText: 2024 Dvir
-// SPDX-FileCopyrightText: 2024 GreaseMonk
-// SPDX-FileCopyrightText: 2024 Shroomerian
-// SPDX-FileCopyrightText: 2024 Wiebe Geertsma
-// SPDX-FileCopyrightText: 2025 Alkheemist
-// SPDX-FileCopyrightText: 2025 Ark
-// SPDX-FileCopyrightText: 2025 Redrover1760
-// SPDX-FileCopyrightText: 2025 Whatstone
-// SPDX-FileCopyrightText: 2025 ark1368
-// SPDX-FileCopyrightText: 2025 sleepyyapril
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
 using Content.Server.Shuttles.Systems;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
@@ -35,8 +19,7 @@ using Robust.Shared.Containers;
 using Content.Server._NF.Station.Components;
 using Robust.Shared.EntitySerialization.Systems;
 using Robust.Shared.Utility;
-using Content.Server._NF.Shipyard.Systems;
-using Robust.Shared.Player;
+using Content.Server._Lua.StationRecords.Systems;
 
 namespace Content.Server._NF.Shipyard.Systems;
 
@@ -52,6 +35,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly ShipOwnershipSystem _shipOwnership = default!;
+    [Dependency] private readonly ShipCrewAssignmentSystem _shipCrew = default!; // Lua
 
     public MapId? ShipyardMap { get; private set; }
     private float _shuttleIndex;
@@ -99,6 +83,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         SubscribeLocalEvent<ShipyardConsoleComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<StationDeedSpawnerComponent, MapInitEvent>(OnInitDeedSpawner);
+        InitializeDockSelect(); // Lua
     }
     public override void Shutdown()
     {
@@ -275,6 +260,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         {
             _station.DeleteStation(shuttleStationUid);
         }
+        _shipCrew.ClearAllForShuttle(shuttleUid);
 
         if (TryComp<ShipyardConsoleComponent>(consoleUid, out var comp))
         {
@@ -326,6 +312,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         }
         if (_station.GetOwningStation(shuttleUid) is { Valid: true } shuttleStationUid)
         { _station.DeleteStation(shuttleStationUid); }
+        _shipCrew.ClearAllForShuttle(shuttleUid);
         if (TryComp<ShipyardConsoleComponent>(consoleUid, out var comp))
         { CleanGrid(shuttleUid, consoleUid); }
 
@@ -451,6 +438,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         //TODO: move this to an event that others hook into.
         if (TryGetNetEntity(shuttleDeed.ShuttleUid, out var shuttleNetEntity) &&
+            shuttleNetEntity != null && shuttleNetEntity.Value != NetEntity.Invalid &&
             _shuttleRecordsSystem.TryGetRecord(shuttleNetEntity.Value, out var record))
         {
             record.Name = newName ?? "";
@@ -468,5 +456,16 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
     {
         string?[] parts = { comp.ShuttleName, comp.ShuttleNameSuffix };
         return string.Join(' ', parts.Where(it => it != null));
+    }
+
+    public void ClearShuttleDeedReferencesOnMap(EntityUid mapUid)
+    {
+        var query = AllEntityQuery<ShuttleDeedComponent, TransformComponent>();
+        while (query.MoveNext(out _, out var deed, out var xform))
+        {
+            if (xform.MapUid != mapUid) continue;
+            deed.ShuttleUid = null;
+            deed.DeedHolder = null;
+        }
     }
 }

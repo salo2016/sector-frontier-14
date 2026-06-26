@@ -280,7 +280,7 @@
       prob: 0.05
       orGroup: Pizza
     - id: KnifePlastic
-  
+
 - type: entity
   name: pizza box
   parent: FoodBoxPizzaFilled
@@ -376,6 +376,9 @@
     contents:
     - id: FoodDonkpocket
       amount: 6
+    - id: DonkcoLighter
+      amount: 1
+      prob: 0.10
   - type: NFIngredient # Frontier
 
 - type: entity
@@ -612,7 +615,7 @@
 
 - type: entity
   id: HappyHonkNukie
-  parent: [HappyHonk, BaseC3SyndicateContrabandUnredeemable] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandUnredeemable
+  parent: [HappyHonk, BaseC1SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandUnredeemable # Lua-changes: BaseC3SyndicateContrabandUnredeemable > BaseC1SyndicateContrabandNoValue
   name: robust nukie meal
   description: A sus meal with a potentially explosive surprise.
   suffix: Toy Unsafe

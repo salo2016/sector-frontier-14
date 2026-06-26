@@ -1,6 +1,4 @@
 #nullable enable annotations
-using System.Linq;
-using System.Numerics;
 using Content.Server.Disposal.Unit;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -9,6 +7,9 @@ using Content.Shared.Disposal.Tube;
 using Content.Shared.Disposal.Unit;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
+using Robust.UnitTesting.Pool;
+using System.Linq;
+using System.Numerics;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -28,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 SubscribeLocalEvent<DoInsertDisposalUnitEvent>(ev =>
                 {
                     var (_, toInsert, unit) = ev;
-                    var insertTransform = EntityManager.GetComponent<TransformComponent>(toInsert);
+                    var insertTransform = Comp<TransformComponent>(toInsert);
                     // Not in a tube yet
                     Assert.That(insertTransform.ParentUid, Is.EqualTo(unit));
                 }, after: new[] { typeof(SharedDisposalUnitSystem) });

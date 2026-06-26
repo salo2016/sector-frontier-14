@@ -1,9 +1,20 @@
 #region frame
 - type: entity
-  id: NFBaseWeaponFrameRifle
-  parent: [ NFBaseWeaponEncumbranceRifle, NFBaseItemWeaponGun ]
   abstract: true
+  parent: [ NFBaseWeaponEncumbranceRifle, NFBaseGunMeleeAttackMedium, NFBaseItemWeaponGun ]
+  id: NFBaseWeaponFrameRifle
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: RiflesPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: RiflesDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: RiflesDrop
+  # Goobstation edit end
   - type: Wieldable
     unwieldOnUse: false
   - type: GunRequiresWield
@@ -11,11 +22,11 @@
     minAngle: -0 # Set to 0 because GunRequiresWield
     maxAngle: -0
   - type: Gun
-    projectileSpeed: 30
-    minAngle: 1.8
-    maxAngle: 9
-    angleIncrease: 0.5
-    angleDecay: 2.5
+    projectileSpeed: 55 #Lua
+    minAngle: 1.6
+    maxAngle: 8
+    angleIncrease: 0.4
+    angleDecay: 2
     fireRate: 3
     selectedMode: SemiAuto
     availableModes:
@@ -31,37 +42,37 @@
 
 #region manufacturer
 - type: entity
-  id: NFBaseWeaponFrameRifleFrontierGunsmith
-  parent: NFBaseWeaponFrameRifle
   abstract: true
+  parent: NFBaseWeaponFrameRifle
+  id: NFBaseWeaponFrameRifleFrontierGunsmith
   components:
   - type: Gun
-    minAngle: 2.2
-    maxAngle: 11
-    angleIncrease: 1.1
-    angleDecay: 3.5
+    minAngle: 1.9
+    maxAngle: 19.5
+    angleIncrease: 0.9
+    angleDecay: 2.9
     fireRate: 2.4
   - type: NFWeaponDetails
     manufacturer: weapon-details-manufacturer-frontier-gunsmith-consortium
 
 - type: entity
-  id: NFBaseWeaponFrameRifleSteelbolt
-  parent: [ BaseC3PirateContraband, NFBaseWeaponFrameRifle ]
   abstract: true
+  parent: [ BaseC3PirateContraband, NFBaseWeaponFrameRifle ]
+  id: NFBaseWeaponFrameRifleSteelbolt
   components:
   - type: Gun
-    minAngle: 2
-    maxAngle: 10
-    angleIncrease: 0.9
-    angleDecay: 3.2
+    minAngle: 1.8
+    maxAngle: 9
+    angleIncrease: 0.8
+    angleDecay: 2.9
     fireRate: 2.7
   - type: NFWeaponDetails
     manufacturer: weapon-details-manufacturer-steelbolt-tool-forge
 
 - type: entity
-  id: NFBaseWeaponFrameRifleFoamForce
-  parent: NFBaseWeaponFrameRifleFrontierGunsmith
   abstract: true
+  parent: NFBaseWeaponFrameRifleFrontierGunsmith
+  id: NFBaseWeaponFrameRifleFoamForce
   components:
   - type: NFWeaponDetails
     manufacturer: weapon-details-manufacturer-foam-force-llc
@@ -71,8 +82,8 @@
 
 #region chamber
 - type: entity
-  id: NFBaseWeaponRifleChamber
   abstract: true
+  id: NFBaseWeaponRifleChamber
   components:
   - type: Gun
     soundGunshot:
@@ -85,38 +96,38 @@
         ents: []
 
 - type: entity
-  id: NFBaseWeaponRifleChamber20
-  parent: NFBaseWeaponRifleChamber
   abstract: true
+  parent: NFBaseWeaponRifleChamber
+  id: NFBaseWeaponRifleChamber556x45 #Lua 20 -> 556x45
   components:
   - type: Gun
     examineCaliber: gun-examine-caliber-20
   - type: BallisticAmmoProvider
     capacity: 15
-    proto: NFCartridgeRifle20
+    proto: Cartridge556x45mmFMJ #Lua 20 -> 556x45
     whitelist:
       tags:
-      - NFCartridgeRifle20
+      - Cartridge556x45mmFMJ #Lua 20 -> 556x45
 
 - type: entity
-  id: NFBaseWeaponRifleChamber30
-  parent: NFBaseWeaponRifleChamber
   abstract: true
+  parent: NFBaseWeaponRifleChamber
+  id: NFBaseWeaponRifleChamber762x39 #Lua 30 -> 762x39
   components:
   - type: Gun
     examineCaliber: gun-examine-caliber-30
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
   - type: BallisticAmmoProvider
-    proto: NFCartridgeRifle30
+    proto: Cartridge762x39mmFMJ #Lua 30 -> 762x39
     whitelist:
       tags:
-      - NFCartridgeRifle30
+      - Cartridge762x39mmFMJ #Lua 30 -> 762x39
 
 - type: entity
-  id: NFBaseWeaponRifleChamberDartFoam
-  parent: NFBaseWeaponRifleChamber
   abstract: true
+  parent: NFBaseWeaponRifleChamber
+  id: NFBaseWeaponRifleChamberDartFoam
   components:
   - type: Gun
     examineCaliber: gun-examine-caliber-foam

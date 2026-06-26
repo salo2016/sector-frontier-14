@@ -6,9 +6,13 @@
     "x": 32,
     "y": 32
   },
+  "rsic": false,
   "states": [
     {
       "name": "blank_flag"
+    },
+    {
+      "name": "Stormcreed_flag"
     },
     {
       "name": "NT_flag"

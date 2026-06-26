@@ -1,18 +1,13 @@
-// SPDX-FileCopyrightText: 2025 Ilya246
-//
-// SPDX-License-Identifier: MPL-2.0
-
 using Content.Server.Power.Components;
 using Content.Server.Shuttles.Components;
+using Content.Shared._Lua.Shuttles;
 using Content.Shared._Mono.Detection;
-using Content.Shared._Mono.Ships;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Map.Components;
-using System;
 
 namespace Content.Server._Mono.Detection;
 
@@ -40,7 +35,7 @@ public sealed class ThermalSignatureSystem : EntitySystem
         SubscribeLocalEvent<ThermalSignatureComponent, GunShotEvent>(OnGunShot);
         SubscribeLocalEvent<PowerSupplierComponent, GetThermalSignatureEvent>(OnPowerGetSignature);
         SubscribeLocalEvent<ThrusterComponent, GetThermalSignatureEvent>(OnThrusterGetSignature);
-        SubscribeLocalEvent<FTLDriveComponent, GetThermalSignatureEvent>(OnFTLGetSignature);
+        SubscribeLocalEvent<UnifiedDriveComponent, GetThermalSignatureEvent>(OnUnifiedDriveGetSignature);
 
         _gridQuery = GetEntityQuery<MapGridComponent>();
         _sigQuery = GetEntityQuery<ThermalSignatureComponent>();
@@ -75,7 +70,7 @@ public sealed class ThermalSignatureSystem : EntitySystem
             args.Signature += ent.Comp.Thrust * ent.Comp.HeatSignatureRatio;
     }
 
-    private void OnFTLGetSignature(Entity<FTLDriveComponent> ent, ref GetThermalSignatureEvent args)
+    private void OnUnifiedDriveGetSignature(Entity<UnifiedDriveComponent> ent, ref GetThermalSignatureEvent args)
     {
         var xform = Transform(ent);
         if (!TryComp<FTLComponent>(xform.GridUid, out var ftl))

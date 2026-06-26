@@ -19,18 +19,16 @@
     group: GenericNumber
   - type: StatusEffects
     allowed:
-    - SlowedDown
     - Stutter
-    - Stun
     - Electrocution
     - TemporaryBlindness
     - RadiationProtection
-    - Drowsiness
     - Adrenaline
   - type: StandingState
   - type: Tag
     tags:
     - DoorBumpOpener
+  - type: MovementAlwaysTouching #Lua
 
 - type: entity
   id: MobGoliath
@@ -51,14 +49,14 @@
         Base: goliath_dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.00
-    baseSprintSpeed : 2.00
+    baseRunningSpeed : 2.00
   - type: Bloodstream
     bloodMaxVolume: 350
     chemicalMaxVolume: 0
   - type: MobThresholds
     thresholds:
       0: Alive
-      250: Dead
+      300: Dead #Lua 150<300
   - type: MeleeWeapon
     soundHit:
       path: "/Audio/Weapons/smash.ogg"
@@ -96,9 +94,9 @@
     - id: FoodMeatGoliath
       amount: 3
     - id: MaterialGoliathHide1
-      amount: 3
-  - type: TimedDespawn
-    lifetime: 2400
+      amount: 1 #Lua 3<1
+  - type: Reflect #Lua
+    reflectProb: 0.2
 
 - type: entity
   parent: BaseAction
@@ -213,11 +211,11 @@
         Base: hivelord_dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
+    baseRunningSpeed : 4.0
   - type: MobThresholds
     thresholds:
       0: Alive
-      75: Dead
+      150: Dead #Lua 75<150
   - type: MeleeWeapon
     damage:
       types:
@@ -253,8 +251,6 @@
   - type: Butcherable
     spawned:
     - id: FoodHivelordRemains
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   id: MobHivelordBrood
@@ -268,11 +264,11 @@
     - state: hivelordbrood
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.5
-    baseSprintSpeed : 4.0
+    baseRunningSpeed : 4.0
   - type: MobThresholds
     thresholds:
       0: Alive
-      5: Dead
+      15: Dead #Lua 5<15
   - type: MeleeWeapon
     soundHit:
       path: /Audio/Weapons/bladeslice.ogg
@@ -335,7 +331,7 @@
     entity: FoodHivelordRemainsInert
     stage: 1
   - type: StaticPrice
-    price: 5000
+    price: 1000 #Lua 5000<1000
   - type: Tag
     tags:
     - HivelordRemains
@@ -378,12 +374,12 @@
       Dead:
         Base: basilisk_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3
-    baseSprintSpeed : 3.5
+    baseWalkSpeed : 2
+    baseRunningSpeed : 3
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead
+      150: Dead #Lua 45<150
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcBite
@@ -395,6 +391,7 @@
         Piercing: 5
   - type: Gun
     fireRate: 0.75
+    projectileSpeed: 10.0 # When we get predicted guns and projectiles this should be raised to like 15, 15 mis-predicts too much right now unfortunately.
     selectedMode: SemiAuto
     showExamineText: false
     availableModes: [ SemiAuto ]
@@ -427,8 +424,8 @@
     reflectProb: 1
     reflects:
     - Energy
-  - type: Butcherable
-    spawned:
-    - id: DiamondOre1
-      amount: 1
-      maxAmount: 3
+#  - type: Butcherable #comment from _Lua
+#    spawned:
+#    - id: DiamondOre1
+#      amount: 1
+#      maxAmount: 3

@@ -35,32 +35,29 @@
     ears: ClothingHeadsetKSO
     #neck: ClothingNeckMantleERTLeader
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitFSFCommanderBravo #Рейнджер
+    outerClothing: ClothingOuterHardsuitFSFCommandBravo #Lua ClothingOuterHardsuitFSFCommanderBravo<ClothingOuterHardsuitFSFCommandBravo
     suitstorage: JetpackVoidFilled
     shoes: ClothingShoesBootsMagFSF #Рейнджер
     id: FSFCommanderBravoPDA
     belt: ClothingBeltERTFilled
-    pocket1: NFWeaponEnergyPistolDisabler
+    pocket1: UplinkBravofilled50
     pocket2: DoorRemoteAll
   storage:
     back:
-    - SmokeGrenade
-    - SmokeGrenade
     - HandHeldMassScanner
     - PowerDrill
     - JawsOfLife
+    - Multitool
+    - WelderExperimental
     - HandheldCrewMonitor
-    - NFWeaponEnergyRifleAssaultPulseCarbine
-    - WeaponSubMachineGunVector
     - PinpointerNuclear
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
     - EmergencyMedipen
     - CombatMedipen
     - BoxMRE
-    - Flare
+    - PowerCellMicroreactor
+    - PowerCellMicroreactor
+    - PowerCellAntiqueProto
+    - ClothingShoesBootsSpeed
 
 - type: job
   id: FSFSpecialistBravo
@@ -94,33 +91,26 @@
     eyes: ClothingEyesHudAdvanced
     ears: ClothingHeadsetKSO
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitFSFSpecialistBravo #Рейнджер
+    outerClothing: ClothingOuterHardsuitFSFBaseBravo #Lua ClothingOuterHardsuitFSFSpecialistBravo<ClothingOuterHardsuitFSFBaseBravo
     suitstorage: JetpackVoidFilled
     shoes: ClothingShoesBootsMagFSF #Рейнджер
     id: FSFSpecialistBravoIDCard
     belt: ClothingBeltERTFilled
+    pocket1: UplinkBravofilled40
   storage:
     back:
-    - SmokeGrenade
-    - ExGrenade
+    - PowerCellMicroreactor
+    - PowerCellMicroreactor
     - HandHeldMassScanner
     - PowerDrill
     - JawsOfLife
+    - Multitool
+    - WelderExperimental
     - HandheldCrewMonitor
-    - TelescopicShield
-    - NFWeaponEnergyPistolDisabler
-    - NFWeaponEnergyRifleAssaultPulseCarbine
-    - WeaponSubMachineGunVector
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
+    - PinpointerNuclear
     - EmergencyMedipen
     - CombatMedipen
     - BoxMRE
-    - Flare
-    - Truncheon
-    - PinpointerNuclear
 
 
 ########## CHARLIE
@@ -159,36 +149,29 @@
     ears: ClothingHeadsetKSO
     #neck: ClothingNeckMantleERTLeader
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitFSFCommanderCharlie #Рейнджер
+    outerClothing: ClothingOuterHardsuitFSFCommandCharlie #Lua ClothingOuterHardsuitFSFCommanderCharlie<ClothingOuterHardsuitFSFCommandCharlie
     suitstorage: JetpackVoidFilled
     shoes: ClothingShoesBootsMagFSF #Рейнджер
     id: FSFCommanderCharliePDA
     belt: ClothingBeltERTFilled
-    pocket1: NFWeaponEnergyPistolDisabler
+    pocket1: UplinkCharlieFilled60
     pocket2: DoorRemoteAll
   storage:
     back:
-    - ExGrenade
-    - ExGrenade
-    - SmokeGrenade
-    - ADTCombatHypo
     - HandHeldMassScanner
     - PowerDrill
     - JawsOfLife
+    - Multitool
+    - WelderExperimental
     - HandheldCrewMonitor
-    - NFWeaponEnergyRifleAssaultPulseCarbine
-    - WeaponSubMachineGunVector
     - PinpointerNuclear
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
     - EmergencyMedipen
     - CombatMedipen
-    - CombatMedipen
-    - CombatMedipen
     - BoxMRE
-    - Flare
+    - PowerCellMicroreactor
+    - PowerCellMicroreactor
+    - PowerCellAntiqueProto
+    - ClothingShoesBootsSpeed
 
 - type: job
   id: FSFSpecialistCharlie
@@ -222,36 +205,26 @@
     eyes: ClothingEyesHudAdvanced
     ears: ClothingHeadsetKSO
     gloves: ClothingHandsGlovesCombat
-    outerClothing: ClothingOuterHardsuitFSFSpecialistCharlie #Рейнджер
+    outerClothing: ClothingOuterHardsuitFSFBaseCharlie #Lua ClothingOuterHardsuitFSFSpecialistCharlie<ClothingOuterHardsuitFSFBaseCharlie
     suitstorage: JetpackVoidFilled
     shoes: ClothingShoesBootsMagFSF #Рейнджер
     id: FSFSpecialistCharlieIDCard
     belt: ClothingBeltERTFilled
+    pocket1: UplinkCharlieFilled45
   storage:
     back:
-    - ExGrenade
-    - ExGrenade
-    - SmokeGrenade
+    - PowerCellMicroreactor
+    - PowerCellMicroreactor
     - HandHeldMassScanner
     - PowerDrill
     - JawsOfLife
+    - Multitool
+    - WelderExperimental
     - HandheldCrewMonitor
-    - TelescopicShield
-    - NFWeaponEnergyPistolDisabler
-    - NFWeaponEnergyRifleAssaultPulseCarbine
-    - WeaponSubMachineGunVector
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
-    - NFMagazineSubMachineGun45
+    - PinpointerNuclear
     - EmergencyMedipen
     - CombatMedipen
-    - CombatMedipen
-    - CombatMedipen
     - BoxMRE
-    - Flare
-    - Truncheon
-    - PinpointerNuclear
 
 # Leader
 ## Amber
@@ -295,8 +268,8 @@
     back:
     - NFWeaponEnergyRifleSniperCannon
     - NFWeaponSubMachineGunWt550
-    - NFMagazineSubMachineGunTopMounted35
-    - NFMagazineSubMachineGunTopMounted35
+    - Magazine9x19mmSubMachineGunTopMountedFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunTopMountedFMJ #Lua 35 -> 9x19
     - BoxMRE
     - NFWeaponEnergyPistolDisabler
     - CrowbarRed
@@ -348,9 +321,9 @@
     back:
     - NFWeaponEnergyRifleSniperXrayCannon
     - NFWeaponSubMachineGunDrozd
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
     - BoxMRE
     - PinpointerNuclear
     - CrowbarRed
@@ -403,13 +376,13 @@
   storage:
     back:
     - NFWeaponEnergyRifleAssaultPulseCarbine
-    - WeaponSubMachineGunVector
+    - WeaponSubMachineGunVector9x19mm #Lua 35 -> 9x19
     - PinpointerNuclear
     - CrowbarRed
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
     - EmergencyMedipen
     - BoxMRE
     - Flare
@@ -461,8 +434,8 @@
     - BoxMRE
     - NFWeaponEnergyRifleSniperCannon
     - NFWeaponSubMachineGunWt550
-    - NFMagazineSubMachineGunTopMounted35
-    - NFMagazineSubMachineGunTopMounted35
+    - Magazine9x19mmSubMachineGunTopMountedFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunTopMountedFMJ #Lua 35 -> 9x19
     - Flare
     - Truncheon
 
@@ -509,9 +482,9 @@
     - EmergencyMedipen
     - BoxMRE
     - NFWeaponSubMachineGunDrozd
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
     - CrowbarRed
     - Flare
     - Truncheon
@@ -558,11 +531,11 @@
     - NFWeaponEnergyPistolDisabler
     - CrowbarRed
     - NFWeaponEnergyRifleAssaultPulseCarbine
-    - WeaponSubMachineGunVector
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
-    - NFMagazineSubMachineGun35
+    - WeaponSubMachineGunVector9x19mm #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmSubMachineGunFMJ #Lua 35 -> 9x19
     - EmergencyMedipen
     - BoxMRE
     - Flare
@@ -611,8 +584,8 @@
     - Defibrillator
     - BoxMRE
     - NFWeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
+    - Magazine9x19mmPistolFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmPistolFMJ #Lua 35 -> 9x19
     - NFWeaponEnergyRifleCarbine
     - Flare
     - NFWeaponEnergyPistolDisabler
@@ -732,10 +705,10 @@
     - BoxMRE
     - Defibrillator
     - NFWeaponPistolN1984
-    - MagazineMagnum
-    - MagazineMagnum
-    - MagazineMagnum
-    - MagazineMagnum
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
     - NFWeaponEnergyPistolDisabler
     - HandheldHealthAnalyzer
     - PinpointerNuclear
@@ -784,8 +757,8 @@
     - EmergencyMedipen
     - BoxMRE
     - NFWeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
+    - Magazine9x19mmPistolFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmPistolFMJ #Lua 35 -> 9x19
     - NFWeaponEnergyRifleCarbine
     - Flare
 
@@ -890,10 +863,10 @@
     - EmergencyMedipen
     - BoxMRE
     - NFWeaponPistolN1984
-    - MagazineMagnum
-    - MagazineMagnum
-    - MagazineMagnum
-    - MagazineMagnum
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
     - Flare
     - PinpointerNuclear
 
@@ -945,8 +918,8 @@
     - EmergencyMedipen
     - BoxMRE
     - NFWeaponPistolMk58
-    - MagazinePistol
-    - MagazinePistol
+    - Magazine9x19mmPistolFMJ #Lua 35 -> 9x19
+    - Magazine9x19mmPistolFMJ #Lua 35 -> 9x19
     - Flare
     - NFWeaponEnergyPistolDisabler
 
@@ -1049,10 +1022,10 @@
     - EmergencyMedipen
     - BoxMRE
     - NFWeaponPistolN1984
-    - MagazineMagnum
-    - MagazineMagnum
-    - MagazineMagnum
-    - MagazineMagnum
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
+    - Magazine45_ACPPistolFMJ #Lua 45 -> ACP
     - CrowbarRed
     - NFWeaponEnergyPistolDisabler
     - TrashBagBlue

@@ -21,6 +21,32 @@
   - type: Tool
     qualities:
     - Slicing
+  # Lua start
+  - type: Repairable
+    fuelCost: 2
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: MeleeDurability
+  # Lua end
 
 #Shortswords
 - type: entity
@@ -80,6 +106,11 @@
   id: CaptainSabre
   description: A ceremonial weapon belonging to the captain of the station.
   components:
+  # Goobstation edit start
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/sabre_drop.ogg
+  # Goobstation edit end
   - type: Sprite
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
   - type: MeleeWeapon

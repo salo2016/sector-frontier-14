@@ -1,0 +1,131 @@
+# Damage-per-second = 125 for pistols; 125-25 = 100 for caustic ammo; max COO = 7.5
+# Main damage type - Blunt for standart; main damage/special damage = 70/30 for special
+# LeptonComm status clear
+# Standart
+- type: entity
+  id: Bullet9x19mmFMJ
+  name: bullet (9x19mm FMJ)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 16.7
+
+# Mechanical
+- type: entity
+  id: Bullet9x19mmPractice
+  name: bullet (9x19mm practice)
+  parent: BaseBulletPractice
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 1 #Lua -1
+
+- type: entity
+  id: Bullet9x19mmRubber
+  name: bullet (9x19mm rubber)
+  parent: BaseBulletRubber
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 3
+  - type: StaminaDamageOnCollide #Lua add
+    damage: 15
+
+- type: entity
+  id: Bullet9x19mmHP
+  parent: BaseBullet
+  name: bullet (9x19mm hollow-point)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 11.7
+        Piercing: 5
+
+# Physical
+- type: entity
+  id: Bullet9x19mmIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (9x19mm incendiary)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 11.7
+        Heat: 5
+
+- type: entity
+  id: Bullet9x19mmUranium
+  parent: BaseBulletUranium
+  name: bullet (9x19mm uranium)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 11.7
+        Radiation: 5
+
+# Special
+- type: entity
+  id: Bullet9x19mmEmp
+  name: bullet (9x19mm emp)
+  parent: BaseBulletEmp
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 11.7
+        Shock: 5
+
+- type: entity
+  id: Bullet9x19mmCaustic
+  name: bullet (9x19mm caustic)
+  parent: BaseBullet
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Blunt: 9.3
+        Caustic: 4
+
+# Out of balance
+- type: entity
+  id: Bullet9x19mmRIP
+  parent: BaseBullet
+  name: bullet (9x19mm RIP)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Slash: 5
+        Piercing: 10 #Lua -25
+        Blunt: 10 #Lua add
+  - type: StaminaDamageOnCollide #Lua add
+    damage: 5
+
+- type: entity
+  id: Bullet9x19mmPlasteelAP
+  parent: BaseBullet
+  name: bullet (9x19mm AP)
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 18 #Lua +9
+    ignoreResistances: true #Lua add
+  - type: StaminaDamageOnCollide #Lua add
+    damage: 5

@@ -31,6 +31,7 @@ public sealed partial class StoreMenu : DefaultWindow
 
     public Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> Balance = new();
     public string CurrentCategory = string.Empty;
+    private bool _hasBankBalance;
 
     private List<ListingDataWithCostModifiers> _cachedListings = new();
 
@@ -44,21 +45,32 @@ public sealed partial class StoreMenu : DefaultWindow
         SearchBar.OnTextChanged += _ => SearchTextUpdated?.Invoke(this, SearchBar.Text);
     }
 
-    public void UpdateBalance(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
+    public void UpdateBalance(Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance, bool allowWithdraw, bool hasBankBalance, int bankBalance)
     {
         Balance = balance;
+        _hasBankBalance = hasBankBalance;
 
         var currency = balance.ToDictionary(type =>
             (type.Key, type.Value), type => _prototypeManager.Index(type.Key));
 
-        var balanceStr = string.Empty;
-        foreach (var ((_, amount), proto) in currency)
+        var parts = new List<string>();
+        if (hasBankBalance && currency.Count == 1)
         {
-            balanceStr += Loc.GetString("store-ui-balance-display", ("amount", BankSystemExtensions.ToIndependentString((int) amount)), // Frontier: amount<BankSystemExtensions.GetIndependentString((int)amount)
-                ("currency", Loc.GetString(proto.DisplayName, ("amount", 1))));
+            var ((_, _), proto) = currency.First();
+            parts.Add(Loc.GetString("store-ui-balance-display", ("amount", BankSystemExtensions.ToSpesoString(bankBalance)), ("currency", Loc.GetString(proto.DisplayName, ("amount", 1)))));
+        }
+        else
+        {
+            foreach (var ((protoId, amount), proto) in currency)
+            {
+                var amountStr = hasBankBalance && protoId == "Speso"
+                    ? BankSystemExtensions.ToSpesoString(bankBalance)
+                    : BankSystemExtensions.ToIndependentString((int) amount);
+                parts.Add(Loc.GetString("store-ui-balance-display", ("amount", amountStr), ("currency", Loc.GetString(proto.DisplayName, ("amount", 1)))));
+            }
         }
 
-        BalanceInfo.SetMarkup(balanceStr.TrimEnd());
+        BalanceInfo.SetMarkup(string.Join(" | ", parts));
 
         var disabled = true;
         foreach (var type in currency)
@@ -70,7 +82,8 @@ public sealed partial class StoreMenu : DefaultWindow
             }
         }
 
-        WithdrawButton.Disabled = disabled;
+        WithdrawButton.Disabled = disabled || !allowWithdraw;
+        WithdrawButton.Visible = allowWithdraw;
     }
 
     public void UpdateListing(List<ListingDataWithCostModifiers> listings)
@@ -111,8 +124,10 @@ public sealed partial class StoreMenu : DefaultWindow
         // open a new one
         _withdrawWindow = new StoreWithdrawWindow();
         _withdrawWindow.OpenCentered();
-
-        _withdrawWindow.CreateCurrencyButtons(Balance);
+        var withdrawBalance = _hasBankBalance
+            ? Balance.Where(x => (string) x.Key != "Speso").ToDictionary(x => x.Key, x => x.Value)
+            : Balance;
+        _withdrawWindow.CreateCurrencyButtons(withdrawBalance);
         _withdrawWindow.OnWithdrawAttempt += OnWithdrawAttempt;
     }
 

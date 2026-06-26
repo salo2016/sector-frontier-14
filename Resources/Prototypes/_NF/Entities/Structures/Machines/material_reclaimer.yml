@@ -92,6 +92,7 @@
         loop: true
     useOldSolutionLogic: true
     solutionContainerId: output
+    spillExcessBuffer: false
   - type: MaterialStorage
     insertOnInteract: false
   - type: ContainerContainer
@@ -102,7 +103,7 @@
   - type: SolutionContainerManager
     solutions:
       output:
-        maxVol: 1000
+        maxVol: 2000
   - type: DrainableSolution
     solution: output
   - type: ExaminableSolution
@@ -121,3 +122,11 @@
   - type: Speech
     speechVerb: Robotic
     speechSounds: SyndieBorg
+#Lua-changes: added TimedSpawner
+  - type: TimedSpawner
+    prototypes:
+    - RandomSmallMobSpawn
+    chance: 0.1
+    intervalSeconds: 1800
+    minimumEntitiesSpawned: 1
+    maximumEntitiesSpawned: 2

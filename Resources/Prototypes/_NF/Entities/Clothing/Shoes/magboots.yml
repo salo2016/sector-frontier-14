@@ -1,5 +1,5 @@
 - type: entity
-  parent: [ClothingShoesBootsMag, ClothingShoesBootsCombat]
+  parent: [ClothingShoesBootsMag, ClothingShoesBootsCombat, BaseClearContraband] # Lua-changes: added BaseClearContraband
   id: ClothingShoesBootsMagSecurity
   name: security magboots
   description: Security magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.
@@ -55,10 +55,10 @@
     magbootsAlert: MagbootsNfsd
   - type: ClothingSpeedModifier
     walkModifier: 0.95
-    sprintModifier: 0.9
+    sprintModifier: 0.95 #Lua 0.9<0.95
 
 - type: entity
-  parent: [BaseC3PirateContraband, ClothingShoesBootsMagNfsd]
+  parent: [ClothingShoesBootsMagNfsd]
   id: ClothingShoesBootsMagPirate
   name: pirate magboots
   description: Pirate magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle.

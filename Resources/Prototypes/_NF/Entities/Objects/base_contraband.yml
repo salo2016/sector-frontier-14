@@ -31,7 +31,7 @@
   - type: Contraband
     severity: Class2
     # Security and heads only (finally, shotgun traffic controller)
-    allowedDepartments: [ Security, Command ]
+    allowedDepartments: [ Security, Command, CentralCommand ] # Lua-changes: added CentralCommand
 
 # Engineering equipment that's potentially hazardous in use
 - type: entity
@@ -82,7 +82,7 @@
     severity: Class3Expedition
     turnInValues:
       FrontierUplinkCoin: 2
-      Doubloon: 2 
+      Doubloon: 2
 
 - type: entity
   parent: BaseC3ContrabandUnredeemable
@@ -141,7 +141,6 @@
   - type: Contraband
     turnInValues:
       FrontierUplinkCoin: 1
-      Doubloon: 0
 
 - type: entity
   parent: BaseC3ContrabandUnredeemable

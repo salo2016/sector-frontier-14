@@ -168,7 +168,7 @@
         fractalType: Ridged
         octaves: 1
       entities:
-        - FloorWaterEntity
+        - FloorWaterBiomeEntity
     # Fill remainder with dirt.
     - !type:BiomeTileLayer
       threshold: -1.0
@@ -594,3 +594,11 @@
     - !type:BiomeTileLayer
       threshold: -1.0
       tile: FloorAsteroidSand
+
+# Alias: Grassland -> reuse Grasslands template
+- type: biomeTemplate
+  id: Grassland
+  layers:
+    - !type:BiomeMetaLayer
+      template: Grasslands
+      threshold: -1

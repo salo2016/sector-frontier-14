@@ -27,6 +27,7 @@
     angleIncrease: 4
     angleDecay: 16
     fireRate: 8
+    projectileSpeed: 55 # Mono
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -64,6 +65,42 @@
     price: 500
   - type: UseDelay
     delay: 1
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      collection: RiflesPickUp
+  - type: EmitSoundOnDrop
+    sound:
+      collection: RiflesDrop
+  - type: EmitSoundOnLand
+    sound:
+      collection: RiflesDrop
+  # Goobstation edit end
+#Lua added durability and repairing
+  - type: Repairable
+    fuelCost: 3
+    doAfterDelay: 3
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 21000
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: GunJam
+#Lua end
 
 - type: entity
   abstract: true # Frontier: use NF variant
@@ -72,6 +109,11 @@
   parent: [BaseWeaponLightMachineGun, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband
   description: Developed by Waffle Corp, the L6 Squad Automatic Weapon is a deadly light machine gun often used by the Gorlex Marauders. Although bulky and cumbersome, its heavy barrel and high ammo capacity make it perfect for suppressing combatants with a hail of bullets. Feeds from .30 ammo belts.
   components:
+  - type: Item #Lua
+    shape:
+    - 0,0,7,4
+  - type: Gun #Lua
+    examineCaliber: gun-examine-caliber-6852
   - type: Sprite
     sprite: Objects/Weapons/Guns/LMGs/l6.rsi
     layers:
@@ -84,6 +126,8 @@
     steps: 4
     zeroVisible: true
   - type: Appearance
+  - type: StaticPrice
+    price: 10000
 
 - type: entity
   abstract: true # Frontier: use NF variant

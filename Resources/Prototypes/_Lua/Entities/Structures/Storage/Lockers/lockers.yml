@@ -1,0 +1,221 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: entity
+  id: LockernfsdBailiffFilled
+  suffix: Filled
+  parent: LockerBaseSecure
+  name: nfsd bailiff locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_gold
+    stateDoorOpen: nfsd_gold_open
+    stateDoorClosed: nfsd_gold_door
+  - type: Sprite
+    sprite: _NF/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: AccessReader
+    access: [["Security"]]
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatWarden
+      - id: ClothingHeadHatBeretWarden
+      - id: ClothingOuterCoatWarden
+      - id: ClothingOuterWinterWarden
+      - id: RubberStampWarden
+
+- type: entity
+  id: LockernfsdBrigmedicFilled
+  suffix: Filled
+  parent: LockerBaseSecure
+  name: nfsd brigmedic locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_brigmed
+    stateDoorOpen: nfsd_brigmed_open
+    stateDoorClosed: nfsd_brigmed_door
+  - type: Sprite
+    sprite: _NF/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: AccessReader
+    access: [["Security"]]
+  - type: StorageFill
+    contents:
+      - id: BoxSterileMask
+      - id: MedkitFilled
+      - id: MedkitCombatFilled
+      - id: MedkitAdvancedFilled
+      - id: HypoBrigmedic # Frontier
+
+- type: entity
+  id: LockernfsdSheriffFilled
+  suffix: Filled
+  parent: LockerBaseSecure
+  name: nfsd sheriff's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_sheriff
+    stateDoorOpen: nfsd_sheriff_open
+    stateDoorClosed: nfsd_sheriff_door
+  - type: Sprite
+    sprite: _NF/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHatNfsdCampaignFilled
+      - id: ClothingHeadHatHoshat
+      - id: ClothingUniformJumpskirtHoSAlt
+      - id: ClothingUniformJumpsuitHoSAlt
+      - id: ClothingNeckCloakSheriff
+      - id: ClothingOuterCoatNfsdFormalSheriff
+      - id: ClothingNeckMantleSheriff
+      - id: ClothingOuterWinterHoS # Frontier
+      - id: ClothingShoesBootsWinterHoS # Frontier
+
+- type: entity
+  id: LockernfsdSilverFilled
+  suffix: Filled
+  parent: LockerBaseSecure
+  name: nfsd deputy locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: nfsd_silver
+    stateDoorOpen: nfsd_silver_open
+    stateDoorClosed: nfsd_silver_door
+  - type: Sprite
+    sprite: _NF/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: generic
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: generic_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: AccessReader
+    access: [["Security"]]
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetNfsd
+      - id: ClothingOuterArmorNfsd
+      - id: ClothingHeadsetNfsdBrown
+
+- type: entity
+  id: LockerSyndicateNordfall
+  parent: LockerBaseSecure
+  name: syndicate locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: syndicate
+    stateDoorOpen: syndicate_open
+    stateDoorClosed: syndicate_door
+  - type: Sprite
+    sprite: _Lua/Structures/Storage/closet.rsi
+    noRot: true
+    layers:
+    - state: syndicate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: syndicate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+      shader: unshaded
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+# Fuel lockers
+
+# Bluespace fuel locker
+
+- type: entity
+  parent: [ LockerWallColorFuelBluespace, StorageFillMaterialsFuelBluespace ]
+  id: LockerWallMaterialsFuelBluespaceFilled
+  suffix: Filled, Bluespace
+
+- type: entity
+  categories: [ HideSpawnMenu ] # debloat spawn menu
+  id: LockerWallColorFuelBluespace
+  parent: NFBaseLockerGridInvWallColor
+  name: bluespace fuel wall locker
+  components:
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+      color: "#047285"
+    - state: fillFuelCell-0
+      map: ["enum.StorageFillLayers.Fill"]
+      color: "#0777c2"
+    - state: door
+      map: ["enum.StorageVisualLayers.Door"]
+      color: "#047285"
+    - state: door-decal-line-01
+      map: [ decal1 ]
+      color: "#93057a"
+    - state: door-decal-fuel-plasma
+      map: [ decal2 ]
+      color: "#fff4e2"
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+    - state: locked
+      map: ["enum.LockVisualLayers.Lock"]
+  - type: StorageFillVisualizer
+    maxFillLevels: 5
+    fillBaseName: fillFuelCell
+
+- type: entity # Full stack
+  abstract: true
+  id: StorageFillMaterialsFuelBluespace
+  components:
+  - type: StorageFill
+    contents:
+    - id: FuelBluespace

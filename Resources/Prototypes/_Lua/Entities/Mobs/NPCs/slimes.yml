@@ -10,8 +10,6 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
-  - type: TimedDespawn
-    lifetime: 3600
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/slimes.rsi
@@ -35,7 +33,7 @@
       120: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
-    baseSprintSpeed: 4
+    baseRunningSpeed: 4
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Effects/Footsteps/slime1.ogg
@@ -114,8 +112,6 @@
   abstract: true
   description: It looks so much like jelly. I wonder what it tastes like?
   components:
-  - type: TimedDespawn
-    lifetime: 3600
   - type: ReplacementAccent
     accent: slimes
   - type: Speech
@@ -294,8 +290,6 @@
   id: ReagentSlimeSpace
   parent: [ MobAdultSlimesSpace, MobCombat ]
   components:
-  - type: TimedDespawn
-    lifetime: 3600
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -339,7 +333,6 @@
     solution: bloodstream
     transferAmount: 5
   - type: DamageStateVisuals
-    rotate: true
     states:
       Alive:
         Base: alive

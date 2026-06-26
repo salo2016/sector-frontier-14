@@ -169,7 +169,7 @@
   - StcForcedOuterClothing
   - StcShoes
   - ContractorFace
-  - ContractorGlasses
+  - StcGlasses
   - ContractorBelt
   - StcEars
   - ContractorBoxSurvival
@@ -195,8 +195,8 @@
   - StationRepForcedOuterClothing
   - ContractorShoes
   - ContractorFace
-  - ContractorGlasses
-  - ContractorBelt
+  - StationRepGlasses
+  - StationRepBelt
   - StationRepEars
   - ContractorBoxSurvival
   - StationRepPDA
@@ -428,6 +428,34 @@
   - SocksUnderwear
 
 - type: roleLoadout
+  id: JobSDEngineer
+  groups:
+  - DeputyHead
+  - DeputyNeck
+  - DeputyJumpsuit
+  - NfsdGlovesBrown
+  - NfsdBackpackBrown
+  - DeputyOuterClothing
+  - NfsdForcedOuterClothing
+  - NfsdShoesBrown
+  - NfsdFace
+  - NfsdGlasses
+  - NfsdBelt
+  - NfsdEarsBrown
+  - NfsdBoxSurvival
+  - DeputyPDA
+  - ContractorWallet
+  - ContractorCartridge
+  - ContractorImplanter
+  - ContractorEncryptionKey
+  - ContractorBackpackItems
+  - ContractorHandItems
+  - NfsdSpeciesSpecific
+  - TopUnderwear
+  - PantsUnderwear
+  - SocksUnderwear
+
+- type: roleLoadout
   id: JobPublicAffairsLiaison
   groups:
   - ContractorHead
@@ -643,13 +671,15 @@
 - type: roleLoadout
   id: JobPrisoner
   groups:
-#  - PrisonerHead
-#  - PrisonerNeck
+  - PrisonerHead
+  - PrisonerNeck
   - PrisonerJumpsuit
 #  - PrisonerGloves
 #  - PrisonerBackpack
   - PrisonerForcedOuterClothing
-#  - PrisonerShoes
+  - PrisonerGlasses
+  - PrisonerHandItems
+  - PrisonerShoes
   - PrisonerFace
   - PrisonerSurvival
   - PrisonerPDA

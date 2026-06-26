@@ -11,4 +11,6 @@ public sealed partial class GatheringProjectileComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("amount")]
     public int Amount = 1;
+
+
 }

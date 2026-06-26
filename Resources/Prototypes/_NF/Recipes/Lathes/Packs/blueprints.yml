@@ -160,6 +160,7 @@
   # MiscellaneousItemsOrganization
   - NFPouchFirstAid
   - NFPouchFirstAidAlt
+  - MedicalPouch
   # ChemicalDispensary
   - ChemMasterMachineCircuitboard
   - ChemDispenserMachineCircuitboard
@@ -186,6 +187,8 @@
   # HardsuitsArmored
   - ClothingOuterHardsuitMercenary
   - ClothingOuterHardsuitPrivateSecurity
+  # HardsuitsOldWar
+  - ClothingOuterHardsuitSurplus
   # ArsenalStyle
   - ClothingEyesPunkInfoShades
   - ClothingOuterArmorPunkRandomized
@@ -206,6 +209,7 @@
   - ClothingOuterCoatBomberRandomized
   # HardsuitsArmoredAdvanced
   - ClothingOuterHardsuitScaf
+  - ClothingOuterHardsuitNoble
   # MiscellaneousItemsOrganization
   - NFPouchMercenary
   - NFPouchPrivateSecurity
@@ -252,10 +256,14 @@
   - JetpackCaptain
   # AdvancedPersonalPropulsion
   - JetpackVoid
+  # BluespaceGasTanks
+  - BluespaceAirTank
+  - SmallBluespaceAirTank
   # SalvageEquipment
   - MiningDrill
   - WeaponGrapplingGun
   - MineralScannerEmpty
+  - OreProcessorMachineCircuitboard
   - OreProcessorIndustrialMachineCircuitboard
   - ClothingMaskWeldingGas
   # SpaceScanning
@@ -315,12 +323,15 @@
   - DeviceDesynchronizer
   # MagnetsTechAdvanced
   - ClothingShoesBootsMagAdv
-  # HardsuitsExperimentalRD
+  # HardsuitsExperimentalProtection
   - ClothingOuterHardsuitRd
+  - ClothingOuterHardsuitHostileEnvironment
   # IndustrialEngineering
   - ProtolatheHyperConvectionMachineCircuitboard
   # AdvancedToolsTechnology
   - BorgModuleAdvancedTool
+  - FloorTileItemSepia
+  - FloorTileItemBluespace
 
 # region Service
 - type: latheRecipePack
@@ -430,7 +441,7 @@
   - NFAmmunitionBoxPistol45
   - NFSpeedLoaderPistol35Empty
   - NFSpeedLoaderPistol45Empty
-  - NFMagazineClipRifle20Empty
+  - NFMagazineClipRifle556x45Empty #Lua 20 -> 556x45
   - MagazineLightRifleLowCapacityEmpty
   - NFMagazinePistol35Empty
   # NonlethalAmmunition
@@ -461,7 +472,7 @@
   - NFAmmunitionBoxShellShotgunOverpressure
   - NFMagazineRifle20Empty
   - NFMagazineRifle30Empty
-  - NFMagazineDrumRifle20Empty
+  - NFMagazineDrumRifle556x45Empty #Lua 20 -> 556x45
   - MagazineAsmgtUniversalEmpty
   # BulkRifleAmmo
   - NFAmmunitionBoxBigRifle20
@@ -477,6 +488,7 @@
   - TimerTrigger
   - FlashPayload
   - ChemicalPayload
+  - ExplosivePayload
   # NFBasicShuttleArmament
   - PowerCageRechargerCircuitboard
   - PowerCageSmall
@@ -485,21 +497,6 @@
   - NFMagazineGrenadeEmpty
   # NFPortableMicrofusionWeaponry
   - NFPortableRecharger
-
-# region Engineering & Science
-- type: latheRecipePack
-  id: NFBlueprintsEngineeringScience
-  recipes:
-  # RapidPartExchange
-  - RPED
-  # AdvancedParts
-  - AdvancedCapacitorStockPart
-  - AdvancedMatterBinStockPart
-  - NanoManipulatorStockPart
-  # SuperParts
-  - SuperCapacitorStockPart
-  - SuperMatterBinStockPart
-  - PicoManipulatorStockPart
 
 # region Common
 - type: latheRecipePack

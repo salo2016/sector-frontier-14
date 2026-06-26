@@ -14,8 +14,7 @@
   - type: Item
     sprite: _NF/Objects/Specific/Chemistry/dropper.rsi
   - type: Injector
-    transferAmount: 5
-    toggleState: Draw
+    currentTransferAmount: 5
   - type: Tag
     tags:
     - Syringe
@@ -39,7 +38,7 @@
   components:
   - type: Tag
     tags:
-    - CentrifugeCompatible  
+    - CentrifugeCompatible
   - type: Sprite
     sprite: _NF/Objects/Specific/Chemistry/vial_bluespace.rsi
     layers:
@@ -51,7 +50,7 @@
     maxFillLevels: 6
     fillBaseName: vial-1-
     inHandsMaxFillLevels: 4
-    inHandsFillBaseName: -fill-  
+    inHandsFillBaseName: -fill-
   - type: SolutionContainerManager
     solutions:
       beaker:
@@ -60,7 +59,50 @@
     maxTransferAmount: 300
   - type: Item
     size: Tiny
-    sprite: _NF/Objects/Specific/Chemistry/vial_bluespace.rsi  
+    sprite: _NF/Objects/Specific/Chemistry/vial_bluespace.rsi
   - type: StaticPrice
     price: 100
-    vendPrice: 100  
+    vendPrice: 100
+
+- type: entity
+  name: medical pouch
+  id: MedicalPouch
+  parent: [ PillCanister, BaseBagOpenClose ]
+  description: Holds up to 12 tiny medical items.
+  components:
+  - type: Item
+    size: Small
+    sprite: _NF/Objects/Specific/Chemistry/medical_pouch.rsi # Frontier: NF prefix
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Chemistry/medical_pouch.rsi # Frontier: NF prefix
+    layers:
+    - state: closed
+      map: ["closeLayer"]
+    - state: open
+      map: ["openLayer"]
+      visible: false
+  - type: Storage
+    grid:
+    - 0,0,3,2
+    whitelist:
+      tags:
+      - Pill
+      - Bottle
+      - CentrifugeCompatible # Frontier: Vial > CentrifugeCompatible
+      - Syringe
+      components:
+      - Injector
+
+- type: entity
+  name: corpsman's medical pouch
+  id: CorpsmanMedicalPouch
+  parent: [ MedicalPouch, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband > BaseC3SyndicateContraband
+  description: Holds up to 15 tiny medical items.
+  components:
+  - type: Item
+    sprite: _NF/Objects/Specific/Chemistry/corpsman_medical_pouch.rsi # Frontier: NF prefix
+  - type: Sprite
+    sprite: _NF/Objects/Specific/Chemistry/corpsman_medical_pouch.rsi # Frontier: NF prefix
+  - type: Storage
+    grid:
+    - 0,0,4,2 #syndie stuffs always bigger

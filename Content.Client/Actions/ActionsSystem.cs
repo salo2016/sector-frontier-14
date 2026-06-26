@@ -212,7 +212,7 @@ namespace Content.Client.Actions
             else
             {
                 var request = new RequestPerformActionEvent(GetNetEntity(action));
-                EntityManager.RaisePredictiveEvent(request);
+                RaisePredictiveEvent(request);
             }
         }
 
@@ -288,7 +288,16 @@ namespace Content.Client.Actions
                 }
 
                 AddActionDirect((user, actions), actionId);
+
+                var nodeAssignments = _serialization.Read<List<(byte Hotbar, byte Slot)>>(assignmentNode, notNullableOverride: true);
+                foreach (var index in nodeAssignments)
+                {
+                    var assignment = new SlotAssignment(index.Hotbar, index.Slot, actionId);
+                    assignments.Add(assignment);
+                }
             }
+
+            AssignSlot?.Invoke(assignments);
         }
 
         private void OnWorldTargetAttempt(Entity<WorldTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
@@ -310,7 +319,7 @@ namespace Content.Client.Actions
             // this is the actual entity-world targeting magic
             EntityUid? targetEnt = null;
             if (TryComp<EntityTargetActionComponent>(ent, out var entity) &&
-                args.Input.EntityUid != null &&
+                args.Input.EntityUid.Valid &&
                 ValidateEntityTarget(user, args.Input.EntityUid, (uid, entity)))
             {
                 targetEnt = args.Input.EntityUid;
@@ -335,7 +344,12 @@ namespace Content.Client.Actions
 
         private void OnEntityTargetAttempt(Entity<EntityTargetActionComponent> ent, ref ActionTargetAttemptEvent args)
         {
-            if (args.Handled || args.Input.EntityUid is not { Valid: true } entity)
+            if (args.Handled)
+                return;
+
+            args.Handled = true;
+
+            if (args.Input.EntityUid is not { Valid: true } entity)
                 return;
 
             // let world target component handle it
@@ -345,8 +359,6 @@ namespace Content.Client.Actions
                 DebugTools.Assert(HasComp<WorldTargetActionComponent>(ent), $"Action {ToPrettyString(ent)} requires WorldTargetActionComponent for entity-world targeting");
                 return;
             }
-
-            args.Handled = true;
 
             var action = args.Action;
             var user = args.User;

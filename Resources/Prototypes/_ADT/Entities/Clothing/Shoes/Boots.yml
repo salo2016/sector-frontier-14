@@ -31,12 +31,12 @@
   components:
     - type: Action
       icon: { sprite: ADT/Clothing/Shoes/Boots/advanced.rsi, state: icon }
-      iconOn: ADT/Clothing/Shoes/Boots/advanced.rsi/icon-on.png
+      iconOn:
+        sprite: ADT/Clothing/Shoes/Boots/advanced.rsi
+        state: icon-on
 
 - type: entity
   id: ActionToggleADTGasTank
-  name: action-name-internals-toggle
-  description: action-description-internals-toggle
   categories: [ HideSpawnMenu ]
   components:
     - type: Action
@@ -68,7 +68,7 @@
       event: !type:ToggleJetpackEvent
 
 - type: entity
-  parent: ClothingShoesBootsMag
+  parent: [ClothingShoesBootsMag, BaseC2SyndicateContraband, ContrabandClothing] # Lua-changes: added BaseC2SyndicateContraband, ContrabandClothing
   id: ADTClothingShoesBootsMagAdvSynd
   name: advanced syndicate magboots
   description: State-of-the-art magnetic boots that do not slow down their wearer. Made by gorlax for gorlax

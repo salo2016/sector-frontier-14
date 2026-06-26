@@ -1,0 +1,9 @@
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSerpent
+  name: "Увлекательная Аэродинамика"
+  description: "Как вывести Serpent на сверхзвук и не ахуеть"
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: serpent

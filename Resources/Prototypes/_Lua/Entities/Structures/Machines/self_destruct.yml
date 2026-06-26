@@ -29,6 +29,7 @@
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
     speed: 120
+  - type: WallMount
   - type: Physics
     bodyType: Static
   - type: Fixtures
@@ -43,6 +44,7 @@
   - type: ShuttleConsoleLock
     locked: false
   - type: SelfDestruct
+    totalIntensity: 10000000
   - type: ActivatableUI
     key: enum.SelfDestructUiKey.Key
   - type: UserInterface

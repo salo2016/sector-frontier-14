@@ -92,6 +92,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - YupiTransferCartridge #Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - NewsReaderCartridge
       - BountyContractsCartridge # Frontier
@@ -176,6 +177,7 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge #Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - BountyContractsCartridge # Frontier
@@ -250,7 +252,7 @@
     state: pda-internmed
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: BaseSecurityPDA
@@ -505,6 +507,12 @@
   components:
   - type: Pda
     id: QuartermasterIDCard
+    penSlot:
+      startingItem: ADTPenQM
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -515,6 +523,14 @@
     accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
+  - type: CartridgeLoader
+    preinstalled:
+    - CrewManifestCartridge
+    - NotekeeperCartridge
+    - NanoChatCartridge # Lua
+    - NanoTaskCartridge
+    - NewsReaderCartridge
+    - AstroNavCartridge
 
 - type: entity
   parent: BasePDA
@@ -728,6 +744,12 @@
   components:
   - type: Pda
     id: CEIDCard
+    penSlot:
+      startingItem: ADTPenCe
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -766,6 +788,12 @@
   components:
   - type: Pda
     id: CMOIDCard
+    penSlot:
+      startingItem: ADTPenCmo
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -798,7 +826,7 @@
     state: pda-medical
   - type: GuideHelp
     guides:
-    - Medical Doctor
+    - MedicalDoctor
 
 - type: entity
   parent: MedicalPDA
@@ -857,6 +885,12 @@
   components:
   - type: Pda
     id: RDIDCard
+    penSlot:
+      startingItem: ADTPenRD
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -896,6 +930,12 @@
   components:
   - type: Pda
     id: HoSIDCard
+    penSlot:
+      startingItem: ADTPenHos
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -911,6 +951,7 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge #Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
@@ -963,6 +1004,7 @@
     id: CentcomIDCard
     penSlot:
       startingItem: PenCentcom
+      priority: -1
       whitelist:
         tags:
         - Write
@@ -981,6 +1023,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - YupiTransferCartridge #Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
@@ -1009,6 +1052,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - YupiTransferCartridge #Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - NewsReaderCartridge
       - LogProbeCartridge
@@ -1113,13 +1157,19 @@
     - DoorBumpOpener
 
 - type: entity
-  parent: [ BasePDA, BaseC3SyndicateContrabandNoValue ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue
+  parent: [BasePDA, BaseC2SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue # Lua-changes: BaseC3SyndicateContrabandNoValue > BaseC2SyndicateContrabandNoValue
   id: SyndiPDA
   name: syndicate PDA
   description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
   components:
   - type: Pda
     id: SyndicateIDCard
+    penSlot:
+      startingItem: ADTPenGorlax
+      priority: -1
+      whitelist:
+        tags:
+        - Write
   - type: Appearance
     appearanceDataInit:
      enum.PdaVisuals.PdaType:
@@ -1134,6 +1184,7 @@
     preinstalled:
       - NotekeeperCartridge
       - YupiTransferCartridge #Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - AstroNavCartridge # Frontier
 
@@ -1163,6 +1214,7 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - YupiTransferCartridge #Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - NewsReaderCartridge
       - MedTekCartridge
@@ -1337,6 +1389,7 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge #Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
@@ -1366,6 +1419,7 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge #Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - WantedListCartridge
@@ -1494,7 +1548,7 @@
     state: pda-pirate
 
 - type: entity
-  parent: [ BaseMedicalPDA, BaseC3SyndicateContrabandNoValue ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue
+  parent: [BaseMedicalPDA, BaseC2SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContrabandNoValue # Lua-changes: BaseC3SyndicateContrabandNoValue > aseC2SyndicateContrabandNoValue
   id: SyndiAgentPDA
   name: syndicate corpsman PDA
   description: For those days when healing normal syndicates aren't enough, try healing nuclear operatives instead!
@@ -1515,6 +1569,7 @@
     preinstalled:
       - NotekeeperCartridge
       - YupiTransferCartridge #Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - MedTekCartridge
 
@@ -1572,3 +1627,14 @@
     borderColor: "#7F3300"
   - type: Icon
     state: pda-wizard
+
+- type: entity
+  parent: ClearPDA
+  id: ScurretPDA
+  description: A temporary PDA granted to scurret temps. Doesn't do much. Wawa!
+  components:
+  - type: Pda
+    id: VisitorIDCard
+  - type: Tag #  Ignore Chameleon tags
+    tags:
+    - DoorBumpOpener

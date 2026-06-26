@@ -40,9 +40,21 @@ namespace Content.Server.Spawners.EntitySystems
 
         private void OnEntityTableSpawnMapInit(Entity<EntityTableSpawnerComponent> ent, ref MapInitEvent args)
         {
+            if (ent.Comp.HasSpawned) return;
             Spawn(ent);
+            ent.Comp.HasSpawned = true;
             if (ent.Comp.DeleteSpawnerAfterSpawn && !TerminatingOrDeleted(ent) && Exists(ent))
                 QueueDel(ent);
+        }
+
+        public void MarkPersistentSpawnersAsSpawnedOnMap(EntityUid mapUid)
+        {
+            var query = EntityQueryEnumerator<EntityTableSpawnerComponent, TransformComponent>();
+            while (query.MoveNext(out _, out var spawner, out var xform))
+            {
+                if (xform.MapUid != mapUid || spawner.DeleteSpawnerAfterSpawn) continue;
+                spawner.HasSpawned = true;
+            }
         }
 
         private void OnRuleStarted(ref GameRuleStartedEvent args)
@@ -89,14 +101,14 @@ namespace Content.Server.Spawners.EntitySystems
             }
 
             if (!Deleted(uid))
-                EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), Transform(uid).Coordinates);
+                Spawn(_robustRandom.Pick(component.Prototypes), Transform(uid).Coordinates);
         }
 
         private void Spawn(EntityUid uid, RandomSpawnerComponent component)
         {
             if (component.RarePrototypes.Count > 0 && (component.RareChance == 1.0f || _robustRandom.Prob(component.RareChance)))
             {
-                EntityManager.SpawnEntity(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
+                Spawn(_robustRandom.Pick(component.RarePrototypes), Transform(uid).Coordinates);
                 return;
             }
 
@@ -118,7 +130,7 @@ namespace Content.Server.Spawners.EntitySystems
 
             var coordinates = Transform(uid).Coordinates.Offset(new Vector2(xOffset, yOffset));
 
-            EntityManager.SpawnEntity(_robustRandom.Pick(component.Prototypes), coordinates);
+            Spawn(_robustRandom.Pick(component.Prototypes), coordinates);
         }
 
         private void Spawn(Entity<EntityTableSpawnerComponent> ent)

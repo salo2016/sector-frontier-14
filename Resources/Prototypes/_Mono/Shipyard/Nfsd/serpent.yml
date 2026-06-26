@@ -1,23 +1,26 @@
 - type: vessel
   id: Serpent
   parent: BaseVesselAntag
-  name: TSF-SKR Serpent
+  name: Serpent
   description: Большой боевой фрегат с впечатляющей броней и мощными артиллерийскими орудиями
   limit: 1
-  price: 375097 # 2000 below max
+  price: 381000 # 332000 x 1.15
   category: Large
   group: Security
   access: Armory
   shuttlePath: /Maps/_Mono/Shuttles/Nfsd/serpent.yml
   guidebookPage: Null
+  whitelist:
+  - Luna
+  - Frontier
   class:
+  - Nfsd # Lua
+  - Medical # Lua
+  - Chemistry # Lua
   - Capital
-  - Nfsd
   engine:
   - AME
-  addComponents:
-    - type: IFF
-      color: "#96B089"
+
 - type: gameMap
   id: Serpent
   mapName: 'Serpent'
@@ -28,7 +31,7 @@
       stationProto: StandardFrontierSecurityVessel
       components:
       - type: StationNameSetup
-        mapNameTemplate: 'Serpent TSF{1}'
+        mapNameTemplate: 'Serpent {1}'
         nameGenerator:
           !type:NanotrasenNameGenerator
           prefixCreator: '14'

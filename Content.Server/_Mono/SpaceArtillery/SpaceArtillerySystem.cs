@@ -1,11 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Ark
-// SPDX-FileCopyrightText: 2025 Ilya246
-// SPDX-FileCopyrightText: 2025 RikuTheKiller
-// SPDX-FileCopyrightText: 2025 ark1368
-// SPDX-FileCopyrightText: 2025 starch
-//
-// SPDX-License-Identifier: MPL-2.0
-
 using System.Numerics;
 using Content.Server._Mono.FireControl;
 using Content.Shared.DeviceLinking.Events;
@@ -45,6 +37,7 @@ public sealed partial class SpaceArtillerySystem : EntitySystem
     {
         base.Initialize();
         _sawmill = Logger.GetSawmill("SpaceArtillery");
+        SubscribeLocalEvent<SpaceArtilleryComponent, BeforeCauseImpulseEvent>(OnBeforeCauseImpulse);
         SubscribeLocalEvent<SpaceArtilleryComponent, AmmoShotEvent>(OnShotEvent);
         SubscribeLocalEvent<SpaceArtilleryComponent, PowerChangedEvent>(OnApcChanged);
         SubscribeLocalEvent<SpaceArtilleryComponent, OnEmptyGunShotEvent>(OnEmptyShotEvent);
@@ -136,6 +129,11 @@ public sealed partial class SpaceArtillerySystem : EntitySystem
         // Call AttemptShoot with the correct signature that includes target coordinates
         // This will eventually call GunSystem.Shoot which correctly handles grid velocity
         _gun.AttemptShoot(uid, gunUid, gun, targetCoordinates);
+    }
+
+    private void OnBeforeCauseImpulse(EntityUid uid, SpaceArtilleryComponent component, ref BeforeCauseImpulseEvent args)
+    {
+        args.Cancelled = true;
     }
 
     private void OnShotEvent(EntityUid uid, SpaceArtilleryComponent component, AmmoShotEvent args)

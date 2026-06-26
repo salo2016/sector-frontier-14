@@ -5,6 +5,7 @@
   abstract: true
   components:
   - type: StationEvent
+  # TODO: add path to  start warning and end Voiceover
     startRadioAnnouncement: station-event-bluespace-dungeon-start-announcement
     startRadioAnnouncementChannel: Supply
     warningRadioAnnouncement: station-event-bluespace-dungeon-warning-announcement
@@ -25,6 +26,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: BluespaceErrorRule
+    asteroid: true
     groups:
       vgroid: !type:DungeonSpawnGroup
         nameDataset: NamesBorer
@@ -55,6 +57,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: BluespaceErrorRule
+    asteroid: true
     groups:
       vgroid: !type:DungeonSpawnGroup
         nameDataset: NamesBorer
@@ -70,6 +73,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: BluespaceErrorRule
+    asteroid: true
     groups:
       vgroid: !type:DungeonSpawnGroup
         nameDataset: NamesBorer
@@ -85,6 +89,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: BluespaceErrorRule
+    asteroid: true
     groups:
       vgroid: !type:DungeonSpawnGroup
         nameDataset: NamesBorer
@@ -100,6 +105,7 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: BluespaceErrorRule
+    asteroid: true
     groups:
       vgroid: !type:DungeonSpawnGroup
         nameDataset: NamesBorer
@@ -108,3 +114,19 @@
         addComponents: *dungeonComponents
         protos:
         - NFVGRoidScrap
+
+- type: entity
+  id: BluespaceDungeonCaveZombie
+  parent: BluespaceDungeonBase
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BluespaceErrorRule
+    asteroid: true
+    groups:
+      vgroid: !type:DungeonSpawnGroup
+        nameDataset: NamesBorer
+        minimumDistance: 1500
+        maximumDistance: 2500
+        addComponents: *dungeonComponents
+        protos:
+        - NFVGRoidCaveZombie

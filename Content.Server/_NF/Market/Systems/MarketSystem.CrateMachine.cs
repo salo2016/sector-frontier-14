@@ -8,12 +8,14 @@ using Content.Shared._NF.Bank.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared._NF.CrateMachine.Components;
+using Content.Server._Lua.DynamicMarket.Systems; // Lua
 
 namespace Content.Server._NF.Market.Systems;
 
 public sealed partial class MarketSystem
 {
     [Dependency] private readonly CrateMachineSystem _crateMachine = default!;
+    [Dependency] private readonly DynamicMarketDbSystem _dynamicMarket = default!; // Lua
 
     private void InitializeCrateMachine()
     {
@@ -51,10 +53,10 @@ public sealed partial class MarketSystem
         if (args.Actor is not { Valid: true } player)
             return;
 
-        if (!TryComp<BankAccountComponent>(player, out var bankAccount))
+        if (!HasComp<BankAccountComponent>(player))
             return;
 
-        TrySpawnCrate(crateMachineUid, player, consoleUid, component, consoleComponent, marketMod, bankAccount);
+        TrySpawnCrate(crateMachineUid, player, consoleUid, component, consoleComponent, marketMod);
     }
 
     private void TrySpawnCrate(EntityUid crateMachineUid,
@@ -62,15 +64,13 @@ public sealed partial class MarketSystem
         EntityUid consoleUid,
         CrateMachineComponent component,
         MarketConsoleComponent consoleComponent,
-        float marketMod,
-        BankAccountComponent playerBank)
+        float marketMod)
     {
         if (!TryComp<MarketItemSpawnerComponent>(crateMachineUid, out var itemSpawner))
             return;
 
         var cartBalance = Math.Max(0, MarketDataExtensions.GetMarketValue(consoleComponent.CartDataList, marketMod));
-        if (playerBank.Balance < cartBalance)
-            return;
+        cartBalance += consoleComponent.TransactionCost;
 
         // Withdraw spesos from player
         if (!_bankSystem.TryBankWithdraw(player, cartBalance))
@@ -85,22 +85,19 @@ public sealed partial class MarketSystem
         consoleComponent.CartDataList = [];
         _crateMachine.OpenFor(crateMachineUid, component);
         // Lua start
-        var grid = Transform(consoleUid).GridUid;
-        if (grid != null)
+        var boughtRows = new List<(string prototypeId, int units, double baseUnitPrice)>(capacity: itemSpawner.ItemsToSpawn.Count);
+        foreach (var data in itemSpawner.ItemsToSpawn)
         {
-            var system = ResolveRoutingSystem(grid.Value);
-            foreach (var data in itemSpawner.ItemsToSpawn)
+            var units = 1;
+            var amountPer = GetAmountPerEntitySpace(data);
+            if (amountPer != null)
             {
-                var units = 1;
-                var amountPer = GetAmountPerEntitySpace(data);
-                if (amountPer != null)
-                {
-                    units = (int) Math.Ceiling((double) data.Quantity / Math.Max(1, amountPer.Value));
-                    units = Math.Max(1, units);
-                }
-                system?.RegisterPurchaseForPrototype(data.Prototype, units);
+                units = (int) Math.Ceiling((double) data.Quantity / Math.Max(1, amountPer.Value));
+                units = Math.Max(1, units);
             }
+            if (data.Price > 0) boughtRows.Add((data.Prototype, units, data.Price));
         }
+        _dynamicMarket.ApplyPurchase(boughtRows);
         // Lua end
     }
 

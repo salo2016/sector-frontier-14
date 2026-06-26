@@ -24,7 +24,7 @@
   - type: MovementIgnoreGravity
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.5
-    baseSprintSpeed: 3.5
+    baseRunningSpeed: 3.5
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Elemental/living_light/luminous_person.rsi
@@ -48,7 +48,6 @@
         BaseUnshaded: dead_glow
   - type: StatusEffects
     allowed:
-    - Stun
     - Corporeal
     - Electrocution
     - StaminaModifier
@@ -91,6 +90,7 @@
   - type: Tag
     tags:
       - FootstepSound
+      - SlowImmune
   - type: Destructible
     thresholds:
       - trigger:
@@ -102,8 +102,7 @@
           - !type:PlaySoundBehavior
             sound:
               collection: GlassBreak
-  - type: TimedDespawn
-    lifetime: 2400
+
 
 - type: entity
   id: MobLuminousPerson

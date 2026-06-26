@@ -1,11 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Ark
-// SPDX-FileCopyrightText: 2025 Ilya246
-// SPDX-FileCopyrightText: 2025 Redrover1760
-// SPDX-FileCopyrightText: 2025 ark1368
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
-using System.Linq;
 using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
@@ -31,21 +23,21 @@ public sealed class GiveBlipsEvent : EntityEventArgs
     /// <summary>
     /// Blips are now (position, velocity, scale, color, shape).
     /// </summary>
-    public readonly List<(NetEntity uid, NetCoordinates Position, Vector2 Vel, float Scale, Color Color, RadarBlipShape Shape)> Blips;
+    public readonly List<(NetEntity uid, NetCoordinates Position, Vector2 Vel, float Scale, Color Color, RadarBlipShape Shape, bool SonarEcho)> Blips;
 
     /// <summary>
     /// Hitscan lines to display on the radar as (start position, end position, thickness, color).
     /// </summary>
     public readonly List<(Vector2 Start, Vector2 End, float Thickness, Color Color)> HitscanLines;
 
-    public GiveBlipsEvent(List<(NetEntity uid, NetCoordinates Position, Vector2 Vel, float Scale, Color Color, RadarBlipShape Shape)> blips)
+    public GiveBlipsEvent(List<(NetEntity uid, NetCoordinates Position, Vector2 Vel, float Scale, Color Color, RadarBlipShape Shape, bool SonarEcho)> blips)
     {
         Blips = blips;
         HitscanLines = new List<(Vector2 Start, Vector2 End, float Thickness, Color Color)>();
     }
 
     public GiveBlipsEvent(
-        List<(NetEntity uid, NetCoordinates Position, Vector2 Vel, float Scale, Color Color, RadarBlipShape Shape)> blips,
+        List<(NetEntity uid, NetCoordinates Position, Vector2 Vel, float Scale, Color Color, RadarBlipShape Shape, bool SonarEcho)> blips,
         List<(Vector2 Start, Vector2 End, float Thickness, Color Color)> hitscans)
     {
         Blips = blips;

@@ -19,6 +19,8 @@
     layers:
       Snout: Mask
     hideOnToggle: true
+  - type: DiseaseProtection #Backmen & Ataraxia anti viral
+    protection: 0.1
 
 - type: entity
   parent: [ClothingMaskGas, BaseC1Contraband] # Frontier: BaseSecurityContraband<BaseC1Contraband
@@ -41,7 +43,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: [ClothingMaskGas, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent
+  parent: [ClothingMaskGas, BaseC1SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   id: ClothingMaskGasSyndicate
   name: syndicate gas mask
   description: A close-fitting tactical mask that can be connected to an air supply.
@@ -59,6 +61,8 @@
         Slash: 0.95
         Piercing: 0.95
         Heat: 0.95
+  - type: DiseaseProtection #Backmen & Ataraxia anti viral
+    protection: 0.2
 
 - type: entity
   parent: ClothingMaskGas
@@ -82,9 +86,9 @@
   description: Nanotrasen cut corners and repainted a spare atmospheric gas mask, but don't tell anyone.
   components:
   - type: Sprite
-    sprite: Clothing/Mask/gascaptain.rsi
+    sprite: _ADT/Clothing/Mask/gascaptain.rsi # Lua
   - type: Clothing
-    sprite: Clothing/Mask/gascaptain.rsi
+    sprite: _ADT/Clothing/Mask/gascaptain.rsi # Lua
   - type: BreathMask
   - type: IngestionBlocker
 
@@ -137,6 +141,8 @@
     tags:
     - PetWearable
     - WhitelistChameleon
+  - type: DiseaseProtection #Backmen & Ataraxia anti viral
+    protection: 0.2
   - type: PhysicalComposition
     materialComposition:
       Steel: 50
@@ -306,6 +312,8 @@
   - type: PhysicalComposition
     materialComposition:
       Plastic: 25
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: ClothingMaskBase
@@ -324,6 +332,9 @@
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: MumbleAccent
+  - type: EmoteBlocker
+    blocksCategories:
+    - Vocal
   - type: Construction
     graph: Muzzle
     node: muzzle
@@ -438,7 +449,7 @@
         Heat: 0.95
 
 - type: entity
-  parent: ClothingMaskGasERT
+  parent: [ClothingMaskGasERT, BaseC3CentCommContraband] # Lua-changes: added BaseC3CentCommContraband
   id: ClothingMaskGasDeathSquad
   name: death squad gas mask
   description: A unique gas mask for the NT's most elite squad.
@@ -459,6 +470,9 @@
         Slash: 0.80
         Piercing: 0.90
         Heat: 0.90
+  - type: Tag
+    tags:
+    - Recyclable # screw the WhitelistChameleon tag
 
 - type: entity
   parent: ClothingMaskBase
@@ -647,6 +661,24 @@
     sprite: Clothing/Mask/scaredmime.rsi
 
 - type: entity
+  parent: [ClothingMaskMime, BaseC1Contraband] # Frontier: BaseSecurityContraband<BaseC1Contraband
+  id: ClothingMaskMimeSecurity
+  name: security mime mask
+  description: You have the right to remain silent.
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/mime_security.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/mime_security.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.95
+        Piercing: 0.95
+        Heat: 0.95
+
+- type: entity
   parent: ClothingMaskBase
   id: ClothingMaskItalianMoustache
   name: italian moustache
@@ -663,7 +695,7 @@
     replacement: italian
 
 - type: entity
-  parent: ClothingMaskBase
+  parent: [ClothingMaskBase, BaseC1SpiderClanContraband] # Lua-changes: added BaseC1SpiderClanContraband
   id: ClothingMaskNinja
   name: ninja mask
   description: A close-fitting nano-enhanced mask that acts both as an air filter and a post-modern fashion statement.

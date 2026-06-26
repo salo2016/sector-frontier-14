@@ -42,8 +42,6 @@
         type: RadarConsoleBoundUserInterface
       enum.CrewMonitoringUIKey.Key:
         type: CrewMonitoringBoundUserInterface
-      enum.GeneralStationRecordConsoleKey.Key:
-        type: GeneralStationRecordConsoleBoundUserInterface
       enum.SiliconLawsUiKey.Key:
         type: SiliconLawBoundUserInterface
       enum.CommunicationsConsoleUiKey.Key:
@@ -54,12 +52,9 @@
         toggleAction: ActionAGhostShowRadar
       enum.CrewMonitoringUIKey.Key:
         toggleAction: ActionAGhostShowCrewMonitoring
-      enum.GeneralStationRecordConsoleKey.Key:
-        toggleAction: ActionAGhostShowStationRecords
       enum.CommunicationsConsoleUiKey.Key:
         toggleAction: ActionAGhostShowCommunications
   - type: CrewMonitoringConsole
-  - type: GeneralStationRecordConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -257,6 +252,7 @@
         acts: [ "Destruction" ]
   - type: ApcPowerReceiver
     powerLoad: 1000
+    needsPower: false
   - type: StationAiCore
   - type: StationAiVision
   - type: InteractionOutline
@@ -286,7 +282,6 @@
     listeningRange: 0
     speakerVolume: Speak
     unlistedNumber: true
-    requiresPower: false
   - type: Holopad
   - type: StationAiWhitelist
   - type: UserInterface

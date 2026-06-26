@@ -46,12 +46,12 @@
     - PillCanisterCBURN
     - CrowbarRed
     - WeaponFlareGun
-    - NFAmmunitionBoxShellShotgunFlare
+    - AmmoBox23x75mmFlare #Lua 4 gauge
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
-    - MagazineShotgunSlug
-    - MagazineShotgunIncendiary
-    - MagazineShotgunBeanbag
+    - NFMagazineShotgunDrumSlug
+    - NFMagazineShotgunDrumIncendiary
+    - NFMagazineShotgunDrumBeanbag
     - Flash
     - DoorRemoteAll
     - EmergencyMedipen
@@ -103,15 +103,15 @@
     - GrenadeIncendiary
     - CrowbarRed
     - WeaponFlareGun
-    - NFAmmunitionBoxShellShotgunFlare
+    - AmmoBox23x75mmFlare #Lua 4 gauge
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
-    - MagazineShotgunSlug
-    - MagazineShotgunIncendiary
-    - MagazineShotgunIncendiary
-    - MagazineShotgunBeanbag
+    - NFMagazineShotgunDrumSlug
+    - NFMagazineShotgunDrumIncendiary
+    - NFMagazineShotgunDrumIncendiary
+    - NFMagazineShotgunDrumBeanbag
     # - ZetaTwoMedipen
     # - ZetaTwoMedipen
     - TelescopicShield
@@ -126,7 +126,7 @@
 
 # Agent
 
-## CBURN 
+## CBURN
 - type: job
   id: CBURNAgent
   name: job-name-cburn-agent
@@ -167,12 +167,12 @@
     - GrenadeIncendiary
     - CrowbarRed
     - WeaponFlareGun
-    - NFAmmunitionBoxShellShotgunFlare
+    - AmmoBox23x75mmFlare #Lua 4 gauge
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
-    - MagazineShotgunSlug
-    - MagazineShotgunIncendiary
-    - MagazineShotgunBeanbag
+    - NFMagazineShotgunDrumSlug
+    - NFMagazineShotgunDrumIncendiary
+    - NFMagazineShotgunDrumBeanbag
     - EmergencyMedipen
     - BoxMRE
     - NFWeaponEnergyPistolDisabler
@@ -221,15 +221,15 @@
     - GrenadeIncendiary
     - CrowbarRed
     - WeaponFlareGun
-    - NFAmmunitionBoxShellShotgunFlare
+    - AmmoBox23x75mmFlare #Lua 4 gauge
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
     - NFMagazineShotgunDrum
-    - MagazineShotgunSlug
-    - MagazineShotgunIncendiary
-    - MagazineShotgunIncendiary
-    - MagazineShotgunBeanbag
+    - NFMagazineShotgunDrumSlug
+    - NFMagazineShotgunDrumIncendiary
+    - NFMagazineShotgunDrumIncendiary
+    - NFMagazineShotgunDrumBeanbag
     # - ZetaTwoMedipen
     # - ZetaTwoMedipen
     - TelescopicShield

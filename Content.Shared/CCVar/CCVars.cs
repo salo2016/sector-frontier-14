@@ -36,20 +36,16 @@ public sealed partial class CCVars : CVars
     /// Set to true to disable parallel processing in the pow3r solver.
     /// </summary>
     public static readonly CVarDef<bool> DebugPow3rDisableParallel =
-        CVarDef.Create("debug.pow3r_disable_parallel", true, CVar.SERVERONLY);
-
-    #region Surgery
-
-    public static readonly CVarDef<bool> CanOperateOnSelf =
-        CVarDef.Create("surgery.can_operate_on_self", true, CVar.SERVERONLY);
-
-    #endregion
+        CVarDef.Create("debug.pow3r_disable_parallel", false, CVar.SERVERONLY);
 
     /// <summary>
     ///     Should the player automatically get up after being knocked down
     /// </summary>
     public static readonly CVarDef<bool> AutoGetUp =
         CVarDef.Create("white.auto_get_up", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED); // WD EDIT
+
+    public static readonly CVarDef<bool> HoldLookUp =
+        CVarDef.Create("rest.hold_look_up", false, CVar.CLIENT | CVar.ARCHIVE);
 
     public static readonly CVarDef<bool> LogInChat =
         CVarDef.Create("white.log_in_chat", true, CVar.CLIENT | CVar.ARCHIVE | CVar.REPLICATED); // WD EDIT

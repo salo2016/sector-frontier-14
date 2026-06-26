@@ -3,8 +3,8 @@
 # See AGPLv3.txt for details.
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons]
-  id: ClothingEyesHudSyndicateAgentOutpostSyndicate
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseC2SyndicateContraband]
+  id: ClothingEyesHudSyndicateAgentOutpostTypan
   name: визор медика синдиката
   description: Визор, используемый медиками на защищенных станциях синдиката.
   components:
@@ -18,8 +18,8 @@
     sprite: Clothing/Eyes/Hud/syndagent.rsi
 
 - type: entity
-  parent: [ClothingEyesBase, ShowSecurityIcons]
-  id: ClothingEyesHudOutpostSyndicate
+  parent: [ClothingEyesBase, ShowSecurityIcons, BaseC2SyndicateContraband]
+  id: ClothingEyesHudOutpostTypan
   name: визор офицера телекоммуникаций
   description: Удобный визор со встроенной системой разпознавания.
   components:

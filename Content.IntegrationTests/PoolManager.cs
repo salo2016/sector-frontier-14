@@ -1,17 +1,9 @@
 #nullable enable
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.IntegrationTests.Pair;
-using Content.IntegrationTests.Tests;
 using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
-using Content.IntegrationTests.Tests.Interaction.Click;
 using Robust.Client;
 using Robust.Server;
 using Robust.Shared.Configuration;
@@ -19,9 +11,15 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;
+using Robust.UnitTesting.Pool;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading;
 
 namespace Content.IntegrationTests;
 
@@ -182,24 +180,29 @@ public static partial class PoolManager
     /// </summary>
     /// <param name="poolSettings">See <see cref="PoolSettings"/></param>
     /// <returns></returns>
-    public static async Task<TestPair> GetServerClient(PoolSettings? poolSettings = null)
+    public static async Task<TestPair> GetServerClient(
+        PoolSettings? poolSettings = null,
+        ITestContextLike? testContext = null)
     {
-        return await GetServerClientPair(poolSettings ?? new PoolSettings());
+        return await GetServerClientPair(
+            poolSettings ?? new PoolSettings(),
+            testContext ?? new NUnitTestContextWrap(TestContext.CurrentContext, TestContext.Out));
     }
 
-    private static string GetDefaultTestName(TestContext testContext)
+    private static string GetDefaultTestName(ITestContextLike testContext)
     {
-        return testContext.Test.FullName.Replace("Content.IntegrationTests.Tests.", "");
+        return testContext.FullName.Replace("Content.IntegrationTests.Tests.", "");
     }
 
-    private static async Task<TestPair> GetServerClientPair(PoolSettings poolSettings)
+    private static async Task<TestPair> GetServerClientPair(
+        PoolSettings poolSettings,
+        ITestContextLike testContext)
     {
         if (!_initialized)
             throw new InvalidOperationException($"Pool manager has not been initialized");
 
         // Trust issues with the AsyncLocal that backs this.
-        var testContext = TestContext.CurrentContext;
-        var testOut = TestContext.Out;
+        var testOut = testContext.Out;
 
         DieIfPoolFailure();
         var currentTestName = poolSettings.TestName ?? GetDefaultTestName(testContext);

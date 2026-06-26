@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Content.IntegrationTests.Tests._NF;
 using Content.Server.Maps;
 using Content.Server.Station.Components;
@@ -11,6 +9,9 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Robust.UnitTesting.Pool;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.IntegrationTests.Tests.Station;
 
@@ -18,8 +19,10 @@ namespace Content.IntegrationTests.Tests.Station;
 [TestOf(typeof(StationJobsSystem))]
 public sealed class StationJobsTest
 {
+    private const string StationMapId = "FooStation";
+
     [TestPrototypes]
-    private const string Prototypes = @"
+    private const string Prototypes = $@"
 - type: playTimeTracker
   id: PlayTimeDummyAssistant
 
@@ -36,13 +39,13 @@ public sealed class StationJobsTest
   id: PlayTimeDummyChaplain
 
 - type: gameMap
-  id: FooStation
+  id: {StationMapId}
   minPlayers: 0
-  mapName: FooStation
+  mapName: {StationMapId}
   mapPath: /Maps/Test/empty.yml
   stations:
     Station:
-      mapNameTemplate: FooStation
+      mapNameTemplate: {StationMapId}
       stationProto: StandardNanotrasenStation
       components:
         - type: StationJobs
@@ -88,7 +91,7 @@ public sealed class StationJobsTest
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
         var stationSystem = entSysMan.GetEntitySystem<StationSystem>();
@@ -162,7 +165,7 @@ public sealed class StationJobsTest
         var server = pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-        var fooStationProto = prototypeManager.Index<GameMapPrototype>("FooStation");
+        var fooStationProto = prototypeManager.Index<GameMapPrototype>(StationMapId);
         var entSysMan = server.ResolveDependency<IEntityManager>().EntitySysManager;
         var stationJobs = entSysMan.GetEntitySystem<StationJobsSystem>();
         var stationSystem = entSysMan.GetEntitySystem<StationSystem>();

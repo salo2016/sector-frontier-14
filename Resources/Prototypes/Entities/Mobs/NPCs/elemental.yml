@@ -23,7 +23,7 @@
         - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseRunningSpeed : 3
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -35,9 +35,6 @@
     bodyType: KinematicController # Same for all inheritors
   - type: StatusEffects
     allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
     - Stutter
     - Electrocution
   - type: Pullable
@@ -95,14 +92,12 @@
         Blunt: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 2
-    baseSprintSpeed : 2.25
+    baseRunningSpeed : 2.25
   - type: NpcFactionMember
     factions:
       - SimpleHostile
   - type: Damageable
     damageContainer: StructuralInorganic
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   parent: MobOreCrab
@@ -143,7 +138,7 @@
         Blunt: 5
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
-    baseSprintSpeed : 2
+    baseRunningSpeed : 2
   - type: Destructible
     thresholds:
     - trigger:
@@ -175,7 +170,7 @@
         Blunt: 2.5
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.0
-    baseSprintSpeed : 1.5
+    baseRunningSpeed : 1.5
   - type: Destructible
     thresholds:
     - trigger:
@@ -388,7 +383,6 @@
     chemicalMaxVolume: 100
   - type: StatusEffects
     allowed:
-    - SlowedDown
     - Electrocution
   - type: MeleeWeapon
     soundHit:
@@ -411,6 +405,7 @@
       - FootstepSound
       - CannotSuicide
       - DoorBumpOpener
+      - StunImmune
   - type: NoSlip
   - type: ZombieImmune
   - type: ExaminableSolution
@@ -419,8 +414,6 @@
     solution: bloodstream
   - type: DrainableSolution
     solution: bloodstream
-  - type: TimedDespawn
-    lifetime: 2400
 
 - type: entity
   name: Reagent Slime Spawner

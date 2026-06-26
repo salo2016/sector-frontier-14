@@ -8,6 +8,7 @@ using Content.Shared.Preferences;
 using Robust.Shared.Player;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using Content.Shared._Lua.Bank; // Lua
 using Content.Shared._NF.Bank.Events;
 using Content.Shared.GameTicking;
 using Robust.Shared.Network;
@@ -43,6 +44,7 @@ public sealed partial class BankSystem : SharedBankSystem
     {
         base.Update(frameTime);
         UpdateSectorBanks(frameTime);
+        HousekeepYupiTransferHistory();
     }
 
     public void OnCleanup(RoundRestartCleanupEvent _)
@@ -93,6 +95,7 @@ public sealed partial class BankSystem : SharedBankSystem
         if (TryBankWithdraw(session, prefs, profile, amount, out var newBalance))
         {
             bank.Balance = newBalance.Value;
+            AddOperationRecord(bank, BankAccountOperationType.Withdraw, amount); // Lua
             Dirty(mobUid, bank);
             _log.Info($"{mobUid} withdrew {amount}");
             return true;
@@ -141,6 +144,7 @@ public sealed partial class BankSystem : SharedBankSystem
         if (TryBankDeposit(session, prefs, profile, amount, out var newBalance))
         {
             bank.Balance = newBalance.Value;
+            AddOperationRecord(bank, BankAccountOperationType.Deposit, amount); // Lua
             Dirty(mobUid, bank);
             _log.Info($"{mobUid} deposited {amount}");
             return true;
@@ -262,9 +266,9 @@ public sealed partial class BankSystem : SharedBankSystem
         }
 
         // Update preferences in cache if the player data exists
-        if (_prefsManager.TryGetCachedPreferences(userId, out var cachedPrefs))
+        if (_prefsManager.TryGetCachedPreferences(userId, out var _)) // Харамные действия #Lua rm cachedPrefs
         {
-            _prefsManager.SetProfile(userId, index, newProfile);
+            _prefsManager.SetProfile(userId, index, newProfile, validateFields: false); // Харамные действия #Lua add validateFields: false
         }
         else
         {
@@ -304,9 +308,10 @@ public sealed partial class BankSystem : SharedBankSystem
         }
 
         // Update preferences in cache if the player data exists
-        if (_prefsManager.TryGetCachedPreferences(userId, out var cachedPrefs))
+        if (_prefsManager.TryGetCachedPreferences(userId, out var _))
         {
-            _prefsManager.SetProfile(userId, index, newProfile);
+            // See comment in TryBankWithdrawOffline: bypass anti-cheat field validation for server-side changes.
+            _prefsManager.SetProfile(userId, index, newProfile, validateFields: false);
         }
         else
         {

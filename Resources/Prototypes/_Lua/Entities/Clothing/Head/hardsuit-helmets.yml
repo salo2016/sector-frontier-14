@@ -2,8 +2,243 @@
 # Copyright (c) 2025 LuaWorld Contributors
 # See AGPLv3.txt for details.
 
+#region Civilian
+
+
+- type: entity
+  parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseC1Contraband]
+  id: ClothingHeadHelmetAriralExosuit
+  name: Шлем экзоскафандра Арирал
+  description: Как вы это увидели?
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/ariral.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/ariral.rsi
+  - type: RaceRequirement
+    allowedRaces:
+      - Ariral
+  - type: PointLight
+    radius: 7
+    energy: 3
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    heatingCoefficient: 0.005
+    coolingCoefficient: 0.005
+  - type: FireProtection
+    reduction: 0.2
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+  - type: ShowHealthIcons
+    damageContainers:
+    - Biological
+
+#region Nanotrasen
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSecurityRed, BaseC3CentCommContraband]
+  id: ClothingHeadHelmetHardsuitBlueShield
+  categories: [ HideSpawnMenu ]
+  name: шлем скафандра офицера "Синий Щит"
+  description: Предназначен для защитника командования.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/blueshield.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/blueshield.rsi
+  - type: PointLight
+    color: '#4ac4ff'
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitNanotrasenStandart
+  categories: [ HideSpawnMenu ]
+  name: шлем стандартного скафандра Nanotrasen
+  description: Самый бюрократический шлем корпорации Nanotrasen.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/ntstandardhelm.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/ntstandardhelm.rsi
+  - type: PointLight
+    color: "#faf19c"
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitSecurityPilot
+  categories: [ HideSpawnMenu ]
+  name: security pilot's helmet
+  description: A helmet with wide field of view for threat observation.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/pilotsuithelmsec.rsi
+  - type: PointLight
+    color: "#77fff8"
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurity
+  id: ClothingHeadHelmetHardsuitBrigmedicWhite
+  categories: [ HideSpawnMenu ]
+  name: white brigmedic' helmet
+  description: White medical version of security hardsuit's helmet.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/brigmedic.rsi
+  - type: PointLight
+    color: "#E6E6FA"
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSecurityRed
+  id: ClothingHeadHelmetHardsuitCapspaceHelmetReinforced
+  categories: [ HideSpawnMenu ]
+  name: captain combat hardsuit's helmet
+  description: The helmet, that protects heads of elite captains.
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/capspace_helmet_reinforced.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/capspace_helmet_reinforced.rsi
+  - type: PointLight
+    color: "#ffaf38"
+
+#region FSF
+
 - type: entity
   parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitFSFBaseBravo
+  name: шлем солдата Браво
+  suffix: КСО, Браво
+  description: A special hardsuit helmet worn by members of an emergency response team.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/SDHardsuits/bravobasehelmet.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/SDHardsuits/bravobasehelmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitFSFCommandBravo
+  name: шлем Командира Браво
+  suffix: КСО, Браво
+  description: A special hardsuit helmet worn by members of an emergency response team.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/SDHardsuits/bravocommhelmet.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/SDHardsuits/bravocommhelmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitFSFBaseCharlie
+  name: шлем солдата Чарли
+  suffix: КСО, Чарли
+  description: A special hardsuit helmet worn by members of an emergency response team.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/SDHardsuits/charliebasehelmet.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/SDHardsuits/charliebasehelmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  id: ClothingHeadHelmetHardsuitFSFCommandCharlie
+  name: шлем солдата Чарли
+  suffix: КСО, Чарли
+  description: A special hardsuit helmet worn by members of an emergency response team.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: BreathMask
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/SDHardsuits/charliecommhelmet.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/SDHardsuits/charliecommhelmet.rsi
+  - type: PointLight
+    color: "#addbff"
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+
+- type: entity
+  parent: [ClothingHeadHelmetHardsuitSyndieCommander, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFCommanderBravo
   name: шлем командира рейнджеров
   suffix: ФСФ, Браво
@@ -26,7 +261,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFSpecialistBravo
   name: средний шлем рейнджера
   suffix: ФСФ, Браво
@@ -53,7 +288,7 @@
 
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  parent: [ClothingHeadHelmetHardsuitSyndieCommander, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFCommanderCharlie
   name: шлем командира рейнджеров
   suffix: ФСФ, Чарли
@@ -76,7 +311,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFSpecialistCharlie
   name: средний шлем рейнджера
   suffix: ФСФ, Чарли
@@ -102,7 +337,7 @@
 ###### ALT
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndieCommander
+  parent: [ClothingHeadHelmetHardsuitSyndieCommander, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFCommanderAlt
   name: шлем командира рейнджеров
   description: A special hardsuit helmet worn by members of an emergency response team.
@@ -124,7 +359,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFMediumAlt
   name: средний шлем рейнджера
   description: A special hardsuit helmet worn by members of an emergency response team.
@@ -146,7 +381,7 @@
         Heat: 0.9
 
 - type: entity
-  parent: ClothingHeadHelmetHardsuitSyndie
+  parent: [ClothingHeadHelmetHardsuitSyndie, BaseC3CentCommContraband]
   id: ClothingHeadHelmetHardsuitFSFLightAlt
   name: лёгкий шлем рейнджера
   description: A special hardsuit helmet worn by members of an emergency response team.
@@ -166,3 +401,124 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.9
+
+#region Modsuit Helmets
+- type: entity
+  parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitBloodRedHardsuit
+  name: Blood-red hardsuit helmet
+  description: A hardsuit helmet with signature markings of the Viper Group. Has a built-in medical HUD complemented by thermal pulse systems.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/nukeops.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/nukeops.rsi
+  - type: PointLight
+    color: "#00ff2a"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: [ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase, BaseC3SyndicateContraband, ContrabandClothing]
+  id: ClothingHeadHelmetHardsuitBloodRedHardsuitelite
+  name: Blood-red elite hardsuit helmet
+  description: A hardsuit helmet with signature markings of the Viper Group. Has a built-in medical HUD complemented by thermal pulse systems.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/pmc.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/pmc.rsi
+  - type: PointLight
+    color: "#00ff2a"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.90
+        Slash: 0.90
+        Piercing: 0.90
+        Heat: 0.90
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitChiefEngineerMOD
+  name: advanced chief engineer hardsuit helmet
+  description: White hardsuit helmet for elite engineer hardsuit.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/engimodhelmet.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/engimodhelmet.rsi
+  - type: PointLight
+    color: "#ffd107"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.95
+        Slash: 0.90
+        Heat: 0.90
+        Cold: 0.95
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide
+
+- type: entity
+  parent: [ ClothingHeadEVAHelmetBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetHardsuitBotanist
+  name: шлем скафандра ботаника
+  description: Фонарик светяшка... круто?
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Sprite
+    sprite: _Lua/Clothing/Head/Hardsuits/botanist.rsi
+  - type: Clothing
+    sprite: _Lua/Clothing/Head/Hardsuits/botanist.rsi
+    clothingVisuals:
+      head:
+      - state: equipped-head
+      head-vox:
+      - state: equipped-head-vox
+  - type: HandheldLight
+    addPrefix: false
+  - type: PointLight
+    color: "#ffd107"
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+  - type: HideLayerClothing
+    slots:
+    - Hair
+    - Snout
+    - HeadTop
+    - HeadSide

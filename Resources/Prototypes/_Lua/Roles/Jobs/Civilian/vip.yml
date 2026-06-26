@@ -1,0 +1,27 @@
+# LuaWorld - This file is licensed under AGPLv3
+# Copyright (c) 2025 LuaWorld Contributors
+# See AGPLv3.txt for details.
+
+- type: job
+  id: Vip
+  name: job-name-vip
+  description: job-description-vip
+  playTimeTracker: JobVip
+  whitelisted: true
+#  sponsorOnly: true
+  startingGear: VipGear
+  canBeAntag: true
+  icon: "JobIconVip"
+  supervisors: job-supervisors-hire
+  displayWeight: 35
+  setPreference: true
+  accessGroups: # Frontier
+  - GeneralAccess # Frontier
+
+- type: startingGear
+  id: VipGear
+  equipment: {}
+
+- type: chameleonOutfit
+  id: VipChameleonOutfit
+  job: Vip

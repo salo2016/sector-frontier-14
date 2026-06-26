@@ -51,11 +51,37 @@
     stealGroup: FireAxe
   - type: IgniteOnMeleeHit
     fireStacks: -4
+  # Lua start
+  - type: Repairable
+    fuelCost: 2
+    doAfterDelay: 3
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalGlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: MeleeDurability
+  # Lua end
 
 - type: entity
   id: FireAxeFlaming
   name: fire axe
-  parent: [ BaseC3SyndicateContraband, FireAxe ] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband
+  parent: [BaseC3SyndicateContraband, FireAxe] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband
   description: Why fight fire with an axe when you can fight with fire and axe? Now featuring rugged rubberized handle!
   components:
   - type: MeleeWeapon

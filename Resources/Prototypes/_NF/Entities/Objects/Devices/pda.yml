@@ -18,12 +18,12 @@
       - CrewManifestCartridge
       - NotekeeperCartridge
       - YupiTransferCartridge # Lua
+      - NanoChatCartridge # Lua
       - NanoTaskCartridge
       - NewsReaderCartridge
       - BountyContractsCartridge
       - AstroNavCartridge
       - WantedListCartridge
-      - LedgerCartridge
       - LogProbeCartridge
       - MailMetricsCartridge
       - AppraisalCartridge
@@ -35,18 +35,48 @@
   name: mercenary PDA
   description: This PDA smells of war.
   components:
-  - type: Pda
-    id: MercenaryIDCard
+  - type: Clothing
+    sprite: _Lua/Objects/Devices/MercenaryPDA.rsi
+  - type: Sprite
+    layers:
+    - sprite: _Lua/Objects/Devices/MercenaryPDA.rsi
+      map: [ "enum.PdaVisualLayers.Base" ]
+      state: "icon"
+    - sprite: _NF/Objects/Devices/pda.rsi
+      state: "light_overlay"
+      map: [ "enum.PdaVisualLayers.Flashlight" ]
+      shader: "unshaded"
+      visible: false
+    - sprite: _NF/Objects/Devices/pda.rsi
+      state: "id_overlay"
+      map: [ "enum.PdaVisualLayers.IdLight" ]
+      shader: "unshaded"
+      visible: false
   - type: Appearance
     appearanceDataInit:
-      enum.PdaVisuals.PdaType:
-        !type:String
-        pda-mercenary
+     enum.PdaVisuals.PdaType:
+       !type:String
+       icon
+  - type: Pda
+    id: MercenaryIDCard
   - type: PdaBorderColor
     borderColor: "#717059"
     accentVColor: "#A32D26"
   - type: Icon
-    state: pda-mercenary
+    sprite: _Lua/Objects/Devices/StormCreedPDA.rsi
+    state: icon
+  # - type: Pda
+  #   id: MercenaryIDCard
+  # - type: Appearance
+  #   appearanceDataInit:
+  #     enum.PdaVisuals.PdaType:
+  #       !type:String
+  #       pda-mercenary
+  # - type: PdaBorderColor
+  #   borderColor: "#717059"
+  #   accentVColor: "#A32D26"
+  # - type: Icon
+  #   state: pda-mercenary
 
 - type: entity
   parent: BasePDA
@@ -154,12 +184,12 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge # Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - BountyContractsCartridge
     - AstroNavCartridge
     - WantedListCartridge
-    - LedgerCartridge
 
 - type: entity
   parent: BaseSecurityPDA
@@ -318,6 +348,31 @@
 
 - type: entity
   parent: BaseSecurityPDA
+  id: SDEngineerPDA
+  name: КПК Инженера СРБС
+  description: За многие годы эксплуатации он покрылся слоем пластитановой пыли.
+  components:
+  - type: Pda
+    id: SDEngineerIDCard
+    bookSlot: # Frontier
+      startingItem: HyperlinkBookNfsdSop
+      priority: -2
+      whitelist:
+        tags:
+        - BookSpaceLaw
+        - BookNfsdSop
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-nfdetective
+  - type: PdaBorderColor
+    borderColor: "#774705"
+  - type: Icon
+    state: pda-nfdetective
+
+- type: entity
+  parent: BaseSecurityPDA
   id: PublicAffairsLiaisonPDA
   name: public affairs liaison PDA
   description: Paperwork, paperwork, paperwork!
@@ -377,15 +432,15 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge # Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - BountyContractsCartridge
     - AstroNavCartridge
-    - LedgerCartridge
     - MailMetricsCartridge
 
 - type: entity
-  parent: PiratePDA
+  parent: [PiratePDA, BaseC2PirateContrabandNoValue] # Lua-changes: added BaseC2PirateContrabandNoValue
   id: NFPiratePDA
   name: pirate PDA
   suffix: Frontier
@@ -399,7 +454,7 @@
         pda-pirate
 
 - type: entity
-  parent: PiratePDA
+  parent: [PiratePDA, BaseC2PirateContrabandNoValue] # Lua-changes: added BaseC2PirateContrabandNoValue
   id: NFPirateCaptainPDA
   name: pirate captain PDA
   suffix: Frontier
@@ -413,7 +468,7 @@
         pda-pirate
 
 - type: entity
-  parent: PiratePDA
+  parent: [PiratePDA, BaseC2PirateContrabandNoValue] # Lua-changes: added BaseC2PirateContrabandNoValue
   id: NFPirateFirstMatePDA
   name: pirate first mate PDA
   suffix: Frontier
@@ -425,6 +480,47 @@
       enum.PdaVisuals.PdaType:
         !type:String
         pda-pirate
+
+- type: entity
+  parent: [PiratePDA, BaseC2PirateContrabandNoValue] # Lua-changes: added BaseC2PirateContrabandNoValue
+  id: NFShantymanPDA
+  name: shantyman PDA
+  description: It's pirate party time!
+  suffix: Frontier
+  components:
+  - type: Pda
+    id: NFPirateIDCard
+  - type: Appearance
+    appearanceDataInit:
+      enum.PdaVisuals.PdaType:
+        !type:String
+        pda-shantyman
+  - type: Instrument
+    allowPercussion: false
+    handheld: true
+    bank: 1
+    program: 2
+  - type: SwappableInstrument
+    instrumentList:
+      "Default": {2: 1}
+      "Accordion": {21: 0}
+      "Fiddle": {110: 0}
+      "Guitar": {24: 0}
+      "Lyre": {46: 0}
+
+- type: entity
+  parent: [NFShantymanPDA, BaseC2PirateContrabandNoValue] # Lua-changes: added BaseC2PirateContrabandNoValue
+  id: NFCaptainShantymanPDA
+  components:
+  - type: Pda
+    id: NFPirateCaptainIDCard
+
+- type: entity
+  parent: [NFShantymanPDA, BaseC2PirateContrabandNoValue] # Lua-changes: added BaseC2PirateContrabandNoValue
+  id: NFFirstMateShantymanPDA
+  components:
+  - type: Pda
+    id: NFPirateFirstMateIDCard
 
 - type: entity
   parent: PassengerPDA
@@ -493,11 +589,11 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge # Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - BountyContractsCartridge
     - AstroNavCartridge
-    - LedgerCartridge
     - MedTekCartridge
 
 - type: entity
@@ -541,8 +637,8 @@
     - CrewManifestCartridge
     - NotekeeperCartridge
     - YupiTransferCartridge # Lua
+    - NanoChatCartridge # Lua
     - NanoTaskCartridge
     - NewsReaderCartridge
     - BountyContractsCartridge
     - AstroNavCartridge
-    - LedgerCartridge

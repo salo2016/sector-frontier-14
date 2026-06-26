@@ -7,7 +7,6 @@ namespace Content.Server.NPC.Systems;
 
 public sealed class NPCUseActionOnTargetSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
@@ -55,4 +54,7 @@ public sealed class NPCUseActionOnTargetSystem : EntitySystem
             TryUseTentacleAttack((uid, comp), target);
         }
     }
+
+    public void ClearActionEntity(EntityUid uid, NPCUseActionOnTargetComponent comp)
+    { comp.ActionEnt = null; }
 }

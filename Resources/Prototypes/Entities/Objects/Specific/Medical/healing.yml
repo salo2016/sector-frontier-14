@@ -51,6 +51,12 @@
     count: 10
   - type: StackPrice
     price: 5
+  # Lua start
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 5
+      Glass: 5
+  # Lua end
 
 - type: entity
   id: Ointment1
@@ -162,6 +168,12 @@
     count: 10
   - type: StackPrice
     price: 5
+  # Lua start
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 5
+      Steel: 5
+  # Lua end
 
 - type: entity
   id: Brutepack1
@@ -257,7 +269,7 @@
     damage:
       types:
         Bloodloss: -0.5 #lowers bloodloss damage
-    ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
+    modifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
       params:
@@ -366,6 +378,11 @@
     count: 10
   - type: StackPrice
     price: 5 # Frontier 10<5
+  # Lua start
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 15
+  # Lua end
 
 - type: entity
   id: Gauze1
@@ -808,7 +825,7 @@
 
 - type: entity
   name: romerol pill
-  parent: Pill
+  parent: [Pill, BaseC3SyndicateContraband] # Lua-changes: added BaseC3SyndicateContraband
   id: PillRomerol
   components:
   - type: SolutionContainerManager
@@ -1100,7 +1117,7 @@
 
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
-  parent: [PrefilledSyringe, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband
+  parent: [PrefilledSyringe, BaseC3SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband # Lua-changes: BaseC3SyndicateContraband > BaseC3SyndicateContrabandNoValue
   suffix: romerol
   id: SyringeRomerol
   components:
@@ -1115,7 +1132,7 @@
           Quantity: 15
 
 - type: entity
-  parent: [PrefilledSyringe, BaseC3SyndicateContraband] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband
+  parent: [PrefilledSyringe, BaseC2SyndicateContrabandNoValue] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband # Lua-changes: BaseC3SyndicateContraband > BaseC2SyndicateContrabandNoValue
   suffix: hyperzine
   id: SyringeStimulants
   components:

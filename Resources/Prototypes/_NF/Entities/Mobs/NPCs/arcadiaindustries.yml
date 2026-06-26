@@ -31,7 +31,7 @@
     - type: Physics
     - type: MovementSpeedModifier
       baseWalkSpeed : 4
-      baseSprintSpeed : 6
+      baseRunningSpeed : 6
     - type: Fixtures
       fixtures:
         fix1:
@@ -77,8 +77,6 @@
         types:
           Bloodloss:
             1
-    - type: TimedDespawn
-      lifetime: 2400
 
 - type: entity
   name: Hijacked Hologuardian
@@ -136,8 +134,6 @@
         types:
           Bloodloss:
             1
-    - type: TimedDespawn
-      lifetime: 2400
 
 - type: entity
   name: Mobile Blaster Unit
@@ -182,7 +178,7 @@
         60: Dead
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
-      baseSprintSpeed: 5
+      baseRunningSpeed: 5
     - type: Tag
       tags:
         - FootstepSound
@@ -211,5 +207,3 @@
         types:
           Bloodloss:
             1
-    - type: TimedDespawn
-      lifetime: 2400

@@ -19,11 +19,37 @@
   - type: Tag
     tags:
     - Payload
+    - RemoteSignaller
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: BasicDevice
   - type: WirelessNetworkConnection
     range: 15
+  # Goobstation edit start
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/component_pickup.ogg
+      params:
+        volume: -2
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/component_drop.ogg
+      params:
+        volume: -2
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/component_drop.ogg
+      params:
+        volume: -2
+  # Goobstation edit end
+  # Lua start
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 20
+      Plastic: 30
+      Glass: 10
+      RawScrap: 40
+  # Lua end
 
 - type: entity
   parent: RemoteSignaller
@@ -43,3 +69,10 @@
     range: 50
   - type: StaticPrice
     price: 30
+  # Lua start
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 20
+      Plastic: 30
+      RawScrap: 50
+  # Lua end

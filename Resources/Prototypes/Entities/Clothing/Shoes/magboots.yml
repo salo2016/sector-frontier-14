@@ -24,7 +24,7 @@
     prefixOn: on
   - type: Magboots
   - type: ClothingSpeedModifier
-    walkModifier: 0.85
+    walkModifier: 0.8
     sprintModifier: 0.8
   - type: Appearance
   - type: GenericVisualizer
@@ -82,13 +82,13 @@
   description: These would look fetching on a fetcher like you.
   components:
   - type: ClothingSpeedModifier
-    walkModifier: 1.10 #PVS isn't too much of an issue when you are blind...
-    sprintModifier: 1.10
+    walkModifier: 1.1 #PVS isn't too much of an issue when you are blind...
+    sprintModifier: 1.1
   - type: StaticPrice
     price: 3000
 
 - type: entity
-  parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseC3SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent
+  parent: [ClothingShoesBootsMagBase, BaseJetpack, BaseC1SyndicateContraband, ContrabandClothing] # Frontier: BaseSyndicateContraband<BaseC3SyndicateContraband, added ContrabandClothing as parent # Lua-changes: BaseC3SyndicateContraband > BaseC1SyndicateContraband
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
   description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters. It can hold 0.75 L of gas.
@@ -99,7 +99,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
   - type: ClothingSpeedModifier
-    walkModifier: 0.95
+    walkModifier: 0.9
     sprintModifier: 0.9
   - type: GasTank
     outputPressure: 42.6
@@ -113,6 +113,10 @@
   - type: Item
     sprite: null
     size: Normal
+    shape: # Lua
+      - 0,0,1,1 # Lua
+  - type: StaticPrice
+    price: 1500
 
 - type: entity
   parent: BaseAction
